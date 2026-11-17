@@ -3,7 +3,8 @@
  *   node tests/e2e.mjs [--html qms_pro_qms.html]
  * 覆盖：十进制判定与边界、抽样推荐、三层快照、计数判批（接受但有不良）、缺失≠0、拍照要求、
  *       复检新轮次保留原失败、报告复核独立性、签名绑定内容摘要、管理员无审批权、消息来源白名单、数据持久化、
- *       身份流程条（六种身份各自的步数、每一步可点、检验员在一张检验里点步骤不跳走）。
+ *       身份流程条（六种身份各自的步数、每一步可点、检验员在一张检验里点步骤不跳走）、
+ *       生产现场（登记换刀 → 现场看板开首件、让步放行要填批准依据、批次追溯、流转卡二维码，支持时浏览器实扫）。
  */
 import { join, resolve } from 'node:path';
 import { launch, openApp, gotoRoute, setUser, sleep, checker, ROOT } from './lib.mjs';
@@ -191,7 +192,7 @@ try {
   c.ok('置灰按钮带无权限说明', r8.n > 0 && r8.disabled && /无权限/.test(r8.sample), JSON.stringify(r8));
 
   console.log('\n[9] 身份流程条：每种身份一条自己的流程，从左到右，每一步都能点');
-  const FLOW = { u1: 5, u2: 6, u3: 6, u4: 5, u5: 3, u6: 3 };
+  const FLOW = { u1: 6, u2: 6, u3: 7, u4: 6, u5: 4, u6: 3 };
   const BAR = '[aria-label="我的工作流程"] button[data-step]';
   const errs0 = log.errors.length, r9 = {};
   for (const uid of Object.keys(FLOW)) {
@@ -208,7 +209,7 @@ try {
     }
     r9[uid] = { n: keys.length, bad };
   }
-  c.ok('流程步数：检验员 5、质量工程师 6、质量负责人 6、生产主管 5、仓库执行人 3、系统管理员 3', Object.keys(FLOW).every((u) => r9[u].n === FLOW[u]), JSON.stringify(r9));
+  c.ok('流程步数：检验员 6、质量工程师 6、质量负责人 7、生产主管 6、仓库执行人 4、系统管理员 3', Object.keys(FLOW).every((u) => r9[u].n === FLOW[u]), JSON.stringify(r9));
   c.ok('每一步点了都能打开正常页面，且没有脚本错误', Object.keys(FLOW).every((u) => !r9[u].bad.length) && log.errors.length === errs0, JSON.stringify(r9) + ' ' + log.errors.slice(errs0).join(' | '));
 
   await setUser(page, 'u1');
@@ -223,6 +224,60 @@ try {
   await sleep(600);
   const r9c = await page.evaluate(() => ({ hash: location.hash, modal: /签名提交本轮检验/.test(document.body.innerText) }));
   c.ok('检验员在一张检验里：流程条显示这张检验的进度，点“签名提交”留在本页并打开签名提交', !!mine && /这张检验的进度/.test(r9b.label) && r9b.clicked && r9c.hash === '#/inspect/' + mine && r9c.modal, JSON.stringify([mine, r9b, r9c]));
+
+  console.log('\n[10] 生产现场：登记换刀 → 现场看板开首件、让步放行、批次追溯、流转卡二维码（真实点击）');
+  await setUser(page, 'u4');
+  const r10a = await page.evaluate(() => {
+    const Q = window.__QMS, o = Q.S.orders.find((x) => x.wo === 'WO-2611-021');
+    const ev = Q.addSetup(o, { op: '20 精车', machine: 'CNC-02', trigger: '换刀' });
+    const req = Q.faiReqs(o).find((r) => r.key === '20 精车' && r.machine === 'CNC-02');
+    return { ev: !!ev, trig: req && req.trigger, task: !!(req && req.task) };
+  });
+  c.ok('生产主管登记换刀：CNC-02 的首件要求重新打开', r10a.ev && r10a.trig === '换刀' && !r10a.task, JSON.stringify(r10a));
+  await setUser(page, 'u1');
+  await gotoRoute(page, '/floor', 800);
+  const r10b = await page.evaluate(() => { const row = Array.from(document.querySelectorAll('main [data-kind="fai"]')).find((r) => /WO-2611-021/.test(r.innerText) && /CNC-02/.test(r.innerText)); return { row: !!row, text: row ? row.innerText.replace(/\s+/g, ' ').slice(0, 80) : '' }; });
+  c.ok('现场看板：检验员看到 CNC-02“换刀后首件待检”', r10b.row && /换刀后首件待检/.test(r10b.text), JSON.stringify(r10b));
+  await page.evaluate(() => { const row = Array.from(document.querySelectorAll('main [data-kind="fai"]')).find((r) => /WO-2611-021/.test(r.innerText) && /CNC-02/.test(r.innerText)); const b = row && row.querySelector('button.btn-sm'); if (b) b.click(); });
+  await sleep(900);
+  const r10c = await page.evaluate(() => { const t = window.__QMS.S.tasks[0]; return { hash: location.hash, scene: t.scene, ctx: t.ctx }; });
+  c.ok('点“开首件”：开出带机台和原因的首件单，进入检验页', r10c.scene === 'FIRST' && r10c.ctx.machine === 'CNC-02' && r10c.ctx.trigger === '换刀' && /^#\/inspect\//.test(r10c.hash), JSON.stringify(r10c));
+
+  await setUser(page, 'u3');
+  const o64 = await page.evaluate(() => (window.__QMS.S.orders.find((x) => x.wo === 'WO-2611-064') || {}).id || '');
+  await gotoRoute(page, '/orders/' + o64 + '?stage=release', 800);
+  await page.evaluate(() => { const b = Array.from(document.querySelectorAll('main button')).find((x) => /质量放行/.test(x.innerText) && !x.disabled); if (b) b.click(); });
+  await sleep(700);
+  const r10d = await page.evaluate(() => { const btn = Array.from(document.querySelectorAll('button')).find((x) => /确认让步放行/.test(x.innerText)); return { modal: /让步放行依据/.test(document.body.innerText), disabled: btn ? btn.disabled : null, doc: Array.from(document.querySelectorAll('input')).some((i) => i.value === 'CC-2611-05') }; });
+  c.ok('让步放行弹窗：批准依据没填完不能放行，文件编号已从处置理由带出', r10d.modal && r10d.disabled === true && r10d.doc, JSON.stringify(r10d));
+  await page.evaluate(() => { const i = Array.from(document.querySelectorAll('input')).find((x) => x.placeholder === '客户或技术负责人'); if (i) { i.value = '客户质量部 王经理'; i.dispatchEvent(new Event('input', { bubbles: true })); } });
+  await sleep(300);
+  await page.evaluate(() => { const b = Array.from(document.querySelectorAll('button')).find((x) => /确认让步放行/.test(x.innerText)); if (b) b.click(); });
+  await sleep(700);
+  const r10e = await page.evaluate(() => { const o = window.__QMS.S.orders.find((x) => x.wo === 'WO-2611-064'); return { at: !!o.releasedAt, kind: o.releaseKind, basis: (o.releaseBasis || []).map((b) => b.docNo + ' / ' + b.approver) }; });
+  c.ok('填好批准人后让步放行：依据记进放行记录', r10e.at && r10e.kind === 'concession' && r10e.basis.length === 1, JSON.stringify(r10e));
+
+  await gotoRoute(page, '/trace?q=DN-2611-007', 800);
+  const r10f = await page.evaluate(() => { const t = document.querySelector('main').innerText; return { dir: /往回查/.test(t), wo: /WO-2611-052/.test(t), sup: /恒科五金/.test(t) }; });
+  c.ok('批次追溯：发货单 DN-2611-007 往回查到 WO-2611-052 和恒科五金', r10f.dir && r10f.wo && r10f.sup, JSON.stringify(r10f));
+  await gotoRoute(page, '/orders/' + o64 + '/card', 800);
+  const r10g = await page.evaluate(async () => {
+    const svg = document.querySelector('.print-area svg[aria-label="二维码"]');
+    const out = { svg: !!svg, path: svg ? svg.querySelector('path').getAttribute('d').length : 0, decoded: null };
+    /* 浏览器支持 BarcodeDetector 时，把二维码画到画布上真的识别一次 */
+    if (svg && 'BarcodeDetector' in window) {
+      try {
+        const img = new Image(), url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], { type: 'image/svg+xml' }));
+        await new Promise((ok, no) => { img.onload = ok; img.onerror = no; img.src = url; });
+        const cv = document.createElement('canvas'); cv.width = 400; cv.height = 400;
+        const g = cv.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(img, 0, 0, 400, 400);
+        const r = await new window.BarcodeDetector({ formats: ['qr_code'] }).detect(cv);
+        out.decoded = r.length ? r[0].rawValue : '';
+      } catch (e) { out.decoded = 'ERR ' + e.message; }
+    }
+    return out;
+  });
+  c.ok('工单流转卡：有二维码' + (r10g.decoded == null ? '（这个浏览器没有 BarcodeDetector，跳过实扫）' : '，浏览器实扫得到工单网址'), r10g.svg && r10g.path > 200 && (r10g.decoded == null || /#\/scan\/WO-2611-064$/.test(r10g.decoded)), JSON.stringify(r10g));
   pageErrors = log.errors.slice();
 } finally {
   await browser.close();

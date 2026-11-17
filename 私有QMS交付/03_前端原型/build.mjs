@@ -93,6 +93,14 @@ if (bad.length) fail('源码中存在乱码字符 U+FFFD，请先修复：\n  ' 
       catch (e) { problems.push(basename(f) + ':' + line0 + ' 模板无法编译：' + e.message); }
     }
   }
+  /* 测试脚本本身也查一遍语法（浏览器测试要装 Chrome 才能跑，至少保证脚本能被加载） */
+  const testDir = join(root, 'tests');
+  if (existsSync(testDir)) {
+    for (const f of readdirSync(testDir).filter((x) => x.endsWith('.mjs'))) {
+      try { execFileSync(process.execPath, ['--check', join(testDir, f)], { stdio: 'pipe' }); }
+      catch (e) { problems.push('tests/' + f + ' 语法错误：' + String((e.stderr && e.stderr.toString()) || e.message).split('\n').filter(Boolean).slice(0, 4).join(' ')); }
+    }
+  }
   if (problems.length) fail('源码检查没有通过：\n  ' + problems.join('\n  '));
   console.log('源码检查通过：' + jsFiles.length + ' 个文件语法正确' + (compile ? '，页面模板均可编译' : '（没有找到 Vue 编译器，跳过模板检查：在 ../04_气泡识别软件 执行 npm install 后可检查）'));
 }
@@ -128,3 +136,14 @@ const html = head +
   '\n<script>\n/* Worlder QMS 原型 · build ' + stamp + ' · src ' + hash + ' */\n(function () {\n\'use strict\';\n' + esc(appJs) + '\n})();\n</script>\n</body>\n</html>\n';
 writeFileSync(out, html);
 console.log('已生成 ' + out + '（' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KB，' + jsFiles.length + ' 个源码文件，src ' + hash + '）');
+
+/* 5. 运行时检查（不开浏览器）：二维码单元测试；在 Node 里把每个页面、每种身份渲染一遍，并走一遍生产现场动作。
+      产物已经生成；检查没通过时返回非零并指出哪一项。--skip-tests 可跳过 */
+if (argv.indexOf('--skip-tests') < 0) {
+  for (const t of ['tests/unit.mjs', 'tests/ssr.mjs']) {
+    const p = join(root, t);
+    if (!existsSync(p)) continue;
+    try { execFileSync(process.execPath, [p], { stdio: 'inherit', cwd: root }); }
+    catch (e) { console.error('构建产物已生成，但 ' + t + ' 没有通过（见上面的输出）'); process.exit(1); }
+  }
+}

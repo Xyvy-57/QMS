@@ -270,9 +270,23 @@ COMPONENTS['page-bubble'] = {
     };
     const routeActive = (r) => UI.bubble.route === r || UI.bubble.route.indexOf(r + '/') === 0 || (r === 'drawings' && UI.bubble.route.indexOf('annotate') === 0);
     const reload = () => { loaded.value = false; help.value = true; UI.bubble.reloadKey++; arm(); };
-    let pollTimer = null;
-    onMounted(() => { arm(); pollBubble(); pollTimer = setInterval(pollBubble, 5000); });
-    onBeforeUnmount(() => { clearTimeout(handshakeTimer); clearInterval(pollTimer); });
+    /* 先探测气泡服务在不在（no-cors：只看连不连得上），不在时显示启动说明，而不是浏览器的“拒绝连接”页面 */
+    const svc = reactive({ state: 'checking', file: location.protocol === 'file:' });
+    const probe = async () => {
+      const base = bubbleBase();
+      if (!base) { svc.state = 'offline'; return; }
+      try {
+        await fetch(base + '/api/v1/health', { mode: 'no-cors', cache: 'no-store' });
+        const prev = svc.state; svc.state = 'online';
+        if (prev === 'offline') reload();
+      } catch (e) { svc.state = 'offline'; }
+    };
+    const startDir = (() => { const m = /^(.*)\/03_前端原型\//.exec(decodeURIComponent(location.pathname)); return m ? m[1] + '/04_气泡识别软件' : '私有QMS交付/04_气泡识别软件'; })();
+    const startCmd = 'cd "' + startDir + '" && node server.mjs';
+    const copyCmd = async () => { try { await navigator.clipboard.writeText(startCmd); toast('已复制，粘贴到“终端”里回车', 'success'); } catch (e) { toast('复制失败，请手动选中复制', 'warn'); } };
+    let pollTimer = null, probeTimer = null;
+    onMounted(() => { arm(); probe(); probeTimer = setInterval(() => { if (svc.state !== 'online') probe(); }, 3000); pollBubble(); pollTimer = setInterval(pollBubble, 5000); });
+    onBeforeUnmount(() => { clearTimeout(handshakeTimer); clearInterval(pollTimer); clearInterval(probeTimer); });
     const refetch = async (x) => { if (await fetchSyncBatch(x)) toast('已拉取 ' + x.syncBatchId + '：' + x.items.length + ' 个气泡，内容摘要一致', 'success'); else toast('拉取失败：' + x.error, 'error'); };
     const newPart = (x) => { try { const p = createPartFromSync(x); toast('已新建零件 ' + p.partNo + ' ' + p.name + '：接着生成标准草稿', 'success'); } catch (e) { toast(e.message, 'error'); } };
     const isLocal = computed(() => /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(bubbleBase()));
@@ -293,7 +307,7 @@ COMPONENTS['page-bubble'] = {
     const viewDiff = computed(() => (viewing.value ? diffOf(viewing.value) : []));
     const viewMap = computed(() => { const m = {}; viewDiff.value.forEach((r) => { if (r.type !== 'same') m[r.it.cid] = r.type; }); return m; });
     const viewItems = computed(() => (viewing.value ? viewing.value.items.concat(viewDiff.value.filter((r) => r.type === 'removed').map((r) => r.it)) : []));
-    return { frame, loaded, panel, help, src, inbox, pendingCount, demos, demoMenu, navTo, routeActive, reload, refetch, newPart, isLocal, summaryOf, prevOf, draft, ignore, pushDemo, openNew, viewing, viewDiff, viewMap, viewItems, BUBBLE_ROUTES, DIFF_META };
+    return { frame, loaded, panel, help, src, inbox, pendingCount, demos, demoMenu, navTo, routeActive, reload, refetch, newPart, isLocal, svc, probe, startCmd, copyCmd, summaryOf, prevOf, draft, ignore, pushDemo, openNew, viewing, viewDiff, viewMap, viewItems, BUBBLE_ROUTES, DIFF_META };
   },
   template: `
 <div class="flex flex-col gap-4 h-[calc(100vh-112px-var(--flow-h))] min-h-[620px]">
@@ -339,8 +353,32 @@ COMPONENTS['page-bubble'] = {
           <div class="flex gap-4 h-[calc(100%-56px)]"><div class="skeleton w-56 h-full"></div><div class="flex-1 space-y-3"><div class="skeleton h-10"></div><div class="skeleton h-12"></div><div class="skeleton h-12"></div><div class="skeleton h-12"></div><div class="skeleton h-12 w-2/3"></div></div></div>
         </div>
       </transition>
+      <div v-if="svc.file || svc.state === 'offline'" class="absolute inset-0 z-10 bg-white flex items-center justify-center p-6 overflow-y-auto">
+        <div class="max-w-xl w-full">
+          <div class="flex items-start gap-3">
+            <span class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0"><ic name="info" :size="20"/></span>
+            <div>
+              <div class="font-semibold text-[16px]">{{ svc.file ? '请换成 http://localhost:5180 打开 QMS' : '气泡识别服务还没有启动' }}</div>
+              <p class="text-[12.5px] text-ink-3 mt-1 leading-relaxed" v-if="svc.file">现在这个页面是直接双击 HTML 文件打开的（地址栏是 file://）。为了安全，气泡软件只允许被白名单里的 QMS 地址内嵌、同步结果也只发给白名单地址，所以这里接不上。</p>
+              <p class="text-[12.5px] text-ink-3 mt-1 leading-relaxed" v-else>QMS 里内嵌的气泡软件由本机服务提供，服务启动后这里会自动连上。</p>
+            </div>
+          </div>
+          <div v-if="svc.state !== 'online'" class="mt-5">
+            <div class="text-[13px] font-medium">① 打开“终端”，粘贴这一行并回车（之后这个终端窗口不要关）：</div>
+            <div class="mt-2 rounded-xl bg-[#1d1d1f] text-white font-mono text-[12px] px-3.5 py-3 flex items-center gap-3"><span class="flex-1 select-all break-all leading-relaxed">{{ startCmd }}</span><button class="shrink-0 h-7 px-2.5 rounded-lg bg-white/15 hover:bg-white/25 text-[11.5px]" @click="copyCmd">复制</button></div>
+            <div class="text-[13px] font-medium mt-4">② 服务启动后，浏览器会自动打开 http://localhost:5180 ，在那里点左侧“气泡识别”。</div>
+          </div>
+          <div v-else class="mt-5 text-[13px]">气泡识别服务已经在运行，直接换成下面的地址打开即可。</div>
+          <div class="flex flex-wrap items-center gap-2 mt-5">
+            <a v-if="svc.file" class="btn-primary" href="http://localhost:5180/#/bubble"><ic name="external" :size="15"/>打开 http://localhost:5180</a>
+            <button v-else class="btn-primary" @click="probe"><ic name="refresh" :size="15"/>重新连接</button>
+            <span class="text-[11.5px] text-ink-4">{{ svc.state === 'checking' ? '正在检测…' : svc.state === 'offline' ? '每 3 秒自动检测一次' : '' }}</span>
+          </div>
+          <p v-if="svc.file" class="text-[11.5px] text-ink-4 mt-4 leading-relaxed">提示：两个地址的演示数据分开保存在浏览器里，换地址后看到的是一份新的演示数据。</p>
+        </div>
+      </div>
       <transition name="fade">
-        <div v-if="UI.bubble.status === 'nohandshake' && help" class="absolute left-4 right-4 top-4 card shadow-lift p-4 max-w-2xl">
+        <div v-if="UI.bubble.status === 'nohandshake' && help && !svc.file && svc.state === 'online'" class="absolute left-4 right-4 top-4 card shadow-lift p-4 max-w-2xl">
           <div class="flex items-start gap-3">
             <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0"><ic name="info" :size="16"/></span>
             <div class="flex-1 text-[12.5px] leading-relaxed">

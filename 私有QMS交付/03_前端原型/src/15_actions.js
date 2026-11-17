@@ -166,7 +166,7 @@ function ncrsOfTask(taskId) { return S.ncrs.filter((n) => n.taskId === taskId); 
 /** 任务上下文摘要（列表与报告共用） */
 function ctxText(task) {
   const c = task.ctx || {};
-  return ['supplier', 'customer', 'receipt', 'shipment', 'wo', 'op', 'machine', 'freq', 'batch'].filter((k) => c[k]).map((k) => (CTX_FIELDS[k] ? CTX_FIELDS[k].label + ' ' : '') + c[k]).join(' · ');
+  return ['supplier', 'customer', 'receipt', 'shipment', 'wo', 'op', 'machine', 'trigger', 'freq', 'batch'].filter((k) => c[k]).map((k) => (CTX_FIELDS[k] ? CTX_FIELDS[k].label + ' ' : '') + c[k]).join(' · ');
 }
 /** 任务当前轮次与进度 */
 function currentRound(task) { return task.rounds[task.rounds.length - 1]; }

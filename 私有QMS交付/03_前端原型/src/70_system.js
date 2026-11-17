@@ -4,6 +4,7 @@
 
 const PERM_GROUPS = [
   ['质量策划', ['bubble.sync', 'std.edit', 'std.approve', 'plan.edit', 'plan.approve']],
+  ['生产主线', ['order.create', 'order.work', 'order.setup', 'order.release']],
   ['检验执行', ['task.create', 'task.measure', 'task.submit', 'task.retest']],
   ['报告', ['report.review', 'tpl.edit']],
   ['不合格与质量限制', ['ncr.create', 'ncr.scope', 'ncr.suggest', 'ncr.approve', 'ncr.execute', 'hold.create', 'hold.release']],
@@ -188,7 +189,24 @@ COMPONENTS['page-settings'] = {
     const exportState = () => { downloadText('worlder-qms-演示数据.json', JSON.stringify(S, null, 1), 'application/json'); toast('已导出演示数据', 'success'); };
     const reset = async () => { if (await confirmBox({ title: '重置演示数据？', message: '将清空浏览器中保存的全部演示数据，恢复为初始示例。', ok: '重置', danger: true })) resetDemo(); };
     const statusText = computed(() => ({ idle: '未连接', loading: '连接中', handshake: '已握手', nohandshake: '未收到握手' })[UI.bubble.status] || UI.bubble.status);
-    return { f, dirty, save, simulate, simulateBad, usage, exportState, reset, statusText, API_DOCS, BUBBLE_NEEDS };
+    /* 生产现场：班次、开班首件、扫码地址 */
+    const pf = reactive({ shifts: shiftList().map((x) => ({ key: x.key, name: x.name, start: x.start })), faiShift: S.settings.faiShift !== false, scanBase: S.settings.scanBase || '' });
+    const prodDirty = computed(() => JSON.stringify(pf.shifts) !== JSON.stringify(shiftList().map((x) => ({ key: x.key, name: x.name, start: x.start }))) || pf.faiShift !== (S.settings.faiShift !== false) || pf.scanBase.trim() !== (S.settings.scanBase || ''));
+    const scanNow = computed(() => scanUrl('WO-2611-011'));
+    const saveProd = () => {
+      const bad = pf.shifts.find((x) => !String(x.name || '').trim() || !/^([01]?\d|2[0-3]):[0-5]\d$/.test(String(x.start).trim()));
+      if (bad) { toast('班次名称不能为空，开始时间写成 08:00 这样的格式', 'error'); return; }
+      const starts = pf.shifts.map((x) => hmToMin(x.start));
+      if (starts.some((m, i) => starts.indexOf(m) !== i)) { toast('两个班次的开始时间不能相同', 'error'); return; }
+      const base = pf.scanBase.trim();
+      if (base && !/^https?:\/\/\S+$/i.test(base)) { toast('扫码地址要以 http:// 或 https:// 开头', 'error'); return; }
+      S.settings.shifts = pf.shifts.map((x) => ({ key: x.key, name: String(x.name).trim(), start: String(x.start).trim().padStart(5, '0') }));
+      S.settings.faiShift = !!pf.faiShift;
+      S.settings.scanBase = base;
+      logAudit('集成', '生产现场', '更新班次（' + S.settings.shifts.map((x) => x.name + ' ' + x.start).join('、') + '）、开班首件' + (S.settings.faiShift ? '开启' : '关闭') + '、扫码地址 ' + (base || '跟随当前地址'));
+      toast('生产现场设置已保存', 'success');
+    };
+    return { f, dirty, save, simulate, simulateBad, usage, exportState, reset, statusText, API_DOCS, BUBBLE_NEEDS, pf, prodDirty, scanNow, saveProd };
   },
   template: `
 <div class="space-y-5">
@@ -219,6 +237,27 @@ COMPONENTS['page-settings'] = {
       <ol class="mt-3 space-y-3">
         <li v-for="(x,i) in BUBBLE_NEEDS" :key="i" class="flex gap-3"><span class="w-5 h-5 rounded-full bg-brand-50 text-brand-700 text-[11px] font-semibold flex items-center justify-center shrink-0 mt-0.5">{{ i + 1 }}</span><div><div class="font-medium text-[13px]">{{ x[0] }}</div><div class="text-[11.5px] text-ink-4 leading-relaxed mt-0.5">{{ x[1] }}</div></div></li>
       </ol>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-5 gap-5" data-panel="production">
+    <div class="card p-5 xl:col-span-3 space-y-4">
+      <div><h2 class="section-title">生产现场</h2><p class="text-xs text-ink-3 mt-1">班次决定“开班首件”和现场看板的“本班”；扫码地址写进工单流转卡的二维码。</p></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div v-for="(x,i) in pf.shifts" :key="x.key" class="rounded-xl bg-[#f7f7f9] p-3 grid grid-cols-2 gap-2">
+          <div><label class="label">班次 {{ i + 1 }}</label><input v-model="x.name" class="input" :disabled="!can('sys.admin')"></div>
+          <div><label class="label">开始时间</label><input v-model="x.start" class="input font-mono" placeholder="08:00" :disabled="!can('sys.admin')"></div>
+        </div>
+      </div>
+      <label class="flex items-start gap-2.5 text-[13px] cursor-pointer"><input type="checkbox" v-model="pf.faiShift" class="w-4 h-4 mt-0.5 accent-brand-600" :disabled="!can('sys.admin')"><span><span class="font-medium">开班首件</span><span class="block text-[12px] text-ink-3 mt-0.5">上一班首件已经合格、这一班还在生产的机台，开班后要再做一次首件。关掉后只按登记的开工、换型、换刀、修机后等事件要求首件。</span></span></label>
+      <div><label class="label">扫码地址（平板、手机访问 QMS 用的地址）</label><input v-model="pf.scanBase" class="input font-mono" placeholder="例如 http://192.168.1.20:5180/ ；留空则用当前打开 QMS 的地址" :disabled="!can('sys.admin')">
+        <p class="text-[11.5px] text-ink-4 mt-1.5 leading-relaxed">现在二维码里的地址：<span class="font-mono break-all">{{ scanNow }}</span>。localhost 只有本机能打开：让平板扫码时，用 <span class="font-mono">node server.mjs --host 0.0.0.0</span> 启动服务，把终端显示的局域网地址填在这里。</p></div>
+      <g-btn perm="sys.admin" cls="btn-primary" icon="check" :when="prodDirty" why="没有需要保存的修改" @click="saveProd">保存生产现场设置</g-btn>
+    </div>
+    <div class="card overflow-hidden xl:col-span-2">
+      <div class="px-5 pt-4 pb-2"><h2 class="section-title">机台</h2><p class="text-xs text-ink-3 mt-1">演示数据。正式系统从设备台账同步。</p></div>
+      <table class="tbl"><thead><tr><th>编号</th><th>名称</th><th>产线</th></tr></thead>
+        <tbody><tr v-for="m in S.machines || []" :key="m.code"><td class="font-mono text-[12.5px]">{{ m.code }}</td><td>{{ m.name }}</td><td class="text-ink-3">{{ m.line }}</td></tr></tbody></table>
     </div>
   </div>
 

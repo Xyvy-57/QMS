@@ -12,7 +12,8 @@ const argv = process.argv.slice(2);
 const arg = (n, d) => { const i = argv.indexOf('--' + n); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : d; };
 
 const ROUTES = [
-  '/workbench', '/dashboard', '/orders', '/orders?wo=WO-2611-011', '/bubble', '/standards', '/standards/s1', '/plans', '/plans?tab=tpl', '/plans/pl1', '/plans/pl4',
+  '/workbench', '/workbench?f=active', '/workbench?f=released', '/orders/o1', '/orders/o2?stage=release', '/orders/oh64', '/orders/oh64?stage=release', '/orders/oh64/card',
+  '/floor', '/trace', '/trace?q=DN-2611-007', '/scan/WO-2611-021', '/dashboard', '/orders', '/orders?wo=WO-2611-011', '/bubble', '/standards', '/standards/s1', '/plans', '/plans?tab=tpl', '/plans/pl1', '/plans/pl4',
   '/tasks', '/tasks/IQC', '/tasks/FIRST', '/tasks/IPQC', '/tasks/FQC', '/tasks/OQC',
   '/inspect/t1', '/inspect/t2', '/inspect/t3', '/inspect/t4', '/inspect/t5', '/inspect/t6',
   '/reports', '/reports/rt3-1', '/reports/rt4-1', '/reports/rt6-1', '/report-templates',

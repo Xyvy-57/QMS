@@ -113,7 +113,7 @@ if (window.tailwind) {
     { name: 'Vue', ok: function () { return !!window.Vue; }, urls: ['vendor/vue.global.prod.js', NPM + '/vue/3.4.38/files/dist/vue.global.prod.js', UNPKG + '/vue@3.4.38/dist/vue.global.prod.js', JSD + '/vue@3.4.38/dist/vue.global.prod.js'] },
     { name: 'Chart.js', optional: true, ok: function () { return !!window.Chart; }, urls: ['vendor/chart.umd.min.js', NPM + '/chart.js/4.4.1/files/dist/chart.umd.js', UNPKG + '/chart.js@4.4.1/dist/chart.umd.js', JSD + '/chart.js@4.4.1/dist/chart.umd.min.js'] }
   ];
-  var SRC = ['10_core', '15_actions', '20_ui', '30_pages_a', '32_bubble', '40_inspect', '45_reports', '48_guide', '50_ncr', '60_masterdata', '70_system', '80_rd', '90_app'];
+  var SRC = ['10_core', '15_actions', '20_ui', '30_pages_a', '32_bubble', '40_inspect', '44_qr', '45_reports', '46_production', '47_mainline', '48_guide', '49_floor', '50_ncr', '60_masterdata', '70_system', '80_rd', '85_prod_demo', '90_app'];
 
   function loadOne(url, done) {
     var s = document.createElement('script');

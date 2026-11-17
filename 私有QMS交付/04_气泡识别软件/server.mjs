@@ -10,6 +10,7 @@
  *   --qms <目录>       QMS_DIR       QMS 原型目录（默认 ../03_前端原型）
  *   --data <目录>      BUBBLE_DATA   数据目录（默认 ./data）
  *   --host 127.0.0.1   BUBBLE_HOST   监听地址；内网部署改为 0.0.0.0，并在“设置与对接”里加上 QMS 的内网地址
+ *                                    （平板扫工单流转卡上的二维码也要用 0.0.0.0：启动后终端会列出局域网地址）
  *
  * 接口（PRD §7）：
  *   GET  /api/v1/open/balloon-sync/{syncBatchId}   冻结结果（权威数据，带内容摘要）
@@ -21,6 +22,8 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync, statSyn
 import { join, resolve, dirname, extname, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash, randomBytes } from 'node:crypto';
+import { spawn } from 'node:child_process';
+import { networkInterfaces } from 'node:os';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
@@ -322,20 +325,53 @@ const qms = http.createServer((req, res) => {
   return serveFile(res, file);
 });
 
+/* 本机回环地址：浏览器访问 localhost 时可能先走 IPv6（::1），两个都监听，避免“拒绝连接” */
+function alsoListenV6(server, port) {
+  if (HOST !== '127.0.0.1') return;
+  const v6 = http.createServer();
+  server.listeners('request').forEach((fn) => v6.on('request', fn));
+  v6.on('error', () => { /* 本机没有 IPv6 时忽略 */ });
+  v6.listen(port, '::1');
+}
+/** 启动后自动用正确的地址打开 QMS（不要直接双击 HTML：file:// 页面不在白名单里，气泡软件无法内嵌） */
+function openBrowser(url) {
+  if (argv.indexOf('--no-open') >= 0 || process.env.BUBBLE_NO_OPEN === '1') return;
+  const cmd = process.platform === 'darwin' ? ['open', [url]] : process.platform === 'win32' ? ['cmd', ['/c', 'start', '', url]] : ['xdg-open', [url]];
+  try { const ch = spawn(cmd[0], cmd[1], { stdio: 'ignore', detached: true }); ch.on('error', () => {}); ch.unref(); } catch (e) { /* 没有图形界面时忽略 */ }
+}
+
 bubble.listen(PORT, HOST, () => {
-  const show = HOST === '0.0.0.0' ? 'localhost' : HOST === '127.0.0.1' ? 'localhost' : HOST;
-  console.log('Worlder 气泡识别服务已启动');
+  alsoListenV6(bubble, PORT);
+  const show = HOST === '0.0.0.0' || HOST === '127.0.0.1' ? 'localhost' : HOST;
+  console.log('');
+  console.log('Worlder 气泡识别服务已启动（这个窗口不要关，关了服务就停了）');
   console.log('  气泡识别：http://' + show + ':' + PORT + (existsSync(join(root, 'dist', 'bubble.html')) ? '' : '   （未构建，使用 index.html 开发入口）'));
   if (QMS_PORT && existsSync(QMS_DIR)) {
     qms.listen(QMS_PORT, HOST, () => {
-      console.log('  QMS 原型：http://' + show + ':' + QMS_PORT + '   （' + (existsSync(join(QMS_DIR, 'qms_pro_qms.html')) ? 'qms_pro_qms.html' : 'index.html') + '）');
+      alsoListenV6(qms, QMS_PORT);
+      const qmsUrl = 'http://' + show + ':' + QMS_PORT;
+      console.log('  QMS 原型：' + qmsUrl + '   （' + (existsSync(join(QMS_DIR, 'qms_pro_qms.html')) ? 'qms_pro_qms.html' : 'index.html') + '）');
       console.log('  数据目录：' + DATA);
+      console.log('');
+      if (HOST === '0.0.0.0') {
+        /* 局域网地址：平板、手机扫工单流转卡上的二维码时用（在 QMS“集成设置 › 生产现场”里填成扫码地址） */
+        const ips = [];
+        Object.values(networkInterfaces()).forEach((list) => (list || []).forEach((a) => { if (a && (a.family === 'IPv4' || a.family === 4) && !a.internal) ips.push(a.address); }));
+        if (ips.length) {
+          console.log('  局域网访问：' + ips.map((ip) => 'http://' + ip + ':' + QMS_PORT + '/').join('  '));
+          console.log('  平板扫码：把上面的地址填到 QMS“集成设置 › 生产现场 › 扫码地址”，再打印工单流转卡');
+        }
+      }
+      console.log('请用 ' + qmsUrl + ' 打开 QMS，在“气泡识别”页面里使用气泡软件。');
+      console.log('不要直接双击 qms_pro_qms.html：那样打开的页面不在白名单里，气泡软件嵌不进去。');
       console.log('按 Ctrl+C 停止');
+      openBrowser(qmsUrl + '/#/bubble');
     });
-    qms.on('error', (e) => console.error('QMS 端口 ' + QMS_PORT + ' 启动失败：' + e.message));
+    qms.on('error', (e) => console.error('QMS 端口 ' + QMS_PORT + ' 启动失败：' + e.message + (e.code === 'EADDRINUSE' ? '（可能已经有一个服务在运行，先关掉那个终端窗口）' : '')));
   } else {
     console.log('  数据目录：' + DATA);
     if (QMS_PORT) console.log('  （没有找到 QMS 原型目录 ' + QMS_DIR + '，只启动气泡识别服务）');
+    openBrowser('http://' + show + ':' + PORT);
   }
 });
-bubble.on('error', (e) => { console.error('端口 ' + PORT + ' 启动失败：' + e.message); process.exit(1); });
+bubble.on('error', (e) => { console.error('端口 ' + PORT + ' 启动失败：' + e.message + (e.code === 'EADDRINUSE' ? '（可能已经有一个服务在运行：先关掉之前的终端窗口，或用 --port 换一个端口）' : '')); process.exit(1); });

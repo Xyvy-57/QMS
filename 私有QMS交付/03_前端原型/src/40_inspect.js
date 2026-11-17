@@ -62,6 +62,8 @@ COMPONENTS['new-task-drawer'] = {
       try {
         const ctx = {};
         (scene.value.ctx || []).forEach((k) => { const v = String(f.ctx[k] || '').trim(); if (v) ctx[k] = v; });
+        /* 从工单主线、现场看板带过来的首件原因不在场景字段里，也要保留 */
+        ['trigger', 'setupId'].forEach((k) => { if (f.ctx[k]) ctx[k] = String(f.ctx[k]); });
         const t = createTask({ scene: f.scene, planId: f.planId, lot: f.lot, ctx, assignee: f.assignee, due: f.due ? new Date(f.due).toISOString() : '' });
         close();
         toast('已创建 ' + t.code + '，检验依据已冻结', 'success');
@@ -511,6 +513,8 @@ COMPONENTS['page-inspect'] = {
       </template>
     </div>
   </div>
+
+  <order-trail v-if="orderOfTask(t)" :order="orderOfTask(t)" :stage="t.scene"/>
 
   <div v-show="showInfo" class="card p-5 space-y-4">
     <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-6 gap-y-3">

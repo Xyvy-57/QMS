@@ -72,6 +72,11 @@ const ICONS = {
   stamp: '<path d="M9 3h6l-1 7h4a2 2 0 0 1 2 2v3H4v-3a2 2 0 0 1 2-2h4z"/><path d="M5 19h14"/>',
   dot: '<circle cx="12" cy="12" r="3" fill="currentColor"/>',
   undo: '<path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',
+  tag: '<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.4" fill="currentColor"/>',
+  qr: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>',
+  scan: '<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M7 12h10"/>',
+  monitor: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="m7 11 2.5-2.5L12 11l4-4"/>',
+  trace: '<circle cx="5" cy="12" r="2.2"/><circle cx="19" cy="5" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M7.2 12H11m0 0 6-6m-6 6 6 6"/>',
 };
 
 const COMPONENTS = {};
@@ -455,7 +460,7 @@ const EXT = {
  *   roles —— 只有这些身份默认显示该组，其它身份的该组也收进“更多功能”
  * 五类检验不再各占一个菜单，在“检验任务”页里用页签切换。 */
 const NAV = [
-  { group: '做检验', items: [{ to: '/workbench', label: '我的工作', icon: 'home', badge: 'todo' }, { to: '/orders', label: '生产工单', icon: 'factory' }, { to: '/tasks', label: '检验任务', icon: 'list' }, { to: '/reports', label: '检验报告', icon: 'file', badge: 'review' }, { to: '/ncr', label: '不合格处置', icon: 'alert', badge: 'ncr' }] },
+  { group: '生产主线', items: [{ to: '/workbench', label: '生产主线', icon: 'factory', badge: 'mainline' }, { to: '/floor', label: '现场看板', icon: 'monitor', badge: 'floor' }, { to: '/tasks', label: '检验任务', icon: 'list' }, { to: '/reports', label: '检验报告', icon: 'file', badge: 'review' }, { to: '/ncr', label: '不合格处置', icon: 'alert', badge: 'ncr' }, { to: '/trace', label: '批次追溯', icon: 'trace' }] },
   { group: '定标准', roles: ['qe', 'ql'], items: [{ to: '/bubble', label: '气泡识别', icon: 'target', badge: 'inbox' }, { to: '/standards', label: '检验标准', icon: 'ruler', badge: 'stdReview' }, { to: '/plans', label: '检验方案', icon: 'clipboard', badge: 'planReview' }] },
   { group: '看数据', roles: ['qe', 'ql', 'pm'], items: [{ to: '/dashboard', label: '数据看板', icon: 'chart' }] },
   { group: '基础资料', more: true, items: [{ to: '/parts', label: '零部件', icon: 'box' }, { to: '/routes', label: '工序路线与模板', icon: 'route' }, { to: '/scenes', label: '检验场景与流程', icon: 'layers' }, { to: '/gauges', label: '检具与检验方法', icon: 'gauge' }, { to: '/report-templates', label: '报告模板', icon: 'layout' }] },

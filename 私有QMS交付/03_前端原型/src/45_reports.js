@@ -199,6 +199,7 @@ COMPONENTS['page-report'] = {
     </div>
   </div>
 
+  <order-trail v-if="orderOfReport(rep)" :order="orderOfReport(rep)" :stage="rep.content.task.scene"/>
   <next-step v-bind="nextOf('report', rep)"/>
 
   <div class="flex flex-col 2xl:flex-row gap-5">

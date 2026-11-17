@@ -12,7 +12,7 @@ function switchUser(id) {
 function activeNavPath() {
   const r = UI.route;
   if (r.name === 'inspect' || r.name === 'tasks') return '/tasks';
-  const map = { standard: '/standards', plan: '/plans', report: '/reports', ncr: '/ncr' };
+  const map = { standard: '/standards', plan: '/plans', report: '/reports', ncr: '/ncr', order: '/workbench', orders: '/workbench', traveler: '/workbench', scan: '/floor' };
   return map[r.name] || r.path;
 }
 
@@ -26,6 +26,9 @@ function crumbsOf() {
   if (r.name === 'standard') { const s = stdOf(id); if (s) out.push({ label: s.code + ' Rev ' + s.rev }); }
   if (r.name === 'plan') { const p = planOf(id); if (p) out.push({ label: p.code + ' Rev ' + p.rev }); }
   if (r.name === 'inspect') { const t = taskOf(id); if (t) out.push({ label: t.code }); }
+  if (r.name === 'order' || r.name === 'traveler') { const o = S.orders.find((x) => x.id === id || x.wo === id); if (o) out.push(r.name === 'traveler' ? { label: o.wo, to: '/orders/' + o.id } : { label: o.wo }); if (o && r.name === 'traveler') out.push({ label: '流转卡' }); }
+  if (r.name === 'scan') out.push({ label: '扫码 ' + (r.params.code || '') });
+  if (r.name === 'orders') out.push({ label: '工序视图' });
   if (r.name === 'report') { const x = S.reports.find((y) => y.id === id); if (x) out.push({ label: x.code }); }
   if (r.name === 'ncr') { const n = S.ncrs.find((y) => y.id === id); if (n) out.push({ label: n.code }); }
   return out.length ? out : [{ label: 'Worlder QMS' }];
@@ -38,10 +41,14 @@ function paletteItems(q) {
   NAV.forEach((g) => g.items.forEach((i) => add('前往', i.label, g.group || '', i.icon, () => go(i.to))));
   if (can('task.create')) S.scenes.filter((s) => s.enabled).forEach((sc) => add('操作', '新建' + sc.name + '任务', sc.en, SCENE_META[sc.code].icon, () => { UI.newTask = { scene: sc.code }; }));
   if (can('ncr.create')) add('操作', '登记不合格', 'NCR', 'alert', () => { UI.newNcr = {}; });
+  add('操作', '扫码', '流转卡二维码、扫码枪', 'scan', () => { UI.scan = true; });
+  if (can('order.work')) add('操作', '报工', '工序合格数、不良数', 'edit', () => { UI.work = {}; });
+  if (can('order.setup')) add('操作', '登记换型 / 换刀', '首件触发', 'plus', () => { UI.setup = {}; });
   add('操作', UI.sidebar ? '收起侧栏' : '展开侧栏', '', 'sidebar', () => { UI.sidebar = !UI.sidebar; });
   S.users.forEach((u) => { if (u.id !== S.me) add('切换身份', u.name + ' · ' + ROLES[u.role].name, u.dept, 'user', () => switchUser(u.id)); });
   const k = String(q || '').trim().toLowerCase();
   if (!k) return out.filter((x) => x.group !== '切换身份').slice(0, 40);
+  S.orders.forEach((o) => add('生产工单', o.wo, partOf(o.partId).name + ' · ' + ORDER_ML_STATE[mainlineOf(o).state][0] + ((o.inLots || []).length ? ' · 来料 ' + o.inLots.join(' ') : '') + (o.outLot ? ' · 成品 ' + o.outLot : ''), 'factory', () => go('/orders/' + o.id)));
   S.tasks.forEach((t) => add('检验任务', t.code, sceneOf(t.scene).name + ' · ' + partOf(t.partId).name + ' · ' + STATUS.task[t.status][0], SCENE_META[t.scene].icon, () => go('/inspect/' + t.id)));
   S.standards.forEach((s) => add('检验标准', s.code + ' Rev ' + s.rev, partOf(s.partId).name + ' · ' + STATUS.std[s.status][0], 'ruler', () => go('/standards/' + s.id)));
   S.plans.forEach((p) => add('检验方案', p.code + ' Rev ' + p.rev, p.name, 'clipboard', () => go('/plans/' + p.id)));
@@ -81,6 +88,8 @@ const App = {
     const todos = computed(() => buildTodos());
     const badges = computed(() => ({
       todo: todos.value.length,
+      mainline: S.orders.map(mainlineOf).filter((m) => m.mine.length && m.state !== 'released').length,
+      floor: floorItems().filter((i) => i.urgent && floorMine(i)).length,
       inbox: S.syncInbox.filter((x) => x.status === 'pending').length,
       stdReview: S.standards.filter((s) => s.status === 'review').length,
       planReview: S.plans.filter((p) => p.status === 'review').length,
@@ -206,7 +215,7 @@ const App = {
     </div>
   </aside>
 
-  <div class="transition-[padding] duration-500 ease-apple" :class="UI.sidebar ? 'lg:pl-[248px]' : 'lg:pl-[72px]'" :style="{ '--flow-h': UI.route.name === 'workbench' ? '0px' : '46px' }">
+  <div class="transition-[padding] duration-500 ease-apple" :class="UI.sidebar ? 'lg:pl-[248px]' : 'lg:pl-[72px]'" :style="{ '--flow-h': '46px' }">
     <!-- 顶栏 -->
     <header class="sticky top-0 z-30 h-14 glass border-b border-black/[0.06] flex items-center gap-2 px-3 sm:px-6">
       <button class="btn-icon lg:hidden" @click="UI.mobileNav = true" aria-label="打开导航"><ic name="menu" :size="18"/></button>
@@ -221,6 +230,7 @@ const App = {
       <button v-if="can('task.create')" class="btn-primary hidden sm:inline-flex" @click="UI.newTask = {}"><ic name="plus" :size="15"/>新建检验</button>
       <button class="hidden md:flex items-center gap-2 h-9 w-48 px-3 rounded-xl bg-black/[0.045] hover:bg-black/[0.07] text-ink-4 text-[13px] transition-colors" @click="UI.palette = true"><ic name="search" :size="15"/>搜索或跳转…<span class="ml-auto flex items-center gap-0.5"><span class="kbd">{{ isMac ? '⌘' : 'Ctrl' }}</span><span class="kbd">K</span></span></button>
       <button class="btn-icon md:hidden" @click="UI.palette = true" aria-label="搜索"><ic name="search" :size="18"/></button>
+      <button class="btn-icon" @click="UI.scan = true" aria-label="扫码" title="扫码：流转卡二维码、扫码枪"><ic name="scan" :size="18"/></button>
       <button class="hidden sm:inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11.5px] font-medium ring-1 ring-inset transition-colors" :class="UI.bubble.status === 'handshake' ? 'bg-emerald-50 text-emerald-700 ring-emerald-600/15' : 'bg-white text-ink-3 ring-black/10 hover:bg-black/[0.03]'" @click="go('/bubble')" title="气泡识别服务">
         <span class="w-1.5 h-1.5 rounded-full" :class="UI.bubble.status === 'handshake' ? 'bg-emerald-500' : 'bg-ink-5'"></span>气泡服务<span v-if="badges.inbox" class="min-w-[16px] h-4 px-1 rounded-full bg-brand-600 text-white text-[10px] font-semibold flex items-center justify-center">{{ badges.inbox }}</span>
       </button>
@@ -259,7 +269,7 @@ const App = {
       </div>
     </header>
     <div v-if="UI.notif || UI.roleMenu" class="fixed inset-0 z-20" @click="UI.notif = false; UI.roleMenu = false"></div>
-    <div v-if="UI.route.name !== 'workbench' && has('role-flow')" class="sticky top-14 z-[25] glass border-b border-black/[0.06]"><role-flow mode="bar"/></div>
+    <div v-if="has('role-flow')" class="sticky top-14 z-[25] glass border-b border-black/[0.06]"><role-flow mode="bar"/></div>
 
     <main class="px-4 sm:px-6 lg:px-8 py-6 mx-auto max-w-[1680px]">
       <transition name="page" mode="out-in">
@@ -273,6 +283,11 @@ const App = {
   <component v-if="has('new-inspect-wizard')" :is="'new-inspect-wizard'"/>
   <component v-if="has('new-task-drawer')" :is="'new-task-drawer'"/>
   <component v-if="has('new-ncr-modal')" :is="'new-ncr-modal'"/>
+  <component v-if="has('new-order-modal')" :is="'new-order-modal'"/>
+  <component v-if="has('release-modal')" :is="'release-modal'"/>
+  <component v-if="has('work-modal')" :is="'work-modal'"/>
+  <component v-if="has('setup-modal')" :is="'setup-modal'"/>
+  <component v-if="has('scan-modal')" :is="'scan-modal'"/>
 
   <!-- 命令面板 -->
   <teleport to="body"><transition name="modal"><div v-if="UI.palette" class="fixed inset-0 z-[80] flex items-start justify-center pt-[12vh] px-4">
@@ -324,7 +339,7 @@ Object.assign(app.config.globalProperties, {
   S, UI, go, can, denyTip, toast, who: () => me.value,
   ROLES, PERMS, STATUS, SCENE_META, STEP_LIB, STEP_ORDER, PHOTO_POLICY, REVIEW_POLICY, CTX_FIELDS, HOLD_ACTIONS, DISPOSITIONS, NCR_FLOW, EXT, AQL_OPTIONS,
   fmtTime, fmtDate, fmtRel, specText, hashOf, userName, partOf, stdOf, planOf, taskOf, sceneOf, gaugeOf, tplOf, gaugeLabel, effectiveStd, holdsActive,
-  ctxText, currentRound, taskProgress, plansFor, ncrsOfTask, sigValid, nextOf, svgOf, stdSvg,
+  ctxText, currentRound, taskProgress, plansFor, ncrsOfTask, sigValid, nextOf, svgOf, stdSvg, orderOfTask, orderOfNcr, orderOfReport,
 });
 app.config.errorHandler = (err, vm, info) => {
   console.error('[QMS] 界面错误', err, info);
@@ -333,4 +348,4 @@ app.config.errorHandler = (err, vm, info) => {
 app.mount('#app');
 
 /* 调试与自动化测试入口（原型专用） */
-window.__QMS = { S, UI, go, can, me, evalRound, judgeValue, cmpDec, aqlSuggest, createTask, createRetestRound, submitRound, photoViolations, createNcr, approveReport, returnReport, resubmitReport, sigValid, onBubbleMessage, ingestSync, createDraftFromSync, resetDemo, hashOf, fetchSyncBatch, pollBubble, createPartFromSync, balloonsToItems, canonicalSyncQms, sha256HexQms, switchUser };
+window.__QMS = { mainlineOf, orderQty, faiReqs, reportWork, addSetup, releaseOrder, orderConcessions, traceOf, traceHoldScopes, traceHold, scanTarget, scanUrl, qrEncode, shiftAt, floorItems, gateBlocker, startPoint, orderPoints, S, UI, go, can, me, evalRound, judgeValue, cmpDec, aqlSuggest, createTask, createRetestRound, submitRound, photoViolations, createNcr, approveReport, returnReport, resubmitReport, sigValid, onBubbleMessage, ingestSync, createDraftFromSync, resetDemo, hashOf, fetchSyncBatch, pollBubble, createPartFromSync, balloonsToItems, canonicalSyncQms, sha256HexQms, switchUser };

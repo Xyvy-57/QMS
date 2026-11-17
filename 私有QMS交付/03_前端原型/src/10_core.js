@@ -125,6 +125,10 @@ const PERMS = {
   'std.approve': { label: '批准标准生效 / 停用', roles: ['ql'] },
   'plan.edit': { label: '编制检验方案与方案模板', roles: ['qe'] },
   'plan.approve': { label: '批准方案生效 / 停用', roles: ['ql'] },
+  'order.create': { label: '登记生产工单', roles: ['pm', 'qe'] },
+  'order.work': { label: '生产报工（合格数、不良数）', roles: ['pm'] },
+  'order.setup': { label: '登记首件触发（开班 / 换型 / 换刀 / 修机后）', roles: ['pm', 'insp', 'qe'] },
+  'order.release': { label: '工单质量放行（含让步放行）', roles: ['ql'] },
   'task.create': { label: '新建检验任务', roles: ['insp', 'qe'] },
   'task.measure': { label: '录入实测 / 拍照 / 设备导入', roles: ['insp', 'qe'] },
   'task.submit': { label: '签名提交检验轮次', roles: ['insp', 'qe'] },
@@ -162,7 +166,7 @@ const PHOTO_POLICY = { none: '不要求', onDefect: '不合格项必须拍照', 
 const REVIEW_POLICY = { never: '不复核', onFail: '仅不合格时复核', always: '总是复核' };
 const CTX_FIELDS = {
   supplier: { label: '供应商', type: 'supplier' }, receipt: { label: '收货单号', ph: '可空，如 IR2206108AA8LF' }, batch: { label: '批次号', ph: '如 20261116-A' },
-  wo: { label: '工单号', ph: '可空，如 WO-2611-018' }, op: { label: '工序', type: 'op' }, machine: { label: '机台', ph: '如 CNC-03' },
+  wo: { label: '工单号', ph: '可空，如 WO-2611-018' }, op: { label: '工序', type: 'op' }, machine: { label: '机台', ph: '如 CNC-03' }, trigger: { label: '首件原因', ph: '开工 / 开班 / 换型 / 换刀 / 修机后' },
   freq: { label: '巡检频次', ph: '如 每 2 小时' }, customer: { label: '客户', type: 'customer' }, shipment: { label: '发货单号', ph: '可空，如 DN-2611-007' },
 };
 const SCENE_META = {
@@ -602,7 +606,8 @@ const UI = reactive({
   sidebar: true, mobileNav: false, extOpen: false, moreOpen: false,
   newTaskMode: 'wizard',
   palette: false, toasts: [], confirm: null, lightbox: null, roleMenu: false, notif: false,
-  newTask: null, newNcr: null,
+  newTask: null, newNcr: null, newOrder: false, release: null,
+  work: null, setup: null, scan: false, // 报工 / 登记首件触发 / 扫码 弹窗
   flowAct: null, // 顶部流程条在检验页内点了哪一步：{ key, at }，由检验执行页接住并定位
   bubble: { route: 'drawings', status: 'idle', lastMsg: null, reloadKey: 0 },
 });
@@ -643,7 +648,8 @@ function holdsActive() { const out = []; S.ncrs.forEach((n) => n.holds.forEach((
 
 /* ---------------- 路由（hash） ---------------- */
 const ROUTES = [
-  ['/workbench', 'workbench'], ['/dashboard', 'dashboard'], ['/orders', 'orders'], ['/bubble', 'bubble'], ['/standards', 'standards'], ['/standards/:id', 'standard'], ['/plans', 'plans'], ['/plans/:id', 'plan'],
+  ['/workbench', 'workbench'], ['/dashboard', 'dashboard'], ['/orders', 'orders'], ['/orders/:id', 'order'], ['/orders/:id/card', 'traveler'],
+  ['/floor', 'floor'], ['/trace', 'trace'], ['/scan/:code', 'scan'], ['/bubble', 'bubble'], ['/standards', 'standards'], ['/standards/:id', 'standard'], ['/plans', 'plans'], ['/plans/:id', 'plan'],
   ['/tasks', 'tasks'], ['/tasks/:scene', 'tasks'], ['/inspect/:id', 'inspect'], ['/reports', 'reports'], ['/reports/:id', 'report'], ['/report-templates', 'rtpl'],
   ['/ncr', 'ncrs'], ['/ncr/:id', 'ncr'], ['/parts', 'parts'], ['/routes', 'routes'], ['/scenes', 'scenes'], ['/gauges', 'gauges'],
   ['/users', 'users'], ['/audit', 'audit'], ['/settings', 'settings'], ['/rd', 'rd'], ['/ext/:key', 'ext'],

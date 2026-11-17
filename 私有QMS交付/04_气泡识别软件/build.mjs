@@ -73,6 +73,11 @@ for (const f of jsFiles.concat(['00_head.html'])) {
     } catch (e) { problems.push(f + ':' + startLine + ' 模板无法编译：' + e.message); }
   }
 }
+/* 服务端与测试脚本：node --check 只检查语法，不运行 */
+for (const f of ['server.mjs'].concat(existsSync(join(root, 'tests')) ? readdirSync(join(root, 'tests'), { recursive: true }).filter((x) => /\.mjs$/.test(x)).map((x) => join('tests', x)) : [])) {
+  try { execFileSync(process.execPath, ['--check', join(root, f)], { stdio: ['ignore', 'pipe', 'pipe'] }); }
+  catch (e) { problems.push(f + ' 语法错误：' + String(e.stderr || e.message).split('\n').slice(0, 5).join(' ')); }
+}
 /* 开发入口 index.html 要列出全部源码文件，顺序与构建一致 */
 const devHtml = readFileSync(join(root, 'index.html'), 'utf8');
 const listed = (devHtml.match(/'([0-9]{2}_[a-z0-9_]+\.js)'/g) || []).map((s) => s.slice(1, -1));

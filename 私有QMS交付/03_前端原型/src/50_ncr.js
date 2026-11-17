@@ -305,6 +305,7 @@ COMPONENTS['page-ncr'] = {
     </div>
   </div>
   <div class="card px-5 py-4"><stepper :steps="NCR_FLOW.map(x => x[1])" :current="stepIdx"/></div>
+  <order-trail v-if="orderOfNcr(n)" :order="orderOfNcr(n)" :stage="n.taskId && taskOf(n.taskId) ? taskOf(n.taskId).scene : ''"/>
   <next-step v-bind="nextOf('ncr', n)"/>
 
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
