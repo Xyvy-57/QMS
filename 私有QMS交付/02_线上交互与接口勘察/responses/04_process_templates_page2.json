@@ -1,0 +1,319 @@
+{
+  "code": 0,
+  "data": {
+    "items": [
+      {
+        "id": "91ae5512-7ffc-48ec-9e81-bbeca64c74c3",
+        "name": "工序模版 2026-10-16 14:47:23",
+        "description": "",
+        "graph": {
+          "version": 1,
+          "nodes": [
+            {
+              "id": "8169b032-8763-40e3-8600-9d495161e07b",
+              "code": "1",
+              "name": "清洗",
+              "description": "",
+              "position": {
+                "x": 197,
+                "y": 60
+              }
+            },
+            {
+              "id": "b66c6c8f-b499-4ecd-b8de-b6d605837b61",
+              "code": "2.1",
+              "name": "工序2.1",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 236
+              }
+            },
+            {
+              "id": "6054a4f4-ecc5-409f-82ef-7e91f5308e29",
+              "code": "2.2",
+              "name": "工序2.2",
+              "description": "",
+              "position": {
+                "x": 314,
+                "y": 236
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "030109b6-eb92-4872-baca-2d1b23cb6a0c",
+              "source": "8169b032-8763-40e3-8600-9d495161e07b",
+              "target": "b66c6c8f-b499-4ecd-b8de-b6d605837b61"
+            },
+            {
+              "id": "86edadd7-c637-4cad-823c-18739661725d",
+              "source": "8169b032-8763-40e3-8600-9d495161e07b",
+              "target": "6054a4f4-ecc5-409f-82ef-7e91f5308e29"
+            }
+          ],
+          "viewport": {
+            "x": 444.8125,
+            "y": 147.1015625,
+            "zoom": 1
+          }
+        },
+        "row_version": 5,
+        "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+        "creator_name": "杨园园",
+        "created_at": "2026-10-16T06:47:28.607872Z",
+        "updated_at": "2026-10-16T06:47:43.041616Z"
+      },
+      {
+        "id": "eb86b576-2514-44bd-be21-432a7018bcdb",
+        "name": "工序模版 2026-10-16 10:24:03",
+        "description": "",
+        "graph": {
+          "version": 1,
+          "nodes": [
+            {
+              "id": "f7797f1b-4d7c-47e6-9366-2c97b5fd0ccc",
+              "code": "1",
+              "name": "清洗",
+              "description": "",
+              "position": {
+                "x": 197,
+                "y": 60
+              }
+            },
+            {
+              "id": "82ddc540-4cf2-4829-bbfc-cee4492f021a",
+              "code": "2.1",
+              "name": "工序2.1",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 236
+              }
+            },
+            {
+              "id": "c673c9ae-0fab-4bfd-ab8c-17d3f58c4c43",
+              "code": "2.2",
+              "name": "工序2.2",
+              "description": "",
+              "position": {
+                "x": 314,
+                "y": 236
+              }
+            },
+            {
+              "id": "ea7eb8db-9cb7-4778-a920-66133507aa03",
+              "code": "3",
+              "name": "工序3",
+              "description": "",
+              "position": {
+                "x": 197,
+                "y": 412
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "ecec38ef-7bab-41a3-bdaa-665a3718069f",
+              "source": "f7797f1b-4d7c-47e6-9366-2c97b5fd0ccc",
+              "target": "82ddc540-4cf2-4829-bbfc-cee4492f021a"
+            },
+            {
+              "id": "2298f75d-3433-48ba-a5ac-1aa4c48d5805",
+              "source": "f7797f1b-4d7c-47e6-9366-2c97b5fd0ccc",
+              "target": "c673c9ae-0fab-4bfd-ab8c-17d3f58c4c43"
+            },
+            {
+              "id": "ebceb870-eb03-4925-ab48-75b60a26d083",
+              "source": "82ddc540-4cf2-4829-bbfc-cee4492f021a",
+              "target": "ea7eb8db-9cb7-4778-a920-66133507aa03"
+            }
+          ],
+          "viewport": {
+            "x": 297,
+            "y": 15.9765625,
+            "zoom": 1
+          }
+        },
+        "row_version": 9,
+        "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+        "creator_name": "杨园园",
+        "created_at": "2026-10-16T02:24:06.307843Z",
+        "updated_at": "2026-10-16T02:28:50.118932Z"
+      },
+      {
+        "id": "32fe2223-3f8c-4851-addb-ceb297405cab",
+        "name": "工序模版 2026-10-15 14:16:38",
+        "description": "",
+        "graph": {
+          "version": 1,
+          "nodes": [
+            {
+              "id": "aa6b9688-07fe-48c5-970c-ab34c1dac396",
+              "code": "1",
+              "name": "磨平面",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 60
+              }
+            },
+            {
+              "id": "dbe4c708-ce10-4472-b2c9-4bb6e9eb05b7",
+              "code": "2",
+              "name": "粗磨外径",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 236
+              }
+            },
+            {
+              "id": "e8232753-e6b9-45de-9963-a31db96feaf4",
+              "code": "3",
+              "name": "粗磨外滚道",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 412
+              }
+            },
+            {
+              "id": "dbedb532-f460-4028-99ae-b4090b7ac5b0",
+              "code": "4",
+              "name": "磨挡道",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 588
+              }
+            },
+            {
+              "id": "14d45f2e-274c-4df8-b1d0-4d1f4483437f",
+              "code": "5",
+              "name": "精磨外径",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 764
+              }
+            },
+            {
+              "id": "a3b15186-07eb-4f9e-9af0-5d764be9d8ac",
+              "code": "6",
+              "name": "精磨外滚道",
+              "description": "",
+              "position": {
+                "x": 526.4866112650046,
+                "y": 298.9058171745152
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "5c8edffc-e733-4761-ae6e-edbd45708af2",
+              "source": "aa6b9688-07fe-48c5-970c-ab34c1dac396",
+              "target": "dbe4c708-ce10-4472-b2c9-4bb6e9eb05b7"
+            },
+            {
+              "id": "ef883caa-cb3b-42ef-9799-6f9c67762540",
+              "source": "dbe4c708-ce10-4472-b2c9-4bb6e9eb05b7",
+              "target": "e8232753-e6b9-45de-9963-a31db96feaf4"
+            },
+            {
+              "id": "befedcc0-7cf5-4346-a5ba-7ecff2c3f213",
+              "source": "e8232753-e6b9-45de-9963-a31db96feaf4",
+              "target": "dbedb532-f460-4028-99ae-b4090b7ac5b0"
+            },
+            {
+              "id": "26db1efc-6cc5-4192-b539-f5858e4efdba",
+              "source": "dbedb532-f460-4028-99ae-b4090b7ac5b0",
+              "target": "14d45f2e-274c-4df8-b1d0-4d1f4483437f"
+            },
+            {
+              "id": "aafe1a66-5467-40c4-be22-949e3785d258",
+              "source": "14d45f2e-274c-4df8-b1d0-4d1f4483437f",
+              "target": "a3b15186-07eb-4f9e-9af0-5d764be9d8ac"
+            }
+          ],
+          "viewport": {
+            "x": 671.3435969397087,
+            "y": -5.008659875526121,
+            "zoom": 0.8511855726926193
+          }
+        },
+        "row_version": 36,
+        "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+        "creator_name": "杨园园",
+        "created_at": "2026-10-15T06:16:41.807790Z",
+        "updated_at": "2026-10-15T06:19:43.218404Z"
+      },
+      {
+        "id": "530d6a67-c279-49c9-9ed2-ca360d602eaf",
+        "name": "工序模版 2026-10-15 11:06:03",
+        "description": "",
+        "graph": {
+          "version": 1,
+          "nodes": [
+            {
+              "id": "37c4eb3e-9dc8-48aa-b414-1e0a8d4c3200",
+              "code": "1",
+              "name": "清洗",
+              "description": "",
+              "position": {
+                "x": 197,
+                "y": 60
+              }
+            },
+            {
+              "id": "086c4ba8-3aae-4e87-af2a-f4cad21a78a2",
+              "code": "2.1",
+              "name": "孔加工",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 236
+              }
+            },
+            {
+              "id": "ce6151d3-1dde-4655-b754-f6c9d35ea573",
+              "code": "2.2",
+              "name": "工序2.2",
+              "description": "",
+              "position": {
+                "x": 314,
+                "y": 236
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "74d2eecb-74a6-4057-82c7-995af4e567bc",
+              "source": "37c4eb3e-9dc8-48aa-b414-1e0a8d4c3200",
+              "target": "086c4ba8-3aae-4e87-af2a-f4cad21a78a2"
+            },
+            {
+              "id": "6e54e4c9-3f45-45ac-81ef-5dbecb8eb7f2",
+              "source": "37c4eb3e-9dc8-48aa-b414-1e0a8d4c3200",
+              "target": "ce6151d3-1dde-4655-b754-f6c9d35ea573"
+            }
+          ],
+          "viewport": {
+            "x": 340.1953125,
+            "y": 93.171875,
+            "zoom": 1
+          }
+        },
+        "row_version": 10,
+        "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+        "creator_name": "杨园园",
+        "created_at": "2026-10-15T03:06:06.618640Z",
+        "updated_at": "2026-10-15T03:06:35.541239Z"
+      }
+    ],
+    "total": 19,
+    "page": 2,
+    "page_size": 15
+  },
+  "message": "ok"
+}

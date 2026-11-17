@@ -1,0 +1,670 @@
+[
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/index-8_so-KA0.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/authState-BRDaRrGW.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/jsx-runtime-B0lO2Ssu.js"
+  },
+  {
+    "kind": "stylesheet",
+    "url": "https://223.106.198.62:3080/assets/index-BiqJVKRA.css"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/routeMemory-BTg4ygw_.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/searchableSelect-PU5wyYom.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/auth-Ck_ne10M.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/useResizeObserver-Bcl6yivN.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/Icon-C8Bic2eR.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/authProfileSync-r47gH8pC.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/button-D8b5tu5V.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/license/status"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/auth/me"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/ProcessTemplates-D19grrO2.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingPackages-Crugj6Q_.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/UI-D7kWqNtV.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingProcesses-CnWORVdL.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/processTemplates-6SO5tncy.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/PackageCover-C1qQLYwa.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/ProcessGraphThumbnail-Ci_DkJWO.js"
+  },
+  {
+    "kind": "stylesheet",
+    "url": "https://223.106.198.62:3080/assets/ProcessTemplates-D-0zZUBC.css"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/useConfirm-CACrkvpO.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/useToast-BaXWEh6Y.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingPackage-CDopxOBW.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingPackage-CCh-DcbR.js"
+  },
+  {
+    "kind": "image",
+    "url": "https://223.106.198.62:3080/assets/worlder-logo-C7vRSyMq.svg"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/process-templates?page=1&page_size=15"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/process-templates?page=1&page_size=15&keyword=2026-10-31"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/ProcessTemplateEditor-DN5NvRSm.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingProcess-D-PiCQQl.js"
+  },
+  {
+    "kind": "stylesheet",
+    "url": "https://223.106.198.62:3080/assets/drawingProcess-C-z5t1gw.css"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingSearchPicker-BJsuShFg.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingProcessSelectionDialog-Cj-iW7ru.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/search-field-D3HswdyX.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingDirectoryPickerContent-z1XSzcTC.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/useTextField-6-GGYjP3.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/CategoryName-BQW6UOky.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingSearchPreview-CcaKy5hd.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/process-templates/cec2d8d3-7d6f-4b03-a36e-997ce2a17c86"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/process-templates?page=2&page_size=15"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/process-templates?page=1&page_size=15&keyword=%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%A8%A1%E6%9D%BF-QMS-%E5%8F%AA%E8%AF%BB%E6%B5%8B%E8%AF%95"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/workspaces/mine/search?page=1&page_size=1"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/workspaces/mine/search?page=1&page_size=1&workspace_id=04070d72-4224-4e83-83e9-7aba9086c0f9"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/ToleranceManagement-kPtRlFWm.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/toleranceDisplay-ZCOWz9vq.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/decimal--QmXsxLp.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/decimalDisplay-Dzl4ZftQ.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/formValidation-ZTH6V3xa.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/FormFieldError-DYMpROZr.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/tolerances/standards/catalog?scope=all&page=1&page_size=10"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/tolerances/system-standards/830fa764-d0a5-474d-9543-a1bf5f5cd723"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/tolerances/standards/catalog?scope=custom&page=1&page_size=10"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/GaugeManagement-B2JSo2u7.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/input-BehWkEvl.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/basicData-DQFYxnTZ.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/gaugeFeatures-DQYpF6gE.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/gauges-T4Y5XO0Q.js"
+  },
+  {
+    "kind": "stylesheet",
+    "url": "https://223.106.198.62:3080/assets/GaugeManagement-RIzSSQtk.css"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/basic-data/gauge-applicable-types"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/gauges?page=1&page_size=10"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/gauges/default-recommendations"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/gauges/facets"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/gauges?page=1&page_size=10&applicable_type=geometric_tolerance"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/InspectionTemplates-Dapn0i6h.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/CatalogDialog-CfOceHmN.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/InspectionTemplateReadonlyPreview-BhfEvsUR.js"
+  },
+  {
+    "kind": "stylesheet",
+    "url": "https://223.106.198.62:3080/assets/InspectionTemplateReadonlyPreview-QpBzjE7-.css"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/technicalRequirementCategory-DAPV_UKT.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/inspectionTemplateScope-DA_AGW00.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/fields"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/a458febb-38c0-4a59-8af1-4eb79dea6fd4/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/42b08fc1-0f71-489a-b575-4beef20dccf5/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/aead2dcd-a7b9-4f97-912a-9094300d2122/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/63b0fc80-5e0d-412d-8e5d-44a96a6229c3/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/7d06ef6e-1fdd-4ec4-aaab-1ed595fd7b21/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/88cde9d3-b4d8-4835-8f71-258c0ef68190/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/6787706d-bd2a-4303-86e6-2a98b2d22e65/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/27eaac10-05ee-4480-8f47-ae61d7f2252c/design"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/a458febb-38c0-4a59-8af1-4eb79dea6fd4/source-preview"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/42b08fc1-0f71-489a-b575-4beef20dccf5/source-preview"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/aead2dcd-a7b9-4f97-912a-9094300d2122/source-preview"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/7d06ef6e-1fdd-4ec4-aaab-1ed595fd7b21/source-preview"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/88cde9d3-b4d8-4835-8f71-258c0ef68190/source-preview"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/63b0fc80-5e0d-412d-8e5d-44a96a6229c3/source-preview"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/6787706d-bd2a-4303-86e6-2a98b2d22e65/source-preview"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system/27eaac10-05ee-4480-8f47-ae61d7f2252c/source-preview"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/InspectionReportList-B43X9SrM.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/description-0yHsr_qK.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/useBatchExportSelection-B1nSFopG.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/annotations-NxdZpq9T.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/jsonEventStream-BLLv9KEj.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/annotationSnapshot-CsN3QtIF.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/annotationInchToMmConversion-CjZpI0ZD.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/exportNaming-Cr_sypW-.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/inspectionReports-DmnTvrQA.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/ExportFilenameFields-D3_9Gq-Z.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/InspectionTemplateExportPicker-Bb0xxY4d.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/InspectionReportHeaderFields-_vRRht1Y.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/SaveInspectionReportAsTemplateDialog-B8pOP185.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/inspectionReportHeader-CB32Qh4l.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/CreateInspectionReportDialog-Cn9a1jzX.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/SavedDrawingPicker-B2EtTc0J.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/inspectionQuantities-DFgRKu7T.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/processAnnotations-k0WJlJcV.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/annotationValueDisplay-B4N2nxcG.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/FlatCategoryEditorModal-DsnOGt0u.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/field-error-CQp4z01C.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/label-W-Ge6rB6.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/textfield-yO1CCV3B.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-report-categories"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-reports?page=1&page_size=20"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/directories"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-packages?page=1&page_size=8&eligible_for_inspection_source=true&include_process_sources=true"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-plan-template-categories"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-plan-templates?page=1&page_size=8&status=enabled"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/InspectionPlanTemplateList-BH3L_1yH.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/inspection-plan-templates?page=1&page_size=20"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DragAndDrop-DdFyJq5f.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingPackageList-CflrKwE1.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/annotationSessions-BDp64cfd.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingPackageExportDialog--BH1TnlT.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/PdfPageView-CeiVrxN5.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingZoom-CiVIzLij.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/pdfjs-B4qdNOvJ.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/localInspectionExport-Qn1AcXt2.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingPreviewLayer-D-bTIQ9i.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingPackagePreview-F8_QLipq.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/classifiedExport-BV1F0EEF.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/annotationSession-D2lLcqi3.js"
+  },
+  {
+    "kind": "stylesheet",
+    "url": "https://223.106.198.62:3080/assets/DrawingPackageList-CUd-XRzo.css"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-packages?page=1&page_size=10"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/directories/package-counts"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-packages/list-enrichment"
+  },
+  {
+    "kind": "image",
+    "url": "https://223.106.198.62:3080/api/v1/fs-files/22fa1b17-7666-4c72-b994-78f6f2c62967/thumbnail?workspace_id=04070d72-4224-4e83-83e9-7aba9086c0f9"
+  },
+  {
+    "kind": "image",
+    "url": "https://223.106.198.62:3080/api/v1/fs-files/701b7f6f-9eac-45d5-9cd0-e1970e7230f8/thumbnail?workspace_id=04070d72-4224-4e83-83e9-7aba9086c0f9"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingPackageNew-CirPgW3T.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/cadConverter-C-q8du4w.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/files-Bn6ibK-X.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/ImagePreviewDialog-Bm4nDTXn.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DirectorySearchSelect-Cx6rOumR.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/usePdfThumbnails-DJf453Zv.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingPackageCreation-CvstQp--.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingPackageDetail-CRJ2IdPd.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/InspectionMethodsCell-Dosa84Gb.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/customAnnotation-DtLBjhmZ.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/inspectionReportPresentation-6Y4TGrlG.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/annotations/history?drawing_package_id=998bdfc8-99de-41db-8a3b-059b27f0a75e&page=1&page_size=20"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/annotations/history?drawing_package_id=998bdfc8-99de-41db-8a3b-059b27f0a75e&page=1&page_size=100"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-packages/998bdfc8-99de-41db-8a3b-059b27f0a75e"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-packages/998bdfc8-99de-41db-8a3b-059b27f0a75e/pages"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/annotation-sessions/check?drawing_package_id=998bdfc8-99de-41db-8a3b-059b27f0a75e"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/annotations/history/697a963f-4f1e-42f0-b3c5-8e9bc411bb05/snapshot"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/annotations/history/697a963f-4f1e-42f0-b3c5-8e9bc411bb05/changes"
+  },
+  {
+    "kind": "image",
+    "url": "https://223.106.198.62:3080/api/v1/fs-files/701b7f6f-9eac-45d5-9cd0-e1970e7230f8/preview?workspace_id=04070d72-4224-4e83-83e9-7aba9086c0f9"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingProcesses-SrFn1ezb.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/process-templates?page=1&page_size=1"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-process-arrangements?page=1&page_size=15"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingManagement-DUjngz6m.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/DrawingManagement-rwv5EdMH.js"
+  },
+  {
+    "kind": "stylesheet",
+    "url": "https://223.106.198.62:3080/assets/DrawingManagement-Cshl0LT0.css"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingManagement-B4YbtwUh.js"
+  },
+  {
+    "kind": "script",
+    "url": "https://223.106.198.62:3080/assets/drawingManagementUpload-D_FtUm-A.js"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-management?page=1&page_size=20"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-management/directory-counts"
+  },
+  {
+    "kind": "other",
+    "url": "https://223.106.198.62:3080/api/v1/drawing-management/customers"
+  }
+]

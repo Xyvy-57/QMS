@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3200" height="3220" viewBox="0 0 3200 3220">
+<rect width="100%" height="100%" fill="white"/>
+<text x="90.00" y="126.92" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="72" font-weight="700" fill="#18364B" textLength="908.00" lengthAdjust="spacingAndGlyphs">03  不同检验类型的业务区别</text>
+<text x="95.00" y="191.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#526879" textLength="1205.00" lengthAdjust="spacingAndGlyphs">五类当前检验按明确依据执行；行业FAI只作术语解释，不作为已确认业务入口。</text>
+<polyline points="90,280 3110,280" fill="none" stroke="#C7D3DD" stroke-width="2" stroke-linejoin="round"/>
+<text x="95.00" y="3181.22" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="27" font-weight="400" fill="#526879" textLength="681.00" lengthAdjust="spacingAndGlyphs">QMS 系统完整设计 V3  |  业务控制与协作  |  2026-11-15</text>
+<rect x="90" y="340" width="440" height="100" rx="0" fill="#18364B" stroke="#D9D9D9" stroke-width="2"/>
+<text x="107.00" y="387.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="white" textLength="237.00" lengthAdjust="spacingAndGlyphs">类型 / 所在阶段</text>
+<rect x="530" y="340" width="700" height="100" rx="0" fill="#18364B" stroke="#D9D9D9" stroke-width="2"/>
+<text x="547.00" y="387.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="white" textLength="272.00" lengthAdjust="spacingAndGlyphs">何时触发与检什么</text>
+<rect x="1230" y="340" width="610" height="100" rx="0" fill="#18364B" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1247.00" y="387.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="white" textLength="204.00" lengthAdjust="spacingAndGlyphs">采用什么依据</text>
+<rect x="1840" y="340" width="690" height="100" rx="0" fill="#18364B" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1857.00" y="387.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="white" textLength="306.00" lengthAdjust="spacingAndGlyphs">形成什么结果与权限</text>
+<rect x="2530" y="340" width="580" height="100" rx="0" fill="#18364B" stroke="#D9D9D9" stroke-width="2"/>
+<text x="2547.00" y="387.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="white" textLength="204.00" lengthAdjust="spacingAndGlyphs">不能代替什么</text>
+<rect x="90" y="440" width="440" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="107.00" y="487.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="211.00" lengthAdjust="spacingAndGlyphs">来料检验 IQC</text>
+<text x="107.00" y="531.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="305.00" lengthAdjust="spacingAndGlyphs">采购到货 / 委外回厂</text>
+<rect x="530" y="440" width="700" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="547.00" y="487.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="408.00" lengthAdjust="spacingAndGlyphs">到货批或交接批待质量接受</text>
+<text x="547.00" y="531.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="457.00" lengthAdjust="spacingAndGlyphs">对象：供应商、物料/零件版本</text>
+<text x="547.00" y="575.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="340.00" lengthAdjust="spacingAndGlyphs">来料总体、样本、证书</text>
+<rect x="1230" y="440" width="610" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1247.00" y="487.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="374.00" lengthAdjust="spacingAndGlyphs">来料方案、采购质量要求</text>
+<text x="1247.00" y="531.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="340.00" lengthAdjust="spacingAndGlyphs">图纸、证书与抽样规则</text>
+<rect x="1840" y="440" width="690" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1857.00" y="487.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="443.00" lengthAdjust="spacingAndGlyphs">来料报告 + 接受/拒收/待处置</text>
+<text x="1857.00" y="531.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="272.00" lengthAdjust="spacingAndGlyphs">不等于实物已接收</text>
+<rect x="2530" y="440" width="580" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="2547.00" y="487.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="272.00" lengthAdjust="spacingAndGlyphs">不等于已收货入库</text>
+<text x="2547.00" y="531.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">不等于后续工序合格</text>
+<rect x="90" y="790" width="440" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="107.00" y="837.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="204.00" lengthAdjust="spacingAndGlyphs">生产首件确认</text>
+<text x="107.00" y="881.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="223.00" lengthAdjust="spacingAndGlyphs">FIRST_ARTICLE</text>
+<text x="107.00" y="925.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="373.00" lengthAdjust="spacingAndGlyphs">生产开工 / 关键设置变化</text>
+<rect x="530" y="790" width="700" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="547.00" y="837.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="578.00" lengthAdjust="spacingAndGlyphs">开机、换型及被规定为需重确认的变化</text>
+<text x="547.00" y="881.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="442.00" lengthAdjust="spacingAndGlyphs">对象：指定工序、设备、工装</text>
+<text x="547.00" y="925.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="355.00" lengthAdjust="spacingAndGlyphs">程序/刀具与设置下首件</text>
+<rect x="1230" y="790" width="610" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1247.00" y="837.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="340.00" lengthAdjust="spacingAndGlyphs">该工序方案、关键特性</text>
+<text x="1247.00" y="881.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="340.00" lengthAdjust="spacingAndGlyphs">设置条件及重确认规则</text>
+<rect x="1840" y="790" width="690" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1857.00" y="837.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="379.00" lengthAdjust="spacingAndGlyphs">首件报告 + 设置条件认可</text>
+<text x="1857.00" y="881.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="408.00" lengthAdjust="spacingAndGlyphs">仅说明被检首件与设置范围</text>
+<rect x="2530" y="790" width="580" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="2547.00" y="837.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">不保证后续每件合格</text>
+<text x="2547.00" y="881.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="389.00" lengthAdjust="spacingAndGlyphs">不代替行业FAI鉴定或出货</text>
+<rect x="90" y="1140" width="440" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="107.00" y="1187.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="231.00" lengthAdjust="spacingAndGlyphs">过程检验 IPQC</text>
+<text x="107.00" y="1231.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="204.00" lengthAdjust="spacingAndGlyphs">生产加工过程</text>
+<rect x="530" y="1140" width="700" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="547.00" y="1187.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="578.00" lengthAdjust="spacingAndGlyphs">规定频次、工序节点、异常或恢复确认</text>
+<text x="547.00" y="1231.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="442.00" lengthAdjust="spacingAndGlyphs">对象：指定工序、时段、样件</text>
+<text x="547.00" y="1275.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="272.00" lengthAdjust="spacingAndGlyphs">关联在制批次片段</text>
+<rect x="1230" y="1140" width="610" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1247.00" y="1187.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">工序方案、巡检频次</text>
+<text x="1247.00" y="1231.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="374.00" lengthAdjust="spacingAndGlyphs">反应计划与适用过程规则</text>
+<rect x="1840" y="1140" width="690" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1857.00" y="1187.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="389.00" lengthAdjust="spacingAndGlyphs">过程记录/报告、异常事件</text>
+<text x="1857.00" y="1231.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="355.00" lengthAdjust="spacingAndGlyphs">继续加工/停机范围决定</text>
+<rect x="2530" y="1140" width="580" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="2547.00" y="1187.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="371.00" lengthAdjust="spacingAndGlyphs">SPC稳定不等于单件合格</text>
+<text x="2547.00" y="1231.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">不直接允许成品出货</text>
+<rect x="90" y="1490" width="440" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="107.00" y="1537.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="219.00" lengthAdjust="spacingAndGlyphs">完工检验 FQC</text>
+<text x="107.00" y="1581.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">规定制造工序完工后</text>
+<rect x="530" y="1490" width="700" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="547.00" y="1537.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="525.00" lengthAdjust="spacingAndGlyphs">工单/工序完工、返工完成后待接受</text>
+<text x="547.00" y="1581.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="423.00" lengthAdjust="spacingAndGlyphs">对象：完工批次/序列号范围</text>
+<text x="547.00" y="1625.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="204.00" lengthAdjust="spacingAndGlyphs">实际完工数量</text>
+<rect x="1230" y="1490" width="610" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1247.00" y="1537.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="321.00" lengthAdjust="spacingAndGlyphs">完工方案、图纸/规范</text>
+<text x="1247.00" y="1581.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">必要全检或抽样规则</text>
+<rect x="1840" y="1490" width="690" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1857.00" y="1537.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="379.00" lengthAdjust="spacingAndGlyphs">完工报告 + 质量接受结论</text>
+<text x="1857.00" y="1581.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">仅覆盖明确完工范围</text>
+<rect x="2530" y="1490" width="580" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="2547.00" y="1537.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="272.00" lengthAdjust="spacingAndGlyphs">不等于已实际入库</text>
+<text x="2547.00" y="1581.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">不代替客户发运门禁</text>
+<rect x="90" y="1840" width="440" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="107.00" y="1887.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="233.00" lengthAdjust="spacingAndGlyphs">出货检验 OQC</text>
+<text x="107.00" y="1931.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="237.00" lengthAdjust="spacingAndGlyphs">拟交付 / 发运前</text>
+<rect x="530" y="1840" width="700" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="547.00" y="1887.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="510.00" lengthAdjust="spacingAndGlyphs">具体客户、订单或待发运范围形成</text>
+<text x="547.00" y="1931.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="491.00" lengthAdjust="spacingAndGlyphs">对象：拟发运范围、客户/目的地</text>
+<text x="547.00" y="1975.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">包装、标识与资料包</text>
+<rect x="1230" y="1840" width="610" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1247.00" y="1887.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="389.00" lengthAdjust="spacingAndGlyphs">客户/合同要求、有效检验</text>
+<text x="1247.00" y="1931.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="418.00" lengthAdjust="spacingAndGlyphs">必要CoC、让步、风险状态</text>
+<rect x="1840" y="1840" width="690" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1857.00" y="1887.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="544.00" lengthAdjust="spacingAndGlyphs">出货结论与报告；核对明确客户要求</text>
+<text x="1857.00" y="1931.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="374.00" lengthAdjust="spacingAndGlyphs">当前不生成独立发运许可</text>
+<rect x="2530" y="1840" width="580" height="350" rx="0" fill="white" stroke="#D9D9D9" stroke-width="2"/>
+<text x="2547.00" y="1887.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="374.00" lengthAdjust="spacingAndGlyphs">检验完成不等于实际出库</text>
+<text x="2547.00" y="1931.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="340.00" lengthAdjust="spacingAndGlyphs">不推导运输或额度台账</text>
+<rect x="90" y="2190" width="440" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="107.00" y="2237.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="194.00" lengthAdjust="spacingAndGlyphs">首件鉴定 FAI</text>
+<text x="107.00" y="2281.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="219.00" lengthAdjust="spacingAndGlyphs">行业/合同适用</text>
+<text x="107.00" y="2325.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="373.00" lengthAdjust="spacingAndGlyphs">首批生产 / 规定重大变化</text>
+<rect x="530" y="2190" width="700" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="547.00" y="2237.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="491.00" lengthAdjust="spacingAndGlyphs">客户/适用标准要求正式首件鉴定</text>
+<text x="547.00" y="2281.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="442.00" lengthAdjust="spacingAndGlyphs">对象：确定产品构型及首批件</text>
+<text x="547.00" y="2325.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="374.00" lengthAdjust="spacingAndGlyphs">工程设计特性与生产实现</text>
+<rect x="1230" y="2190" width="610" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1247.00" y="2237.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="355.00" lengthAdjust="spacingAndGlyphs">适用FAI要求及客户规范</text>
+<text x="1247.00" y="2281.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="408.00" lengthAdjust="spacingAndGlyphs">工程特性和客观符合性证据</text>
+<rect x="1840" y="2190" width="690" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="1857.00" y="2237.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="389.00" lengthAdjust="spacingAndGlyphs">规定FAI记录与完整性结论</text>
+<text x="1857.00" y="2281.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="321.00" lengthAdjust="spacingAndGlyphs">必要的客户评审/认可</text>
+<rect x="2530" y="2190" width="580" height="350" rx="0" fill="#F1F6F8" stroke="#D9D9D9" stroke-width="2"/>
+<text x="2547.00" y="2237.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="340.00" lengthAdjust="spacingAndGlyphs">仅解释术语与适用情形</text>
+<text x="2547.00" y="2281.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="510.00" lengthAdjust="spacingAndGlyphs">专用模块尚未确认，不是当前入口</text>
+<rect x="110" y="2600" width="1430" height="280" rx="18" fill="#FFF6DD" stroke="#A57913" stroke-width="3"/>
+<text x="135.00" y="2656.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#A57913" textLength="428.00" lengthAdjust="spacingAndGlyphs">生产首件与行业 FAI 分开</text>
+<text x="135.00" y="2714.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="1375.00" lengthAdjust="spacingAndGlyphs">当前原型使用生产首件确认。行业FAI是独立的首件鉴定要求，专用模块待确认，不能凭开机</text>
+<text x="135.00" y="2758.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">首件合格宣称完成。</text>
+<rect x="1660" y="2600" width="1430" height="280" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="1685.00" y="2656.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#087F8C" textLength="468.00" lengthAdjust="spacingAndGlyphs">共用证据，按适用范围复用</text>
+<text x="1685.00" y="2714.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="1372.00" lengthAdjust="spacingAndGlyphs">FQC与OQC若有相同特性，可引用有效证据；OQC仍核对客户、实际发运范围、包装和资</text>
+<text x="1685.00" y="2758.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#18364B" textLength="408.00" lengthAdjust="spacingAndGlyphs">料。无需无依据重复实测。</text>
+<text x="110.00" y="2976.66" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="31" font-weight="400" fill="#18364B" textLength="1670.00" lengthAdjust="spacingAndGlyphs">依据：V3检验用途与策略；IAQG 9102用于FAI术语核对。技术判定与报告状态分开；独立签审只在方案显式选择时进入。</text>
+</svg>

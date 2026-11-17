@@ -1,0 +1,102 @@
+[
+  {
+    "name": "03_gauges",
+    "url": "https://223.106.198.62:3080/#/gauges",
+    "capturedAt": "2026-11-17T03:17:42.878Z"
+  },
+  {
+    "name": "04_gauge_create_form",
+    "url": "https://223.106.198.62:3080/#/gauges",
+    "capturedAt": "2026-11-17T03:18:32.652Z"
+  },
+  {
+    "name": "05_report_templates",
+    "url": "https://223.106.198.62:3080/#/inspection-templates",
+    "capturedAt": "2026-11-17T03:18:33.683Z"
+  },
+  {
+    "name": "05_report_templates",
+    "url": "https://223.106.198.62:3080/#/inspection-templates",
+    "capturedAt": "2026-11-17T03:18:59.893Z"
+  },
+  {
+    "name": "06_report_preview",
+    "url": "https://223.106.198.62:3080/#/inspection-templates",
+    "capturedAt": "2026-11-17T03:19:39.467Z"
+  },
+  {
+    "name": "07_inspection_reports",
+    "url": "https://223.106.198.62:3080/#/inspection-reports",
+    "capturedAt": "2026-11-17T03:21:24.152Z"
+  },
+  {
+    "name": "08_inspection_create",
+    "url": "https://223.106.198.62:3080/#/inspection-reports",
+    "capturedAt": "2026-11-17T03:22:17.583Z"
+  },
+  {
+    "name": "09_inspection_plan_templates",
+    "url": "https://223.106.198.62:3080/#/inspection-reports/templates",
+    "capturedAt": "2026-11-17T03:22:49.758Z"
+  },
+  {
+    "name": "10_drawing_packages",
+    "url": "https://223.106.198.62:3080/#/drawing-packages",
+    "capturedAt": "2026-11-17T03:23:09.131Z"
+  },
+  {
+    "name": "11_drawing_upload_form",
+    "url": "https://223.106.198.62:3080/#/drawing-packages/new",
+    "capturedAt": "2026-11-17T03:23:56.537Z"
+  },
+  {
+    "name": "12_drawing_detail",
+    "url": "https://223.106.198.62:3080/#/drawing-packages/998bdfc8-99de-41db-8a3b-059b27f0a75e",
+    "capturedAt": "2026-11-17T03:24:13.306Z"
+  },
+  {
+    "name": "14_annotation_history",
+    "url": "https://223.106.198.62:3080/#/drawing-packages/998bdfc8-99de-41db-8a3b-059b27f0a75e",
+    "capturedAt": "2026-11-17T03:26:30.842Z"
+  },
+  {
+    "name": "15_drawing_info",
+    "url": "https://223.106.198.62:3080/#/drawing-packages/998bdfc8-99de-41db-8a3b-059b27f0a75e",
+    "capturedAt": "2026-11-17T03:26:55.712Z"
+  },
+  {
+    "name": "16_drawing_processes",
+    "url": "https://223.106.198.62:3080/#/drawing-processes",
+    "capturedAt": "2026-11-17T03:27:17.685Z"
+  },
+  {
+    "name": "17_drawing_management",
+    "url": "https://223.106.198.62:3080/#/drawing-management",
+    "capturedAt": "2026-11-17T03:27:36.549Z"
+  },
+  {
+    "name": "18_drawing_compare",
+    "url": "https://223.106.198.62:3080/#/drawing-compare",
+    "capturedAt": "2026-11-17T03:27:37.117Z"
+  },
+  {
+    "name": "19_drawing_search",
+    "url": "https://223.106.198.62:3080/#/drawing-search",
+    "capturedAt": "2026-11-17T03:29:03.364Z"
+  },
+  {
+    "name": "20_drawing_dataset",
+    "url": "https://223.106.198.62:3080/#/drawing-datasets",
+    "capturedAt": "2026-11-17T03:29:26.691Z"
+  },
+  {
+    "name": "21_library_search_results",
+    "url": "https://223.106.198.62:3080/#/drawing-datasets/results?q=111",
+    "capturedAt": "2026-11-17T03:30:34.420Z"
+  },
+  {
+    "name": "01_process_list",
+    "url": "https://223.106.198.62:3080/#/process-templates",
+    "capturedAt": "2026-11-17T03:31:32.332Z"
+  }
+]

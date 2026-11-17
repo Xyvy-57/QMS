@@ -1,0 +1,1457 @@
+{
+  "_provenance": {
+    "kind": "joined_actual_responses_not_original_response",
+    "sources": [
+      "responses/01_process_templates_page1.json",
+      "responses/04_process_templates_page2.json"
+    ],
+    "captured_date": "2026-11-17",
+    "usage": "local compatibility tests; not authenticated production data source"
+  },
+  "items": [
+    {
+      "id": "cec2d8d3-7d6f-4b03-a36e-997ce2a17c86",
+      "name": "工序模版 2026-10-31 16:49:38",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "1d8e7863-10db-46da-866d-964737a6eb5e",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "00a3afcc-7a5a-42c1-8251-48c4d22a08ad",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "e56f7370-1dab-4e07-bba1-c711ee94c3ea",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "ee68a9db-7619-49c7-95d9-7a923952af98",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 412
+            }
+          },
+          {
+            "id": "98a03318-27bf-40a0-8100-8504a646e0f3",
+            "code": "4",
+            "name": "工序4",
+            "description": "",
+            "position": {
+              "x": 200.86328125,
+              "y": 540.11328125
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "70e34542-ad1a-40e5-b638-e29601088a8e",
+            "source": "1d8e7863-10db-46da-866d-964737a6eb5e",
+            "target": "00a3afcc-7a5a-42c1-8251-48c4d22a08ad"
+          },
+          {
+            "id": "35c9da61-defc-4a70-ad9f-1fe5c2cb34f4",
+            "source": "1d8e7863-10db-46da-866d-964737a6eb5e",
+            "target": "e56f7370-1dab-4e07-bba1-c711ee94c3ea"
+          },
+          {
+            "id": "cb24481e-46b3-4ae3-b41b-a9bcab258ef5",
+            "source": "00a3afcc-7a5a-42c1-8251-48c4d22a08ad",
+            "target": "ee68a9db-7619-49c7-95d9-7a923952af98"
+          },
+          {
+            "id": "0c086298-14ea-4815-a38e-3c22dde41ff5",
+            "source": "e56f7370-1dab-4e07-bba1-c711ee94c3ea",
+            "target": "ee68a9db-7619-49c7-95d9-7a923952af98"
+          },
+          {
+            "id": "983bf071-b865-4834-a697-9cc5a3be5e46",
+            "source": "ee68a9db-7619-49c7-95d9-7a923952af98",
+            "target": "98a03318-27bf-40a0-8100-8504a646e0f3"
+          }
+        ],
+        "viewport": {
+          "x": 284.985023638593,
+          "y": 24.76622457699017,
+          "zoom": 0.9895549325678996
+        }
+      },
+      "row_version": 10,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-31T08:49:40.800930Z",
+      "updated_at": "2026-10-31T08:50:09.840455Z"
+    },
+    {
+      "id": "2c5e9139-1aa2-48fe-8d65-9cac8a1a4291",
+      "name": "工序模版 2026-10-28 18:20:17",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "efe3ebe8-a120-4d08-bb0d-1121e2f7c6a4",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 125
+            }
+          },
+          {
+            "id": "2af7dc64-c6cf-467c-bc47-3b5f906807b9",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 360,
+              "y": 60
+            }
+          },
+          {
+            "id": "60e0cf07-fa57-4a56-b7cd-8f42da6ca61c",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 360,
+              "y": 190
+            }
+          },
+          {
+            "id": "abff8f6c-6e75-4f76-b291-b96b419de368",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 640,
+              "y": 125
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "7eb5645c-5b39-45a7-84d2-3d86a440d9e2",
+            "source": "efe3ebe8-a120-4d08-bb0d-1121e2f7c6a4",
+            "target": "2af7dc64-c6cf-467c-bc47-3b5f906807b9"
+          },
+          {
+            "id": "5c1a3c71-645a-45ae-a1ff-1a5918bfa3f6",
+            "source": "efe3ebe8-a120-4d08-bb0d-1121e2f7c6a4",
+            "target": "60e0cf07-fa57-4a56-b7cd-8f42da6ca61c"
+          },
+          {
+            "id": "ed21fc08-cf40-4b29-b0bb-ee44a6476c67",
+            "source": "2af7dc64-c6cf-467c-bc47-3b5f906807b9",
+            "target": "abff8f6c-6e75-4f76-b291-b96b419de368"
+          },
+          {
+            "id": "9686129e-2509-44c5-98dc-a171d4bfe64d",
+            "source": "60e0cf07-fa57-4a56-b7cd-8f42da6ca61c",
+            "target": "abff8f6c-6e75-4f76-b291-b96b419de368"
+          }
+        ],
+        "viewport": {
+          "x": 281.8125,
+          "y": 170.1015625,
+          "zoom": 1
+        }
+      },
+      "row_version": 6,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-28T10:20:21.283092Z",
+      "updated_at": "2026-10-28T10:20:41.101766Z"
+    },
+    {
+      "id": "10369ac8-e39a-414c-8c2f-149f66e2d65f",
+      "name": "工序模版 2026-10-28 18:18:38",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "1c946f88-3d76-4e35-b905-2cc81b5c152a",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 641.8125,
+              "y": 295.1015625
+            }
+          },
+          {
+            "id": "041a9fee-08c1-4b35-9fee-b2d74aa43c03",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 515.1313754320145,
+              "y": 434.5312194824219
+            }
+          },
+          {
+            "id": "c6b13f14-5994-4aaf-a3c6-2369a21eb109",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 729.3891879320145,
+              "y": 456.3742980957031
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "b51f484c-ed09-4c21-8fb3-f91c17714efa",
+            "source": "1c946f88-3d76-4e35-b905-2cc81b5c152a",
+            "target": "041a9fee-08c1-4b35-9fee-b2d74aa43c03"
+          },
+          {
+            "id": "cbe536f7-ad6a-4298-9727-82471efb47b2",
+            "source": "1c946f88-3d76-4e35-b905-2cc81b5c152a",
+            "target": "c6b13f14-5994-4aaf-a3c6-2369a21eb109"
+          }
+        ],
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "zoom": 1
+        }
+      },
+      "row_version": 3,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-28T10:18:41.041885Z",
+      "updated_at": "2026-10-28T10:18:45.760091Z"
+    },
+    {
+      "id": "0cd67a59-4593-4fcd-adcb-e5c9b9ca7db6",
+      "name": "工序模版 2026-10-28 18:18:04",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "ad3785e1-5645-43a5-a5f7-5fe67469bccc",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 641.8125,
+              "y": 295.1015625
+            }
+          },
+          {
+            "id": "7e5a2181-35ac-4f87-ab3e-10537fa73da3",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 516.6690341234207,
+              "y": 467.5284118652344
+            }
+          },
+          {
+            "id": "f4931513-ba8b-4b9d-96c1-026c05deb4f8",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 764.243558049202,
+              "y": 457.7663269042969
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "d3fd2716-0920-4b4f-a7d8-cadfc4c0f739",
+            "source": "ad3785e1-5645-43a5-a5f7-5fe67469bccc",
+            "target": "7e5a2181-35ac-4f87-ab3e-10537fa73da3"
+          },
+          {
+            "id": "92da499c-e09e-4d14-be23-f9dd6fda2733",
+            "source": "ad3785e1-5645-43a5-a5f7-5fe67469bccc",
+            "target": "f4931513-ba8b-4b9d-96c1-026c05deb4f8"
+          }
+        ],
+        "viewport": {
+          "x": 0,
+          "y": 0,
+          "zoom": 1
+        }
+      },
+      "row_version": 3,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-28T10:18:07.522231Z",
+      "updated_at": "2026-10-28T10:18:12.205333Z"
+    },
+    {
+      "id": "46df0649-e71e-420d-8eaf-a638a59d5371",
+      "name": "工序模版 2026-10-28 18:16:48",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "81b86e93-ac1f-4c29-880a-be6f890f89a8",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 125
+            }
+          },
+          {
+            "id": "4fe1acd8-5d45-4c74-a990-0092e32ab88f",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 360,
+              "y": 60
+            }
+          },
+          {
+            "id": "3828ac33-1c47-439a-818e-c76c96ceec09",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 360,
+              "y": 190
+            }
+          },
+          {
+            "id": "6bd71439-c39a-48f2-b154-310c5700551c",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 640,
+              "y": 125
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "f9072614-21ca-4002-8b1c-4ac42f7cccf5",
+            "source": "81b86e93-ac1f-4c29-880a-be6f890f89a8",
+            "target": "4fe1acd8-5d45-4c74-a990-0092e32ab88f"
+          },
+          {
+            "id": "e51c0ec5-b263-4816-9761-cca054f05733",
+            "source": "81b86e93-ac1f-4c29-880a-be6f890f89a8",
+            "target": "3828ac33-1c47-439a-818e-c76c96ceec09"
+          },
+          {
+            "id": "beeff334-9e68-4c07-94e8-84c501c37788",
+            "source": "4fe1acd8-5d45-4c74-a990-0092e32ab88f",
+            "target": "6bd71439-c39a-48f2-b154-310c5700551c"
+          },
+          {
+            "id": "d8c863ec-02d6-4b28-bfcc-68f87240ce02",
+            "source": "3828ac33-1c47-439a-818e-c76c96ceec09",
+            "target": "6bd71439-c39a-48f2-b154-310c5700551c"
+          }
+        ],
+        "viewport": {
+          "x": 281.8125,
+          "y": 170.1015625,
+          "zoom": 1
+        }
+      },
+      "row_version": 6,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-28T10:16:54.087825Z",
+      "updated_at": "2026-10-28T10:17:25.021650Z"
+    },
+    {
+      "id": "01719ae1-c7d5-4d65-8de3-6a0db9f36899",
+      "name": "工序模版 2026-10-28 18:15:46",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "ac4c6c09-f8ea-47dd-95b7-03367b53bb89",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 641.8125,
+              "y": 295.1015625
+            }
+          },
+          {
+            "id": "d69b98a1-6bc2-453f-97f8-06dd60ff006d",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 565.7102328538895,
+              "y": 474.3927307128906
+            }
+          },
+          {
+            "id": "d983461c-60a2-4b35-a278-c311218d1ec6",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 946.1413241624832,
+              "y": 487.9083557128906
+            }
+          },
+          {
+            "id": "76cb44b3-027c-42b9-b413-775ea584ba8b",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 879.6853892239402,
+              "y": 627.3661709448178
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "bea5c1b2-1009-4859-b7f1-a2ec524842f2",
+            "source": "ac4c6c09-f8ea-47dd-95b7-03367b53bb89",
+            "target": "d69b98a1-6bc2-453f-97f8-06dd60ff006d"
+          },
+          {
+            "id": "4e787d4d-e63b-4fcd-80ac-dc0cd03b62e6",
+            "source": "ac4c6c09-f8ea-47dd-95b7-03367b53bb89",
+            "target": "d983461c-60a2-4b35-a278-c311218d1ec6"
+          },
+          {
+            "id": "ba45fbce-7395-414b-bd06-5926252bd4e4",
+            "source": "d983461c-60a2-4b35-a278-c311218d1ec6",
+            "target": "76cb44b3-027c-42b9-b413-775ea584ba8b"
+          }
+        ],
+        "viewport": {
+          "x": 194.42160281564105,
+          "y": 107.41508828205886,
+          "zoom": 0.6976763315148529
+        }
+      },
+      "row_version": 5,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-28T10:15:50.851888Z",
+      "updated_at": "2026-10-28T10:16:30.495217Z"
+    },
+    {
+      "id": "621f76d1-e898-4685-92fc-ad24fc882065",
+      "name": "工序模版 2026-10-28 18:13:16",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "933591db-d157-4bbe-81b9-fe7094200836",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "a02b243c-0d4e-42fb-a8d0-f7a180795ccf",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "294d442e-0584-42fc-993a-06c8dda63fe6",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "2de8484f-4252-4dde-85ee-7e165bee7828",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 134.99929535388947,
+              "y": 409.0915832519531
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "2a45d485-50f7-4fbc-9824-c3e927bc7f1e",
+            "source": "933591db-d157-4bbe-81b9-fe7094200836",
+            "target": "a02b243c-0d4e-42fb-a8d0-f7a180795ccf"
+          },
+          {
+            "id": "6738ceeb-21ab-4f0b-a19c-46ea047507e1",
+            "source": "933591db-d157-4bbe-81b9-fe7094200836",
+            "target": "294d442e-0584-42fc-993a-06c8dda63fe6"
+          },
+          {
+            "id": "f004bbf5-52b8-4368-8e7c-687e73d9a12c",
+            "source": "a02b243c-0d4e-42fb-a8d0-f7a180795ccf",
+            "target": "2de8484f-4252-4dde-85ee-7e165bee7828"
+          }
+        ],
+        "viewport": {
+          "x": 444.8125,
+          "y": 147.1015625,
+          "zoom": 1
+        }
+      },
+      "row_version": 5,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-28T10:13:19.956987Z",
+      "updated_at": "2026-10-28T10:13:45.421261Z"
+    },
+    {
+      "id": "ca9f93ea-cd34-4f75-9225-35823fb27e08",
+      "name": "工序模版 2026-10-27 16:07:18",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "cb91cada-e363-4567-93e5-d49463d85ba4",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "918c758c-97ad-4889-8de5-2cbe2efe7e40",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "1ac3c196-28ef-4944-9f93-2ce5fd61d964",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "cbf8b92f-8995-402c-aebe-ed1d6bb118d2",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 125.25921356678009,
+              "y": 367.06321716308594
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "fbaf2807-9d93-4c19-808d-bc853a5b0f38",
+            "source": "cb91cada-e363-4567-93e5-d49463d85ba4",
+            "target": "918c758c-97ad-4889-8de5-2cbe2efe7e40"
+          },
+          {
+            "id": "8505b8b3-4931-419d-90b4-934a5662e7df",
+            "source": "cb91cada-e363-4567-93e5-d49463d85ba4",
+            "target": "1ac3c196-28ef-4944-9f93-2ce5fd61d964"
+          },
+          {
+            "id": "c4baa22a-ce24-487f-bfcd-b02092f85248",
+            "source": "918c758c-97ad-4889-8de5-2cbe2efe7e40",
+            "target": "cbf8b92f-8995-402c-aebe-ed1d6bb118d2"
+          }
+        ],
+        "viewport": {
+          "x": 221.75352079069728,
+          "y": 47.217635244687585,
+          "zoom": 1.0389201094130316
+        }
+      },
+      "row_version": 5,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-27T08:07:20.931792Z",
+      "updated_at": "2026-10-27T08:07:31.667959Z"
+    },
+    {
+      "id": "88e4e16f-7285-43af-ad84-33c278275d33",
+      "name": "工序模版 2026-10-27 15:40:39",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "f5c2ffd5-0409-4765-9ebd-6ad318693738",
+            "code": "1",
+            "name": "清洗1",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "ef2e20ca-bea4-48ad-a224-37541a5485cf",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "790339f1-df6a-45f8-a1e1-495eb6daf0d1",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "129e8283-5d28-4656-9735-e83016584fd0",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 164.03408539295197,
+              "y": 378.72154235839844
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "1f55dca3-31c8-4246-b471-aa4a632c69db",
+            "source": "f5c2ffd5-0409-4765-9ebd-6ad318693738",
+            "target": "ef2e20ca-bea4-48ad-a224-37541a5485cf"
+          },
+          {
+            "id": "69723f40-9ad4-4ebc-ad68-2d1cc42629ac",
+            "source": "f5c2ffd5-0409-4765-9ebd-6ad318693738",
+            "target": "790339f1-df6a-45f8-a1e1-495eb6daf0d1"
+          },
+          {
+            "id": "36638c5c-1a34-4503-8e21-bd5028d5d6f1",
+            "source": "ef2e20ca-bea4-48ad-a224-37541a5485cf",
+            "target": "129e8283-5d28-4656-9735-e83016584fd0"
+          }
+        ],
+        "viewport": {
+          "x": 243.90625,
+          "y": 53.4375,
+          "zoom": 1
+        }
+      },
+      "row_version": 7,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-27T07:40:41.931239Z",
+      "updated_at": "2026-10-27T07:40:58.817125Z"
+    },
+    {
+      "id": "dfb93895-4832-4e24-b955-605025e7b58e",
+      "name": "工序模版 2026-10-26 09:37:50",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "b87fb211-5aed-4bf4-a914-c6d5d2c90537",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 192.48126220703125,
+              "y": -1.6624755859375
+            }
+          },
+          {
+            "id": "84a6100c-ad7a-472b-97e9-4796ccba2530",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 81.8531494140625,
+              "y": 178.5374755859375
+            }
+          },
+          {
+            "id": "5705fb33-d929-4c04-a671-31310714f765",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 312.87811279296875,
+              "y": 171.03125
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "8cee96c9-0e2b-4f76-9551-248638132b8a",
+            "source": "b87fb211-5aed-4bf4-a914-c6d5d2c90537",
+            "target": "84a6100c-ad7a-472b-97e9-4796ccba2530"
+          },
+          {
+            "id": "42fe20ce-2bb3-4bda-8836-43d155c38940",
+            "source": "b87fb211-5aed-4bf4-a914-c6d5d2c90537",
+            "target": "5705fb33-d929-4c04-a671-31310714f765"
+          }
+        ],
+        "viewport": {
+          "x": 340.1953125,
+          "y": 93.171875,
+          "zoom": 1
+        }
+      },
+      "row_version": 7,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-26T01:37:52.996924Z",
+      "updated_at": "2026-10-26T01:38:50.206830Z"
+    },
+    {
+      "id": "70cf3dca-c475-4c11-9f3d-194dcac922f4",
+      "name": "工序模版 2026-10-22 14:25:28",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "a93af52b-b8de-4c61-b084-f6eb9d08af3b",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "86f2d41f-e428-48c7-a938-ecc4789b0780",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "a9076aa5-f229-43b7-b8eb-6bfe958f3195",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "088a643f-62ec-45c0-afed-da779ba55112",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 412
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "a3cf2ce4-4fa6-4058-a931-31cf971b28be",
+            "source": "a93af52b-b8de-4c61-b084-f6eb9d08af3b",
+            "target": "86f2d41f-e428-48c7-a938-ecc4789b0780"
+          },
+          {
+            "id": "c6077185-33ab-44a9-b250-e52fade73ab4",
+            "source": "a93af52b-b8de-4c61-b084-f6eb9d08af3b",
+            "target": "a9076aa5-f229-43b7-b8eb-6bfe958f3195"
+          },
+          {
+            "id": "47149785-40f7-4251-abdb-f4c2671c7445",
+            "source": "86f2d41f-e428-48c7-a938-ecc4789b0780",
+            "target": "088a643f-62ec-45c0-afed-da779ba55112"
+          },
+          {
+            "id": "81a42b89-fcfc-4cb9-aca1-ed48e537dff0",
+            "source": "a9076aa5-f229-43b7-b8eb-6bfe958f3195",
+            "target": "088a643f-62ec-45c0-afed-da779ba55112"
+          }
+        ],
+        "viewport": {
+          "x": 307,
+          "y": 25.4765625,
+          "zoom": 1
+        }
+      },
+      "row_version": 8,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-22T06:25:30.750131Z",
+      "updated_at": "2026-10-22T06:25:51.847464Z"
+    },
+    {
+      "id": "8df0db7c-0945-443e-a43b-826bda332cae",
+      "name": "工序模版 2026-10-21 11:03:41",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "1ca181ef-d7b2-468f-aa5e-44a190768cf5",
+            "code": "1",
+            "name": "工序1",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "c88b8286-dac9-4d83-a9a5-96ef50c508d6",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "d94bd81a-f17f-41b4-992d-9f10f270c437",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "1469895f-3b52-4ead-94e3-19482ab4125b",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 190.55822727421747,
+              "y": 401.2588482697727
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "eaede9ab-e972-49dc-a304-62d0a16b6387",
+            "source": "1ca181ef-d7b2-468f-aa5e-44a190768cf5",
+            "target": "c88b8286-dac9-4d83-a9a5-96ef50c508d6"
+          },
+          {
+            "id": "ab4e70b8-38b7-4411-bf3c-02fcfba7571a",
+            "source": "1ca181ef-d7b2-468f-aa5e-44a190768cf5",
+            "target": "d94bd81a-f17f-41b4-992d-9f10f270c437"
+          },
+          {
+            "id": "58a52c64-9b7d-4365-9cdc-aae079dfc101",
+            "source": "c88b8286-dac9-4d83-a9a5-96ef50c508d6",
+            "target": "1469895f-3b52-4ead-94e3-19482ab4125b"
+          },
+          {
+            "id": "85926bef-1307-4129-935f-7839a179d831",
+            "source": "d94bd81a-f17f-41b4-992d-9f10f270c437",
+            "target": "1469895f-3b52-4ead-94e3-19482ab4125b"
+          }
+        ],
+        "viewport": {
+          "x": 209.8368118309188,
+          "y": -23.85807280031588,
+          "zoom": 0.9050581565043845
+        }
+      },
+      "row_version": 18,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-21T03:03:44.101882Z",
+      "updated_at": "2026-10-21T03:13:19.057330Z"
+    },
+    {
+      "id": "fe80fbd6-169e-474c-aee1-019c567fed91",
+      "name": "工序模版 2026-10-20 15:51:42",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "9565dc38-5ddb-4d7c-bbc1-a772815a224e",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "beffb795-de8c-4f97-a987-6c0f1912c7ad",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "c345220f-dee9-488b-8ddd-11a6be2edfed",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "098eaf30-7506-4dd3-a4f0-c4669520fcac",
+            "source": "9565dc38-5ddb-4d7c-bbc1-a772815a224e",
+            "target": "beffb795-de8c-4f97-a987-6c0f1912c7ad"
+          },
+          {
+            "id": "5a97779b-76f8-4df1-a499-260e47e704b5",
+            "source": "9565dc38-5ddb-4d7c-bbc1-a772815a224e",
+            "target": "c345220f-dee9-488b-8ddd-11a6be2edfed"
+          }
+        ],
+        "viewport": {
+          "x": 240.265625,
+          "y": 75.7109375,
+          "zoom": 1
+        }
+      },
+      "row_version": 5,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-20T07:51:45.480795Z",
+      "updated_at": "2026-10-20T07:52:00.955794Z"
+    },
+    {
+      "id": "9c1b016c-895c-4132-bcb3-4f4ae220b70e",
+      "name": "工序模版 2026-10-19 13:33:21",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "6992b983-34a2-4ae2-90a3-6e1a0e46e424",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "ae849007-1c58-42a1-ae1f-46be5bb97c7c",
+            "code": "2.1",
+            "name": "加工",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "349ba5b2-7a5f-48a0-ab59-4d6ae22de49f",
+            "code": "2.2",
+            "name": "333",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "f5cf90ac-ce7c-433d-96a8-a34c01e72cb4",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 412
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "751fda47-79c0-4f01-9a32-9e07e70cb54f",
+            "source": "6992b983-34a2-4ae2-90a3-6e1a0e46e424",
+            "target": "ae849007-1c58-42a1-ae1f-46be5bb97c7c"
+          },
+          {
+            "id": "582c05a3-ef2f-4043-94af-6af7e35b325e",
+            "source": "6992b983-34a2-4ae2-90a3-6e1a0e46e424",
+            "target": "349ba5b2-7a5f-48a0-ab59-4d6ae22de49f"
+          },
+          {
+            "id": "b75c7b6e-99a1-4a27-bc39-e16e8ec1f224",
+            "source": "ae849007-1c58-42a1-ae1f-46be5bb97c7c",
+            "target": "f5cf90ac-ce7c-433d-96a8-a34c01e72cb4"
+          }
+        ],
+        "viewport": {
+          "x": 243.14500584112147,
+          "y": -9.388462815329262,
+          "zoom": 0.9583089953271028
+        }
+      },
+      "row_version": 12,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-19T05:33:24.094192Z",
+      "updated_at": "2026-10-19T05:34:08.240095Z"
+    },
+    {
+      "id": "8230aca1-c02d-4229-89cd-384b57f00b87",
+      "name": "工序模版 2026-10-19 10:46:51",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "113d00a9-4301-4450-b2e5-0cd07c2f8640",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 429.93609619140625,
+              "y": 73.7109375
+            }
+          },
+          {
+            "id": "2e98e939-0841-432b-8c34-bfac67a4755f",
+            "code": "2.1",
+            "name": "工序2",
+            "description": "",
+            "position": {
+              "x": 275.44741547107697,
+              "y": 220.35508728027344
+            }
+          },
+          {
+            "id": "de36319a-6f2a-457a-b83d-0c753b534406",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 516.8501254320145,
+              "y": 223.6540985107422
+            }
+          },
+          {
+            "id": "8fdcb950-0beb-4290-90ad-aa18ffe5f979",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 427.35439789295197,
+              "y": 405.74571228027344
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "df137bdb-f544-42d4-b905-2218a1ba58a0",
+            "source": "113d00a9-4301-4450-b2e5-0cd07c2f8640",
+            "target": "2e98e939-0841-432b-8c34-bfac67a4755f"
+          },
+          {
+            "id": "e237e1aa-0e75-4e2e-88fd-7d146ed2aa7b",
+            "source": "113d00a9-4301-4450-b2e5-0cd07c2f8640",
+            "target": "de36319a-6f2a-457a-b83d-0c753b534406"
+          },
+          {
+            "id": "5e3f5dd6-5e1b-4c2a-9590-f004e8fa032e",
+            "source": "2e98e939-0841-432b-8c34-bfac67a4755f",
+            "target": "8fdcb950-0beb-4290-90ad-aa18ffe5f979"
+          }
+        ],
+        "viewport": {
+          "x": 0.110107421875,
+          "y": 0.22021484375,
+          "zoom": 1
+        }
+      },
+      "row_version": 9,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-19T02:46:54.049357Z",
+      "updated_at": "2026-10-19T02:47:23.229369Z"
+    },
+    {
+      "id": "91ae5512-7ffc-48ec-9e81-bbeca64c74c3",
+      "name": "工序模版 2026-10-16 14:47:23",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "8169b032-8763-40e3-8600-9d495161e07b",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "b66c6c8f-b499-4ecd-b8de-b6d605837b61",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "6054a4f4-ecc5-409f-82ef-7e91f5308e29",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "030109b6-eb92-4872-baca-2d1b23cb6a0c",
+            "source": "8169b032-8763-40e3-8600-9d495161e07b",
+            "target": "b66c6c8f-b499-4ecd-b8de-b6d605837b61"
+          },
+          {
+            "id": "86edadd7-c637-4cad-823c-18739661725d",
+            "source": "8169b032-8763-40e3-8600-9d495161e07b",
+            "target": "6054a4f4-ecc5-409f-82ef-7e91f5308e29"
+          }
+        ],
+        "viewport": {
+          "x": 444.8125,
+          "y": 147.1015625,
+          "zoom": 1
+        }
+      },
+      "row_version": 5,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-16T06:47:28.607872Z",
+      "updated_at": "2026-10-16T06:47:43.041616Z"
+    },
+    {
+      "id": "eb86b576-2514-44bd-be21-432a7018bcdb",
+      "name": "工序模版 2026-10-16 10:24:03",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "f7797f1b-4d7c-47e6-9366-2c97b5fd0ccc",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "82ddc540-4cf2-4829-bbfc-cee4492f021a",
+            "code": "2.1",
+            "name": "工序2.1",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "c673c9ae-0fab-4bfd-ab8c-17d3f58c4c43",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          },
+          {
+            "id": "ea7eb8db-9cb7-4778-a920-66133507aa03",
+            "code": "3",
+            "name": "工序3",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 412
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "ecec38ef-7bab-41a3-bdaa-665a3718069f",
+            "source": "f7797f1b-4d7c-47e6-9366-2c97b5fd0ccc",
+            "target": "82ddc540-4cf2-4829-bbfc-cee4492f021a"
+          },
+          {
+            "id": "2298f75d-3433-48ba-a5ac-1aa4c48d5805",
+            "source": "f7797f1b-4d7c-47e6-9366-2c97b5fd0ccc",
+            "target": "c673c9ae-0fab-4bfd-ab8c-17d3f58c4c43"
+          },
+          {
+            "id": "ebceb870-eb03-4925-ab48-75b60a26d083",
+            "source": "82ddc540-4cf2-4829-bbfc-cee4492f021a",
+            "target": "ea7eb8db-9cb7-4778-a920-66133507aa03"
+          }
+        ],
+        "viewport": {
+          "x": 297,
+          "y": 15.9765625,
+          "zoom": 1
+        }
+      },
+      "row_version": 9,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-16T02:24:06.307843Z",
+      "updated_at": "2026-10-16T02:28:50.118932Z"
+    },
+    {
+      "id": "32fe2223-3f8c-4851-addb-ceb297405cab",
+      "name": "工序模版 2026-10-15 14:16:38",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "aa6b9688-07fe-48c5-970c-ab34c1dac396",
+            "code": "1",
+            "name": "磨平面",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 60
+            }
+          },
+          {
+            "id": "dbe4c708-ce10-4472-b2c9-4bb6e9eb05b7",
+            "code": "2",
+            "name": "粗磨外径",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "e8232753-e6b9-45de-9963-a31db96feaf4",
+            "code": "3",
+            "name": "粗磨外滚道",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 412
+            }
+          },
+          {
+            "id": "dbedb532-f460-4028-99ae-b4090b7ac5b0",
+            "code": "4",
+            "name": "磨挡道",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 588
+            }
+          },
+          {
+            "id": "14d45f2e-274c-4df8-b1d0-4d1f4483437f",
+            "code": "5",
+            "name": "精磨外径",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 764
+            }
+          },
+          {
+            "id": "a3b15186-07eb-4f9e-9af0-5d764be9d8ac",
+            "code": "6",
+            "name": "精磨外滚道",
+            "description": "",
+            "position": {
+              "x": 526.4866112650046,
+              "y": 298.9058171745152
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "5c8edffc-e733-4761-ae6e-edbd45708af2",
+            "source": "aa6b9688-07fe-48c5-970c-ab34c1dac396",
+            "target": "dbe4c708-ce10-4472-b2c9-4bb6e9eb05b7"
+          },
+          {
+            "id": "ef883caa-cb3b-42ef-9799-6f9c67762540",
+            "source": "dbe4c708-ce10-4472-b2c9-4bb6e9eb05b7",
+            "target": "e8232753-e6b9-45de-9963-a31db96feaf4"
+          },
+          {
+            "id": "befedcc0-7cf5-4346-a5ba-7ecff2c3f213",
+            "source": "e8232753-e6b9-45de-9963-a31db96feaf4",
+            "target": "dbedb532-f460-4028-99ae-b4090b7ac5b0"
+          },
+          {
+            "id": "26db1efc-6cc5-4192-b539-f5858e4efdba",
+            "source": "dbedb532-f460-4028-99ae-b4090b7ac5b0",
+            "target": "14d45f2e-274c-4df8-b1d0-4d1f4483437f"
+          },
+          {
+            "id": "aafe1a66-5467-40c4-be22-949e3785d258",
+            "source": "14d45f2e-274c-4df8-b1d0-4d1f4483437f",
+            "target": "a3b15186-07eb-4f9e-9af0-5d764be9d8ac"
+          }
+        ],
+        "viewport": {
+          "x": 671.3435969397087,
+          "y": -5.008659875526121,
+          "zoom": 0.8511855726926193
+        }
+      },
+      "row_version": 36,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-15T06:16:41.807790Z",
+      "updated_at": "2026-10-15T06:19:43.218404Z"
+    },
+    {
+      "id": "530d6a67-c279-49c9-9ed2-ca360d602eaf",
+      "name": "工序模版 2026-10-15 11:06:03",
+      "description": "",
+      "graph": {
+        "version": 1,
+        "nodes": [
+          {
+            "id": "37c4eb3e-9dc8-48aa-b414-1e0a8d4c3200",
+            "code": "1",
+            "name": "清洗",
+            "description": "",
+            "position": {
+              "x": 197,
+              "y": 60
+            }
+          },
+          {
+            "id": "086c4ba8-3aae-4e87-af2a-f4cad21a78a2",
+            "code": "2.1",
+            "name": "孔加工",
+            "description": "",
+            "position": {
+              "x": 80,
+              "y": 236
+            }
+          },
+          {
+            "id": "ce6151d3-1dde-4655-b754-f6c9d35ea573",
+            "code": "2.2",
+            "name": "工序2.2",
+            "description": "",
+            "position": {
+              "x": 314,
+              "y": 236
+            }
+          }
+        ],
+        "edges": [
+          {
+            "id": "74d2eecb-74a6-4057-82c7-995af4e567bc",
+            "source": "37c4eb3e-9dc8-48aa-b414-1e0a8d4c3200",
+            "target": "086c4ba8-3aae-4e87-af2a-f4cad21a78a2"
+          },
+          {
+            "id": "6e54e4c9-3f45-45ac-81ef-5dbecb8eb7f2",
+            "source": "37c4eb3e-9dc8-48aa-b414-1e0a8d4c3200",
+            "target": "ce6151d3-1dde-4655-b754-f6c9d35ea573"
+          }
+        ],
+        "viewport": {
+          "x": 340.1953125,
+          "y": 93.171875,
+          "zoom": 1
+        }
+      },
+      "row_version": 10,
+      "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+      "creator_name": "杨园园",
+      "created_at": "2026-10-15T03:06:06.618640Z",
+      "updated_at": "2026-10-15T03:06:35.541239Z"
+    }
+  ],
+  "total": 19
+}

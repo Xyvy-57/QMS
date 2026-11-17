@@ -1,0 +1,78 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序" [active]:
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - heading "工序管理" [level=1]
+  - paragraph: 维护图纸的工序、先后关系与关联标注
+  - complementary "选择图纸":
+    - heading "图纸工序" [level=2]
+    - button "选择图纸 选择已有图纸，选用模板或直接创建工序安排":
+      - generic: 选择图纸
+      - generic: 选择已有图纸，选用模板或直接创建工序安排
+    - paragraph: 一份图纸 · 一套工序
+    - button "工序模板":
+      - text: 工序模板
+  - tablist "工序管理":
+    - tab "图纸工序" [selected]:
+      - text: 图纸工序
+      - generic "数量：0": "0"
+    - tab "工序模板":
+      - text: 工序模板
+      - generic "数量：19": "19"
+  - tabpanel "图纸工序":
+    - textbox "搜索图纸工序":
+      - /placeholder: 搜索图纸名称、图号或文件名
+    - button "重置"
+    - button "刷新图纸工序":
+    - heading "图纸工序" [level=2]
+    - generic: 共 0 份图纸
+    - paragraph: 暂无符合条件的图纸工序
+    - paragraph: 选择已有图纸，选用模板或直接创建工序安排
+    - button "选择图纸"
+    - generic: 共 0 条，第 1 / 1 页
+    - button "上一页" [disabled]:
+    - button "第 1 页": "1"
+    - button "下一页" [disabled]:
+- tooltip "图纸工序":
+  - generic: 图纸工序

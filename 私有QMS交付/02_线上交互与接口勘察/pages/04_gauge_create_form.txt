@@ -1,0 +1,285 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - complementary:
+    - heading "筛选" [level=2]
+    - button "重置"
+    - heading "适用公差类型" [level=3]
+    - button "全部 10":
+      - generic: 全部
+      - generic: "10"
+    - button "线性尺寸 3":
+      - generic "线性尺寸"
+      - generic: "3"
+    - button "角度尺寸 1":
+      - generic "角度尺寸"
+      - generic: "1"
+    - button "形位公差 1" [pressed]:
+      - generic "形位公差"
+      - generic: "1"
+    - button "螺纹 1":
+      - generic "螺纹"
+      - generic: "1"
+    - button "表面粗糙度 1":
+      - generic "表面粗糙度"
+      - generic: "1"
+    - button "焊接 0":
+      - generic "焊接"
+      - generic: "0"
+    - heading "类别" [level=3]
+    - button "全部 10" [pressed]:
+      - generic: 全部
+      - generic: "10"
+    - button "检具 10":
+      - generic: 检具
+      - generic: "10"
+    - button "检验方法 0":
+      - generic: 检验方法
+      - generic: "0"
+  - main:
+    - heading "检具与检验方法" [level=1]
+    - generic: 共 1 项
+    - paragraph: 维护质检单可选的检验手段，并按适用公差类型快速定位。
+    - button "默认推荐设置":
+      - text: 默认推荐设置
+    - button "新建检验手段" [active]:
+      - text: 新建检验手段
+    - searchbox "搜索检具与检验方法"
+    - button "Close":
+    - generic: 形位公差
+    - button "形位公差":
+      - text: 形位公差
+    - article:
+      - heading "三次元" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - generic "CMM": 别名：CMM
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: ⌖
+        - generic: 位置度
+        - generic: ↗
+        - generic: 圆跳动
+        - generic: ⌒
+        - generic: 线轮廓度
+        - generic: ⏥
+        - generic: 平面度
+        - generic: ⌭
+        - generic: 圆柱度
+        - generic: ⌓
+        - generic: 面轮廓度
+        - generic: ⟂
+        - generic: 垂直度
+        - generic: ∥
+        - generic: 平行度
+        - generic: ∠
+        - generic: 倾斜度
+        - generic: ◎
+        - generic: 同心度
+        - generic: ⌰
+        - generic: 全跳动
+        - generic: ○
+        - generic: 圆度
+        - generic: ⌯
+        - generic: 对称度
+        - generic: 公差类别
+        - generic: 形位公差
+      - button "编辑 三次元":
+        - text: 编辑
+      - button "删除 三次元":
+        - text: 删除
+    - generic: 共 1 条，第 1 / 1 页
+    - button "上一页" [disabled]:
+    - button "第 1 页": "1"
+    - button "下一页" [disabled]:
+  - dialog "新建检验手段":
+    - generic: 新建检验手段
+    - button "关闭弹窗":
+    - generic: 检验手段类型 *
+    - radiogroup "检验手段类型":
+      - radio "检具" [checked]
+      - generic: 检具
+      - generic: 配置量程、精度等参数
+      - radio "检验方法"
+      - generic: 检验方法
+      - generic: 如目测、手感检查
+    - generic: 名称 *
+    - textbox "名称":
+      - /placeholder: 如：游标卡尺
+    - generic: 别名（选填）
+    - textbox "别名":
+      - /placeholder: 请输入别名
+    - group "匹配条件（选填）":
+      - generic: 匹配条件（选填）
+      - region "形位公差":
+        - heading "形位公差" [level=3]
+        - generic: 0 / 13
+        - generic "⌖ 位置度":
+          - checkbox "适用检测项：位置度"
+          - generic: ⌖
+          - generic: 位置度
+        - generic "⌭ 圆柱度":
+          - checkbox "适用检测项：圆柱度"
+          - generic: ⌭
+          - generic: 圆柱度
+        - generic "∥ 平行度":
+          - checkbox "适用检测项：平行度"
+          - generic: ∥
+          - generic: 平行度
+        - generic "⌯ 对称度":
+          - checkbox "适用检测项：对称度"
+          - generic: ⌯
+          - generic: 对称度
+        - generic "↗ 圆跳动":
+          - checkbox "适用检测项：圆跳动"
+          - generic: ↗
+          - generic: 圆跳动
+        - generic "⟂ 垂直度":
+          - checkbox "适用检测项：垂直度"
+          - generic: ⟂
+          - generic: 垂直度
+        - generic "∠ 倾斜度":
+          - checkbox "适用检测项：倾斜度"
+          - generic: ∠
+          - generic: 倾斜度
+        - generic "⌰ 全跳动":
+          - checkbox "适用检测项：全跳动"
+          - generic: ⌰
+          - generic: 全跳动
+        - generic "⌒ 线轮廓度":
+          - checkbox "适用检测项：线轮廓度"
+          - generic: ⌒
+          - generic: 线轮廓度
+        - generic "⌓ 面轮廓度":
+          - checkbox "适用检测项：面轮廓度"
+          - generic: ⌓
+          - generic: 面轮廓度
+        - generic "◎ 同心度":
+          - checkbox "适用检测项：同心度"
+          - generic: ◎
+          - generic: 同心度
+        - generic "○ 圆度":
+          - checkbox "适用检测项：圆度"
+          - generic: ○
+          - generic: 圆度
+        - generic "⏥ 平面度":
+          - checkbox "适用检测项：平面度"
+          - generic: ⏥
+          - generic: 平面度
+      - region "尺寸及孔":
+        - heading "尺寸及孔" [level=3]
+        - generic: 0 / 6
+        - generic "° 角度尺寸":
+          - checkbox "适用检测项：角度尺寸"
+          - generic: °
+          - generic: 角度尺寸
+        - generic "⌴ 沉孔":
+          - checkbox "适用检测项：沉孔"
+          - generic: ⌴
+          - generic: 沉孔
+        - generic "⌵ 沉头孔":
+          - checkbox "适用检测项：沉头孔"
+          - generic: ⌵
+          - generic: 沉头孔
+        - generic "↧ 深度":
+          - checkbox "适用检测项：深度"
+          - generic: ↧
+          - generic: 深度
+        - generic "⌀ 直径":
+          - checkbox "适用检测项：直径"
+          - generic: ⌀
+          - generic: 直径
+        - generic "R 半径":
+          - checkbox "适用检测项：半径"
+          - generic: R
+          - generic: 半径
+      - region "专项检测":
+        - heading "专项检测" [level=3]
+        - generic: 0 / 2
+        - generic "M 螺纹":
+          - checkbox "适用检测项：螺纹"
+          - generic: M
+          - generic: 螺纹
+        - generic "Ra 粗糙度":
+          - checkbox "适用检测项：粗糙度"
+          - generic: Ra
+          - generic: 粗糙度
+      - region "量程与精度":
+        - button "量程与精度" [expanded]:
+          - generic: 量程与精度
+        - text: 量程下限
+        - spinbutton "量程下限"
+        - text: 量程上限
+        - spinbutton "量程上限"
+        - text: 精度
+        - spinbutton "精度"
+        - text: 单位（选填）
+        - combobox "单位":
+          - option "不限" [selected]
+          - option "微米 (um)"
+          - option "毫米 (mm)"
+          - option "度 (deg)"
+          - option "角秒 (arcsec)"
+      - region "公差类别":
+        - heading "公差类别" [level=3]
+        - generic: 内置类型用于自动推荐；所有启用类型均可用于分类和筛选
+        - checkbox "线性尺寸"
+        - generic: 线性尺寸
+        - checkbox "角度尺寸"
+        - generic: 角度尺寸
+        - checkbox "形位公差"
+        - generic: 形位公差
+        - checkbox "螺纹"
+        - generic: 螺纹
+        - checkbox "表面粗糙度"
+        - generic: 表面粗糙度
+        - checkbox "焊接"
+        - generic: 焊接
+      - generic: 已选择 0 / 21 个检测项
+    - text: 备注（选填）
+    - textbox "备注":
+      - /placeholder: 补充适用场景或操作说明
+    - button "取消"
+    - button "保存"

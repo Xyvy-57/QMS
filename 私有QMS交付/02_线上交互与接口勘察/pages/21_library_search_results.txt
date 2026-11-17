@@ -1,0 +1,100 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - button "返回图纸库":
+    - text: 返回图纸库
+  - search:
+    - generic: 图纸名称或图号
+    - textbox "图纸名称或图号":
+      - /placeholder: 输入图纸名称、图号，或上传图纸
+      - text: "111"
+    - button "清空关键词":
+    - button "上传查询图纸":
+      - generic: 上传图纸
+    - button "搜索"
+  - main:
+    - heading "搜索结果" [level=1]:
+      - text: 搜索结果
+      - status: 1 份图纸
+    - paragraph: 与“111”相关的图纸
+    - generic "筛选搜索结果":
+      - generic: 图纸分类
+      - combobox "所属分类":
+        - option "全部分类" [selected]
+        - option "未分类"
+      - generic: 文件格式
+      - combobox "文件格式":
+        - option "全部格式" [selected]
+        - option "JPEG"
+      - generic: 标注状态
+      - combobox "标注状态":
+        - option "全部状态" [selected]
+        - option "已标注"
+        - option "未标注"
+        - option "标注中"
+      - combobox "结果排序":
+        - option "最近更新" [selected]
+        - option "图纸名称"
+      - group "结果显示方式":
+        - button "卡片显示" [pressed]:
+          - text: 卡片
+        - button "列表显示":
+          - text: 列表
+    - article:
+      - button "进入标注 111":
+        - img "111 缩略图"
+        - generic: JPEG · 1 页
+      - heading "111" [level=2]:
+        - button "111"
+      - generic "111"
+      - generic: —
+      - generic "未分类"
+      - generic: 已标注
+      - button "预览 111":
+      - button "标注 111":
+    - generic: 显示 1–1 份，共 1 份图纸
+    - button "上一页结果" [disabled]:
+    - button "第 1 页结果": "1"
+    - button "下一页结果" [disabled]:

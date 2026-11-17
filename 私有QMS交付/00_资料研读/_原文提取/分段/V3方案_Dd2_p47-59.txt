@@ -1,0 +1,584 @@
+
+
+===== PAGE 47 (chars=939, images=9) =====
+QMS V3  |  47
+附录A 
+技
+与工程契
+详细
+术设计
+约
+适用版本：当前QMS 检出 417e5d2a0ebfa826468893b5745329ba95982dc6；现有迁移要求 
+20261110_0021_finished_product。本文中的新增目录、表、API 与工作包均是设计，未向应用或远
+程库实施。当前实现证据见 research/current-system-feasibility.md；结构化契约见 models/technical-
+contracts.json。
+A1. 技
+决策与系
+界
+术
+统边
+采用现有 FastAPI + SQLAlchemy async + PostgreSQL + React/TypeScript 的模块化单体。同一部署
+提供Web BFF、质量业务API 及受限集成API；后台worker 可作为同一代码包的独立进程运行，使
+用同一数据库事务与任务表，初期无需Redis 或消息中间件。图纸文件与正式附件保存在私有对象存
+储，数据库保存对象标识、摘要、版本、保留规则及业务授权。
+当前按单一企业业务使用，不增加组织切换或租户层。权限按产品、批次、供方和具体对象在服务端
+核验。原生Axis 使用现有固定企业空间，图纸采用由QMS 业务对象及图纸使用授权管理；浏览器不
+能覆盖企业空间标识。
+QMS 持有质量要求、事实、判定、处置和限制；ERP/MES/WMS 持有其库存、生产和物流执行事
+实。QMS 可独立建料号、质量批次、检验任务与质量决策，外部单号只是可空引用。普通
+measurement 逐项实测可完成本次记录和真实报告，不自动形成整批接受；只有明确适用的接受策略
+才计算批判定。不默认增加人工放行、仓管交接或三层审批。当前处置只记录本次范围、动作、数量
+及凭据；正式人工决定只在明确配置策略时启用。全套实物流转、额度预占核销、外部执行和门户均
+未确认，不作为主链前置。
+A2. 模
+和目
+任
+块
+录责
+目录/模块
+保留或新增的职责
+明确边界
+server/app/iam、oidc
+保留账号、会话、OIDC/BFF、
+菜单及接口权限
+不把技术管理员或superuser 自动视为质量批准人
+
+
+===== PAGE 48 (chars=852, images=9) =====
+QMS V3  |  48
+目录/模块
+保留或新增的职责
+明确边界
+server/app/catalog、
+sampling
+保留主数据、已有标准根、项
+目来源、抽样标准与方案版本
+不在目录CRUD 中隐式完成技术判定或业务审批
+server/app/
+drawings/axis、
+web/src/axis
+保留图纸内容、文件版次、标
+注与原生画布/方案/实测交互资
+产
+原生业务入口经QMS 桥接；不另建登录，不直接连相邻
+PPS 服务
+新增 
+server/app/quality_b
+asis
+独立标准版本、业务方案修
+订、场景适用与采用；要求身
+份与版本映射
+一个方案修订只有一套业务批准/生效事实
+扩展 
+server/app/inspectio
+ns
+四类订单适配、轮次、样本、
+观察事实、技术判定、报告
+不用客户端结果或原生completed 状态代替服务器判定
+新增 
+server/app/quality_co
+ntrols
+本次范围、明确动作的质量限
+制、NCR/MRB、处置记录及凭
+据
+不自动整批Hold，不建设库存或物流执行账
+既有IAM 与新增动作
+策略校验
+账号/动作/对象权限、显式策
+略、固定内容签审
+不默认新增自然人、资格、委托平台；不臆定双人规则
+新增 
+server/app/evidence
+、jobs
+附件/不可变证据、导出任务及
+必要内部outbox
+worker 不得绕过当前对象与导出权限；外部集成待确认
+metrology、统计与
+quality_system
+量具/校准、首个交叉型Gage 
+R&R 研究、真实检验数据I-
+MR，CAPA/8D 及既有关联业
+务
+不把全部MSA 方法、结构化FMEA 或专业扩展自动纳
+入；管理评审仍为原资料入口
+web/src/pages、新增 
+web/src/quality
+保留动态菜单与既有IQC/FQC
+页，新增共享执行工作台及各
+业务页
+每日从正常入口创建/查询，支持多产品、多图版、多批
+次并行
+
+
+===== PAGE 49 (chars=1254, images=9) =====
+QMS V3  |  49
+新增包内部沿用现有 models.py / schemas.py / router.py / service.py 结构；当某服务确有独立责任时
+再拆文件。quality_basis/native_adapter.py 只翻译QMS 与原生蓝图/页面协
+议；inspections/native_execution_adapter.py 只翻译表图工作台协议，不拥有第二份实测业务规则。
+A2 1 
+航合同与
+象上下文
+导
+对
+原型导航和设计目录共用navigation-model.json，动态计算当前10 组、29 个稳定入口及53 个工作
+面；8 个候选只保存历史编号。P12 至P16 分别是五类检验的独立侧栏入口，P11 保留跨场景任务总
+览；P51 是MSA 独立入口。P27 供应商资料是供应商质量组的唯一稳定入口，P28 是明确supplierId
+的详情，P29 与P30 是可按全部或明确供方范围筛选的来料统计和整改跟踪视图。工作面仍记录
+pageId / groupId / entryPageId / role / label / purpose / lifecyclePlacement / entryPath / 
+requiresObject，共用执行实现不改变业务入口的独立性。
+导航分组不是服务拆分或数据库模型边界。本轮按用户明确要求新增五场景定义、业务方案根、方案
+修订和方案场景关联四张表，拟增核心表由34 张变为38 张；四类独立检验主单保留。原15 条生产
+目标命令保留，增加场景定义更新、方案创建/新修订/启停及标准启停五条，共20 条。供方主档复用
+现有CRUD，回复验证仍追加原NCR。本地动作数由责任合同计算，与生产接口数分开；这些生产表
+和命令均未迁移上线。
+内部工作面从稳定入口按对象ID 和已采用版本进入；需要对象的比较、签审和详情在缺少上下文时回
+到所属台账选择。面包屑和返回动作使用entryPageId 保持归属，历史P 路由可定位但不暴露为常驻
+菜单。旧深链不得绕过接口/对象权限；菜单过滤和隐藏只负责导航呈现。
+检验场景保留自身的业务输入和结果用途，复用执行子对象；CAPA 和客诉分别保留案件及关闭条
+件。供方回复验证保存在原NCR，CAPA/8D 复用sourceNcrId，不生成第二套SCAR 案件。器具、
+审核、文件和培训按各自对象生命周期组织，工具、矩阵和队列不生成第二套权威对象。正常业务UI
+不显示工程批次，后续开发顺序只在工程附录维护。
+原型动作与设计目录共用responsibility-model.json，按53 个pageId 维护负责、办理、审查、输入输
+出、上下游及实际能力。业务职责不复用导航的role 层级字段。详细矩阵保存在文档，产品页只保留
+当前岗位、动作、对象/版本和必要状态或具体拒绝原因，不逐页渲染职责面板及实现报告。演示岗位
+选择仍不构成企业任命或正式服务端授权。
+
+
+===== PAGE 50 (chars=1174, images=9) =====
+QMS V3  |  50
+首页P01 聚合当前空间事实并提供可办理工作，不将尚未接通的派工展示为“我的全部任务”。分析按
+显式产品、方案及特性定位，空选择不回落第一条。量具可正常建档并被MSA 引用；普通检验轮次
+可显式保存各特性的量具引用快照，借还用途不生成measurement 关联，引用和读数保存不等于已
+完成资源资格核验。
+本地可写入口在事件分派和表单提交时执行同一职责检查；缺失职责、动作不匹配或上下文对象无效
+时拒绝，不能仅靠菜单或按钮隐藏。原生工作台的可写入口同样受职责检查；只读投影不能借详情或
+深链变成编辑。职责切换不改变业务状态、处理身份或历史签名。生产服务端仍须依下述IAM、动
+作、对象、内容摘要和明确策略统一核验，不能把前端演示检查作为安全控制完成的证据。
+报告工作面上下文保存taskId + roundId，台账、历史、待审与返回路径沿用同一对ID；查询和审查
+不得静默替换为任务最新轮次。图版/方案比较保留明确左右对象及修订ID，后续变更评估沿用该比
+较对；存在多个候选时需显式选择，不取第一条。
+A2 2 本
+量
+主
+与分析契
+轮质
+业务
+线
+约
+本地原型先以图纸气泡或手录维护独立技术标准版本；再编制显式引用该版、适用场景和项目的独立
+方案修订，按产品和场景选择适用方案开检。建单展示采用项目，继承技术规则而不临时改公差、单
+位、项目或计数参数；已有质量批次可续建另一独立任务。普通measurement 与single_count 计数
+批判定分开，逐项实测不强制Ac/Re，测量符合不自动批接受。同一使用者在具有相应动作权限时可
+连续维护、开检、录数；演示岗位及动作分工仍为待确认示例配置，当前质量工程师可连续维护、开
+检和录数，检验员可从已有方案开检和录数。图纸到标准的采用记录保存源图纸/方案及修订ID、特
+性映射和本地依据ID；不凭名称合并，也不要求原生与本地重复批准。同一实测不能为分析再手抄一
+份；分析引用已保存点ID 及采用的要求修订。
+本地quality-work-model 分别管理图纸特性采用、量具建档、按特性选择的轮次量具快照，以及
+CAPA/8D 案件和阶段记录。案件关联明确产品与可选NCR，关闭核对所需阶段、当前有效性证据和
+结案依据；最近验证失败不取旧有效记录补位。案件状态不回写原检验、报告或其他Hold，方法和历
+史记录均保留。
+本地I-MR 保存显式productId + planId/修订 + characteristicId 及按顺序选择的observationIds，每次
+按当前可采纳事实重算；单位从采用要求核对。同ID 草稿读数修订后结果可能变化，当前没有固定结
+果快照或方法版本存证；生产实现应另存原值、方法/计算版本和结果修订。只用可核实本地来源的当
+
+
+===== PAGE 51 (chars=1408, images=9) =====
+QMS V3  |  51
+前有效读数，不混方案快照或单位，真实超差点保留。相邻移动极差为绝对差，估计sigma 为MR 均
+值/1.128；I 限为均值±3sigma，MR 限为0 与3.267MR 均值。数据不足、常数或无法计算状态单独返
+回，点超限不转写技术合格、批接受或Hold。
+MSA 研究保存量具引用、适用产品/特性、单位、零件及操作者身份列表、重复次数、专用观测单元
+和分析修订。首方法为平衡交叉型两随机因素ANOVA，保留交互项、不自动合并；结构至少2 个零
+件×2 个操作者×2 次重复，每个单元唯一且完整。重复性方差取MS 误差，交互分量为(MS 交互−MS
+误差)/重复数，操作者和零件分量按交互均方及对应因子规模估计；原负估计及截为0 的警告同时保
+存。GRR 由重复性、操作者与交互分量合成；%StudyVar 按分量标准差与总标准差计算，总变差为0
+时不可计算。研究结果不自动配置企业阈值、批准量具或更改校准期限。
+检验策略与结果分层沿用同一证据账：measurement 输出所检项目及对象范围的符合性和记录完成状
+态，批接受保持未作判定；single_count 在明确的计数对象、所需样本及完整证据基础上另输出接
+受/拒收。批量单位、样本实体数和特性测量单位分开，不把kg 数量直接代入计数n。开检命令引用
+已有batchId 时继续沿用该质量批次，每个新任务有独立身份、方案快照和轮次；外部系统、设备及
+供方不成为通用前置。
+本地方案sampling.kind=measurement 保存非空sampleUnit 及可选正整数n，不混入ac/re/
+countUnit/earlyReject；开检明确本轮正整数n 和与方案相同的sampleUnit，不改策略。技术结果为
+conforming/nonconforming/insufficient；报告完成后的scope_conforming/scope_nonconforming 绑定
+scopeKind=samples、轮次ID、样本及项目ID，usage=evidence_only，不授权使用或发运。
+single_count 开检省略参数即继承，显式参数须与方案全等；仅整数件制批量可新建计数批判定。既
+有非件制计数的历史技术结果和报告保留，当前接受状态为legacy_scope_unverified，不声称整批已
+验证。复检可明确本轮安排，但不能改变策略类型，也不能覆盖原轮结果。
+供应商核心复用state.suppliers 主档及IQC 质量批次；批次可空supplierId / receivedAt，续批不得重
+绑或覆盖日期，历史未知不按同名或首条主档匹配。供方资料id/code/name/contact/phone/email/
+description/productIds 保留实际创建、更新身份与时间；代码不区分大小写判唯一，关联产品必须存
+在。普通非IQC 不增加供方前置，也不引入准入批准或综合交付/服务评分字段。
+deriveSupplierQuality 使用显式{supplierId?,productId?,from?,to?}选择，统计与supplierTrace 下钻保
+持同一范围；非法筛选返回ok:false 及error，不抛异常或静默扩成全部范围。完成原检批次按批去
+
+
+===== PAGE 52 (chars=1334, images=9) =====
+QMS V3  |  52
+重，要求其所有原IQC 任务技术完整且已提交；已知问题取任一真实IQC 轮的可采纳失败。完整样本
+只取原轮、按各样本全部必测项可采纳独立计算，不要求其他样本或任务已提交；按sampleUnit 分
+组，混单位总率和零分母均不可计算。主要不符合要求按同batch、实际sampleId、稳定
+characteristicId 和单位去重复检同实体失败，新样本分别保留；measurement 不符合不转成批拒收。
+月份按来料日期归期，优先receivedAt，缺少则批次createdAt 本地日期；日期都未知者无日期筛选
+时保留，有from/to 时排除并列excludedUndatedBatches 说明。
+appendSupplierFollowup 追加request / reply / verification 到ncr.supplierFollowups，保留content、
+evidence、实际actor 和日期。request 须有owner，dueAt 可空，填写时为有效日期；状态提供当前
+责任人、期限与逾期提示，不要求先安排才能记录回复。新request 后只取其后的reply 和verification
+判断当前进展；verification 绑定最新replyId，过期表单拒绝，新回复使旧验证过期，历史保留。
+supplierFollowupStatus 为awaiting_reply / awaiting_verification / verification_failed / verified，仅表示
+跟踪。验证不修改NCR/CAPA/Hold 关闭状态，CAPA 通过sourceNcrId 引用同一问题。权限按当前
+演示配置独立检查createSupplier、updateSupplier 和appendSupplierFollowup，不外推为企业岗位
+制度。
+统计任务行保留originalRoundId、originalReport 及failedRoundIds；原检和实际失败轮次的报告链
+接携带对应roundId，不从activeRoundId 推断。不以复检通过隐藏中间失败轮次。
+当前本地持久化与生产应用设计分开：本轮分析、量具和问题交互按实际本地实现验收，不声称新增
+生产表已迁移。分析与MSA 不另外新增生产专表；当前核心设计为38 张拟增表、20 条命令（含本轮
+基础定义与方案版本维护），均不冒称已迁移；专业域后续持久化必须存研究、原始观测、来源清
+单、方法和结果修订，事务及权限沿用本文约定。其他控制图或MSA 方法不作为本次默认能力。
+A3. 公共数据
+定
+约
+A3 1 
+、
+、精度与保留
+标识
+时间
+主键使用服务端UUID，保留既有主键。业务编号是可搜索标识，不作为跨模块主键。新业务记录保
+存 created_at/recorded_at TIMESTAMPTZ；发生时间另设 occurred_at TIMESTAMPTZ NULL，无
+法确认则保留原文字段和未知标记，不用录入时间冒充发生时间。API 时间带时区，数据库UTC，界
+面按用户时区展示。
+
+
+===== PAGE 53 (chars=1404, images=9) =====
+QMS V3  |  53
+计件数量保持整数语义；新增通用业务数量采用 NUMERIC(30,12)，API 以十进制字符串表达，配合
+受控单位ID。数量入账前必须确认可无损表示，超精度/范围不能静默舍入；超出结构化字段能力的
+真实数量仍保留原文及待处理原因，不以舍入后的数字冒充实际量。单位的维度、换算规则和展示舍
+入版本一并固定；跨维度或未授权换算不得形成规范账量。原有建单API 继续接受当前安全整数范
+围，不破坏旧客户端；新接口数量统一字符串，由适配器无损转换。
+技术测值与公差边界的判定权威采用精确规范十进制字符串：normalized_decimal TEXT 及要求规范
+中的十进制字符串保留所有有效数字，连同单位/规范化规则进入证据摘要。服务器用精确Decimal 比
+较，禁止先quantize 到12 位、转二进制float 或使用默认有限精度上下文默默舍入；换算必须确保精
+确，出现inexact 则标不可采纳待技术评估。numeric_value NUMERIC(30,12)仅是可空查询投影，只
+有可无损表示才写入，超范围置NULL；正式判定与签审hash 永不读取该投影。例如上限10.02、测
+值10.0200000000000001 必须判超差，不能存成10.020000000000 后判合格。无法解析或超出受支
+持规范化范围的原始测值仍保存为事实/intake，不能因此丢弃证据。
+草稿允许修改，但有 row_version BIGINT >= 1。提交后的要求修订、观察事件、判定快照、签审和
+处置凭据采用追加记录；更正通过 supersedes_id 连接，撤销通过独立撤销事件连接。正式历史外键 
+ON DELETE RESTRICT，草稿下属临时对象才可按受控删除规则清理。不可变表由数据库触发器/最
+小权限业务角色限制UPDATE 和DELETE；技术修复使用有审计的专门迁移，不提供“管理员改结
+论”接口。
+A3 2 状
+度
+态维
+检验轮次分别保存执行状态、技术结果和报告状态，避免一个“完成”混合三个意思：
+
+execution_state：planned / active / submitted / closed / voided。
+
+technical_state：measurement 使用conforming / nonconforming / insufficient；single_count 使用
+accepted / rejected 及未评定、未完成或待定状态。历史枚举按原策略保留，不将measurement
+符合统一写成accepted。
+
+report_state：none / draft / frozen / review_required / approved / superseded / voided。
+
+policy_outcome：pending / auto_accepted / manual_review_required / accepted / rejected。
+policy_outcome 仅在有适用接受规则时表达对应接受决定，普通measurement 的被检范围结果另
+存，不据此生成批接受。single_count 的technical_state=accepted 不等于出货许可，
+
+
+===== PAGE 54 (chars=1085, images=9) =====
+QMS V3  |  54
+report_state=approved 可以对应真实不合格报告。若明确策略允许自动接受，服务器在证据充分、无
+适用阻断且满足该规则时记录策略版本和系统决策，不虚构人工批准。人工审查的人员及资格条件仅
+按显式策略选择，不默认要求另一自然人。任务关闭只证明本任务要求完成，不修改独立Hold/CAPA
+或外部库存。
+A4. 
+有表与新增表
+系
+现
+关
+A4 1 保留四
+，共用
+行子表
+类检验头
+执
+保留现有 incoming_inspection_orders、process_inspection_orders、
+finished_product_inspection_orders、outgoing_inspection_orders。各表保留现有类型字段、编号、
+主数据外键和历史显示快照；追加 quality_lot_id、execution_profile、row_version 和 legacy_state，
+新增列先可空或有兼容默认，不强行回填未知事实。
+推荐 qms_inspection_round 使用四个可空FK：incoming_order_id、process_order_id、
+finished_order_id、outgoing_order_id，并定义 num_nonnulls(...) = 1。四个FK 分别指向对应独立检
+验表，均RESTRICT；每类建立轮号唯一索引 (对应order_id, round_no) WHERE 对应order_id IS 
+NOT NULL，并检查 round_no > 0。唯一活动轮次另建独立owner 唯一索引：UNIQUE(对应
+order_id) WHERE 对应order_id IS NOT NULL AND execution_state IN 
+('planned','active','submitted')，不能复用含round_no 的索引防并行活动轮。服务端 OrderRef 
+{kind,id} 只作协议表达，入库转换为明确FK，不在数据库留下无约束的多态ID。
+方案
+收益
+代价/选择
+四个显式FK 的共享
+轮次表
+保留用户要求的四个独立业务
+头；证据、样本、判定逻辑共
+享；数据库可验归属
+增加检验类型需迁移；当前四类稳定，推荐
+每类各自轮次/实测表
+归属简单，类型扩展可独立
+重复四套迁移/索引和证据关联；仅在必须物理隔离执行
+数据时选择
+通用检验主表替代四
+表
+统一查询方便
+违背现有明确独立表约束，迁移范围大，本设计不采用
+
+
+===== PAGE 55 (chars=1040, images=9) =====
+QMS V3  |  55
+方案
+收益
+代价/选择
+owner_type + 
+owner_id 无真实FK
+初期字段少
+产生悬空引用和跨类错绑；本设计不采用
+轮次不能删除首轮失败；复检创建下一轮并保存 parent_round_id、原因、适用返工依据及本轮采用修
+订。父轮必须与子轮同检验类型、同一主单且 parent.round_no < child.round_no；禁止自引用、跨单
+关联及环路。创建时先锁对应订单头，再读取/锁父轮并校验上述条件；数据库约束触发器复查，
+owner/round_no/parent_round_id 创建后不可随意修改，防止并发写入或直接SQL 绕过。既有任务复
+检沿原方案及标准版本，只新建本轮样本安排；不能借复检偷换技术要求。按新标准重新检验应显式
+另建采用新方案修订的任务，并保留与原问题的实际关联。
+A4 2 
+景 
+准 方案与任
+采用
+场
+标
+务
+场景与标准不是父子关系。场景用于方案适用范围；图纸气泡或手录技术要求形成标准版本；方案选
+定标准版本与其中的项目并设置执行安排；任务采用三者确定内容。新增P61 检验场景只维护五个既
+有代码及定义，不建设自定义类型、动态菜单或流程引擎。触发说明不等于已接自动触发接口。
+表或表族
+主键、核心引用
+主要约束
+qms_inspection_scene
+稳定code；定义字段、is_enabled、
+definition_version
+code 固定IQC/FIRST_ARTICLE/IPQC/FQC/
+OQC；定义修改带版本，不删历史代码
+现有 
+inspection_standards 与 
+qms_basis_revision
+标准稳定根；standard_id、
+revision_no、content_hash；标准版
+is_enabled
+技术标准与版本独立，不含场景父ID；提交内
+容不可变，修订用新ID
+qms_requirement_identit
+y/revision
+稳定特性身份及所属
+basis_revision_id；原文、规范公
+差/单位、来源
+UNIQUE(basis_revision_id,identity_id)；技术
+要求只在标准层维护
+qms_inspection_plan
+稳定plan 根、material_id、
+current_revision_id
+current_revision 必须属于本方案；当前指针不
+回写旧任务
+
+
+===== PAGE 56 (chars=1133, images=9) =====
+QMS V3  |  56
+表或表族
+主键、核心引用
+主要约束
+qms_inspection_plan_rev
+ision
+plan_id、确定basis_revision_id；选
+定要求ID、执行/报告安排、
+content_hash 及版级启停投影
+单版只引用一个标准版本；要求ID 必须属于该
+版且不重复；冻结后不可改
+qms_plan_scene
+PK(plan_revision_id,scene_code)；
+两端真实FK
+保留一方案多场景；标准本身不按场景复制或
+归属
+qms_basis_applicability
+标准版本、物料、明确业务上下文与
+有效范围
+只表达技术标准适用范围，不代替方案场景关
+系或抽样安排
+qms_basis_adoption
+round_id、plan_revision_id、
+basis_revision_id、scene_code 及采
+用快照
+复合FK 核对采用与本轮一致；提交后不替
+换；不读取current 指针重建历史
+原生 
+inspection_plan_template
+_revisions
+方案修订的可选workspace/
+template/revision 复合引用
+原生承载呈现蓝图，不替代业务方案根；旧
+basis 上的原生引用保留为来源
+新建业务方案需要确定标准版本、适用场景与该版内项目；服务端和约束触发器校验项目归属，不接
+受另填一组公差覆盖标准。方案保存measurement 或single_count 策略；本次measurement 实际n
+与复检样本安排只进入本轮sampling 快照，不覆盖原方案快照。原生呈现的内容冻结和QMS 业务适
+用保持一个权威，不新增一套重复审批。
+任务建单在同一事务重新核验产品、图版、场景启用、方案启用、标准版本启用及引用一致性，随后
+固定scene 定义快照、plan 修订和standard 要求内容。标准新修订不会自动切换现有方案，方案新修
+订不会回写旧任务。停用只拦新采用，既有任务的事实录入、提交、复检及历史分析继续使用原快
+照，不能因根对象现已停用而封住历史工作。
+本地实现采用扁平不可变版本记录：standardVersionId 与稳定standardId 分开，plan 版本ID 与稳定
+planFamilyId 分开；resolvePlan 只投影旧执行形状，不重新存第二份可编辑技术要求。旧
+createPlan/createDrawingPlan 如保留，仅为兼容适配，不列当前编制API 或可办动作。旧任务
+JSON、原值、原失败与报告不重写；兼容提取按原plan ID 及其确定内容，不凭名称合并，无法证明
+
+
+===== PAGE 57 (chars=1118, images=9) =====
+QMS V3  |  57
+的历史定义版本保持legacy 未知。启停针对所选版本，不默认级联停用同族所有版本。技术
+content_hash 与不可变内容不包含启停投影，availability_version 变更与追加审计事件同事务；不可
+变内容与可变使用状态分别约束。正式数据库迁移仍是生产目标，本轮未执行。
+图纸到标准的来源固定drawing/package/history/source_item/hash；球标号只是显示号。当前本地标
+准表单支持明确数值技术项目，method 编辑尚未接通；完整方法/属性要求的生产规格不能反写为当
+前已实现能力。
+A4 3 
+本、
+与
+告
+样
+实测
+报
+表或表族
+主键、核心引用
+主要约束
+qms_inspection_round
+PK id；四选一订单FK；
+plan_revision_id/basis_revision_id/sc
+ene_code；三层采用快照；本轮
+sampling；parent_round_id 可空
+新采用必须精确引用方案及其标准；
+measurement 不要求Ac/Re；实际n 只属本
+轮；轮次唯一/唯一active，历史不依赖current
+指针
+qms_round_requirement
+PK(round_id,requirement_revision_i
+d)；保存本轮适用/必检要求及计划样
+本数
+复合FK 同时核对round 采用的basis 与
+requirement 所属basis，阻止跨方案错绑
+qms_inspection_sample
+PK id；FK round_id；实体标识/样本
+编号、取样位置、破坏性/留样属性
+UNIQUE(round_id,sample_code)；同一序列件
+在同轮不得重复冒充多个样本
+qms_observation_event
+PK id；FK 
+round_id/sample_id/requirement_rev
+ision_id；normalized_decimal 精确
+字符串；numeric_value 可空查询投
+影；supersedes_id 可空
+复合FK 保证样本与要求属于本轮；判定/hash
+使用精确字符串；事件不可变，更正原值和理
+由必留
+qms_observation_assess
+ment
+observation_event_id、
+assessment_version、
+admissibility、理由、依据摘要
+UNIQUE(observation_event_id,assessment_v
+ersion)；量具失准可追加不采纳评估，不删除
+事实
+
+
+===== PAGE 58 (chars=1184, images=9) =====
+QMS V3  |  58
+表或表族
+主键、核心引用
+主要约束
+qms_judgment_snapshot
+round_id、input_hash、
+ruleset_revision、policy_revision、
+结果/理由
+UNIQUE(round_id,input_hash,ruleset_revision
+,policy_revision)；服务器产生，客户端不得传
+最终结果
+qms_report_revision
+round_id、native_report_revision_id
+可空、evidence_manifest_id、内容
+摘要
+UNIQUE(round_id,revision_no)；明确来源判
+定和观察版本，签审绑定摘要
+qms_approval_request/
+record
+被签对象的强类型关联、
+content_hash、申请/签署用户、
+policy_revision 及策略快照
+人工动作必须有显式策略；独立性/资格仅按所
+选策略；内容或范围变化旧签名不覆盖新版本
+实测事实的唯一可写源选择： 新QMS 用 qms_observation_event 作为唯一权威事实账，原生工作台
+的表格/图纸联动通过适配器读写该账；报告快照和统计投影是派生数据。不是把同一实测在两套业务
+表独立维护。
+这一选择有具体约束依据：当前原生 inspection_report_item_measurement_sets.samples_json 每项
+最多200 条；逐样本旧表注释是legacy（inspection_report.py281—282、444—509），请求 
+measurement_no 也限定1..200（schemas/inspection_report.py72—76）。直接打开旧接口会限制全
+检规模并把位置序号误作稳定实体样本。新适配器按最多200 行一页/一次请求映射UI 显示序号到稳
+定sample_id，后端按分页读写无限制总数的观察表；总量仍受经测定的资源配额和任务政策控制，
+不宣称无限容量。
+原生measurement_sets 对于QMS 绑定报告只作只读投影或不生成；任何投影都带 
+source_round_version/source_hash，过期则重建，不能回写权威账。原生completed 报告只是工作
+内容冻结，不自动代表QMS 签审。已批准报告由固定manifest 生成，导出不能临时读取当前可变要
+求或测值。
+A4 4 事
+可保存与
+据采
+分
+实
+证
+纳
+开
+已授权事实登记者可以保存以下真实输入：量具当前禁用、历史校准无法核实、单位无法识别、测值
+无法数值解析、发生时间未知、人员资格待核验。写入成功返回 admissibility=not_adopted 或 
+
+
+===== PAGE 59 (chars=1075, images=9) =====
+QMS V3  |  59
+pending_review 和原因；原文/文件/录入时间完整保留。服务器判定将它们识别为证据缺口，不能算
+合格。
+身份/归属不匹配、缺必要结构字段或越权仍可拒绝结构化实测命令；若确有未能关联的真实材料，提
+供 POST /api/v1/evidence-intakes，记录未映射证据和待关联责任，不强行指定错误的样本或要求。
+技术结果变更不改写事实，事实更正不自动保持旧批准。
+A5. 本次范
+、限制与
+置
+围
+处
+记录
+A5 1 
+量批次与
+定范
+质
+选
+围
+qms_quality_lot 保留独立UUID、material_id 及本地批号，图纸修订可空，并为IQC 保留可空
+supplier_id 和received_at；续批继承原关联，不由另一任务覆盖。供方主档复用现有suppliers。当
+前生产incoming_inspection_orders.supplier_id 仍为非空FK，支持可选供方必须做显式可空/兼容迁
+移并保留真实旧快照；本轮未执行该迁移，不写入虚构占位供方。供方回复验证以
+qms_business_event 追加到原qms_nonconformance_case，不用SCAR 专表。外部引用用来源系
+统、类型和ID 唯一映射，不凭相同文本自动合并。qms_quality_scope/scope_member 固定本次选定
+批次、样本、序列号、数量与单位；用户必须明确选择限制范围，不能由NCR 自动推定全批。
+qms_disposition_line 记录本次动作、对象、量与单位、依据、责任、期限和实际凭据，区分决定、已
+完成、未完成及未知。相同对象重复处置或合计与已知范围不一致时提示核对，不修改原测量/原失
+败。复检可选择原样本的明确子集，也可新取样；不能默认全体重测、复制旧测值或要求先有正式报
+告。
+A5 2 
+量限制与解除
+质
+qms_hold 保存明确scope_id、restricted_actions、原因、责任和有效状态。创建限制必须提供范围与
+动作；多个有效限制按对象/动作匹配，解除一项只改变该项。解除保存本次凭据和当前动作权限；另
+一个人、专项资格或限额只在显式策略要求时校验。不把任意Hold 解释为禁止记录事实、调查及生
+成真实不合格报告。
+门禁计算输入为所请求动作及实际对象范围，返回相交且限制该动作的有效Hold；同批关系本身不能
+替代范围交集。读模型将“同批相关风险”与“本对象本动作受限”分别表达。选定样本的出货Hold 不会

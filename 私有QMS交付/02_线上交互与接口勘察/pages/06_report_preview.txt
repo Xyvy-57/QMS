@@ -1,0 +1,471 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - complementary:
+    - heading "筛选" [level=2]
+    - button "重置"
+    - heading "模板状态" [level=3]
+    - button "全部 8" [pressed]:
+      - generic: 全部
+      - generic: "8"
+    - button "草稿 0":
+      - generic: 草稿
+      - generic: "0"
+    - button "已启用 8":
+      - generic: 已启用
+      - generic: "8"
+    - button "已停用 0":
+      - generic: 已停用
+      - generic: "0"
+    - heading "创建方式" [level=3]
+    - button "全部 8" [pressed]:
+      - generic: 全部
+      - generic: "8"
+    - button "设计器模板 0":
+      - generic: 设计器模板
+      - generic: "0"
+    - button "原始 Excel 模板 8":
+      - generic: 原始 Excel 模板
+      - generic: "8"
+  - main:
+    - heading "质检报告模板" [level=1]
+    - generic: 共 8 个
+    - paragraph: 统一查找报告模板；系统提供的模板可复制到当前空间后修改。
+    - button "导入 Excel":
+      - text: 导入 Excel
+    - paragraph: 支持 .xlsx / .xls 格式
+    - button "新建模板":
+      - text: 新建模板
+    - combobox "模板来源":
+      - option "全部来源" [selected]
+      - option "空间自定义"
+      - option "系统提供"
+    - searchbox "搜索模板名称或源文件"
+    - button "Close":
+    - generic: 全部状态
+    - generic: ·
+    - generic: 全部创建方式
+    - article:
+      - button "预览 yaqiehangkong":
+      - button "yaqiehangkong"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "QR-C2-15_B0_特性查核报告模板.xlsx"
+      - generic: 更新于 2026/10/26 23:23
+      - generic: 已启用
+      - button "预览 yaqiehangkong": 预览
+      - button "复制并编辑"
+    - article:
+      - button "预览 zhaochenFAI报告新模版":
+      - button "zhaochenFAI报告新模版"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "zhaochenFAI报告新模版(1).xlsx"
+      - generic: 更新于 2026/10/26 10:28
+      - generic: 已启用
+      - button "预览 zhaochenFAI报告新模版": 预览
+      - button "复制并编辑"
+    - article:
+      - button "预览 hongze质检报告":
+      - button "hongze质检报告"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "宏泽质检报告.xlsx"
+      - generic: 更新于 2026/10/26 10:13
+      - generic: 已启用
+      - button "预览 hongze质检报告": 预览
+      - button "复制并编辑"
+    - article:
+      - button "预览 出货报告模版（系统）":
+      - button "出货报告模版（系统）"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "出货报告模版1.xlsx"
+      - generic: 更新于 2026/10/26 10:10
+      - generic: 已启用
+      - button "预览 出货报告模版（系统）": 预览
+      - button "复制并编辑"
+    - article:
+      - button "预览 制程巡检报告-夜班（系统）":
+      - button "制程巡检报告-夜班（系统）"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "new制程巡检报告--（填写样板.xlsx"
+      - generic: 更新于 2026/10/14 13:45
+      - generic: 已启用
+      - button "预览 制程巡检报告-夜班（系统）": 预览
+      - button "复制并编辑"
+    - article:
+      - button "预览 制程巡检报告-A班（系统）":
+      - button "制程巡检报告-A班（系统）"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "new制程巡检报告--（填写样板.xlsx"
+      - generic: 更新于 2026/10/14 13:47
+      - generic: 已启用
+      - button "预览 制程巡检报告-A班（系统）": 预览
+      - button "复制并编辑"
+    - article:
+      - button "预览 首件检验报告（系统）":
+      - button "首件检验报告（系统）"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "首件检验记录表2026.xlsx"
+      - generic: 更新于 2026/10/14 13:48
+      - generic: 已启用
+      - button "预览 首件检验报告（系统）": 预览
+      - button "复制并编辑"
+    - article:
+      - button "预览 全制程检验模版（系统）":
+      - button "全制程检验模版（系统）"
+      - generic: 系统提供
+      - generic: Excel 导入模板
+      - generic "古月FC全制程检验模版.xlsx"
+      - generic: 更新于 2026/10/14 13:49
+      - generic: 已启用
+      - button "预览 全制程检验模版（系统）": 预览
+      - button "复制并编辑"
+- dialog "预览：首件检验报告（系统）":
+  - banner:
+    - heading "预览：首件检验报告（系统）" [level=2]
+    - button "关闭预览：首件检验报告（系统）" [active]: ×
+  - banner:
+    - button "返回模板列表":
+    - textbox "模板名称": 首件检验报告（系统）
+    - generic: 原始 Excel 模板
+    - generic: 已启用
+    - generic: 系统提供 · 只读
+    - generic: 真实气泡图只在图纸/质检报告导出时生成
+    - button "下载试填 Excel":
+      - text: 下载试填 Excel
+  - main:
+    - generic: 配置
+    - generic "当前单元格": —
+    - button "适合宽度" [pressed]
+    - slider "Excel 预览缩放": "100"
+    - status: 100%
+    - generic "工作表行号":
+      - button "选择第 1 行" [disabled]: "1"
+      - button "选择第 2 行" [disabled]: "2"
+      - button "选择第 3 行" [disabled]: "3"
+      - button "选择第 4 行" [disabled]: "4"
+      - button "选择第 5 行" [disabled]: "5"
+      - button "选择第 6 行" [disabled]: "6"
+      - button "选择第 7 行" [disabled]: "7"
+      - button "选择第 8 行" [disabled]: "8"
+      - button "选择第 9 行" [disabled]: "9"
+      - button "选择第 10 行" [disabled]: "10"
+      - button "选择第 11 行" [disabled]: "11"
+      - button "选择第 12 行" [disabled]: "12"
+      - button "选择第 13 行" [disabled]: "13"
+      - button "选择第 14 行" [disabled]: "14"
+      - button "选择第 15 行" [disabled]: "15"
+      - button "选择第 16 行" [disabled]: "16"
+      - button "选择第 17 行" [disabled]: "17"
+      - button "选择第 18 行" [disabled]: "18"
+      - button "选择第 19 行" [disabled]: "19"
+      - button "选择第 20 行" [disabled]: "20"
+      - button "选择第 21 行" [disabled]: "21"
+      - button "选择第 22 行" [disabled]: "22"
+      - button "选择第 23 行" [disabled]: "23"
+      - button "选择第 24 行" [disabled]: "24"
+      - button "选择第 25 行" [disabled]: "25"
+      - button "选择第 26 行" [disabled]: "26"
+    - grid "空表 模板编辑":
+      - gridcell "A1"
+      - gridcell "A2 首件检验记录表 日期：2026年 月 日":
+        - generic: 首件检验记录表 日期：2026年 月 日
+      - gridcell "A3 产品名称":
+        - generic: 产品名称
+      - gridcell "E3":
+        - generic: 零件名称
+      - gridcell "K3 产品图号":
+        - generic: 产品图号
+      - gridcell "O3":
+        - generic: 图号
+      - gridcell "T3 机台":
+        - generic: 机台
+      - gridcell "V3"
+      - gridcell "A4 规格":
+        - generic: 规格
+      - gridcell "E4"
+      - gridcell "H4 材质":
+        - generic: 材质
+      - gridcell "J4"
+      - gridcell "O4 表面处理":
+        - generic: 表面处理
+      - gridcell "R4"
+      - gridcell "T4 工序":
+        - generic: 工序
+      - gridcell "V4"
+      - gridcell "A5 序号":
+        - generic: 序号
+      - gridcell "C5 尺寸/公差":
+        - generic: 尺寸/公差
+      - gridcell "G5 量具":
+        - generic: 量具
+      - gridcell "H5 结果":
+        - generic: 结果
+      - gridcell "K5 判定":
+        - generic: 判定
+      - gridcell "N5"
+      - gridcell "O5"
+      - gridcell "S5"
+      - gridcell "T5"
+      - gridcell "W5"
+      - gridcell "A6":
+        - generic: 气泡号
+      - 'gridcell "C6 {.nominal_value}/"':
+        - generic: 名义值
+        - text: /
+        - generic: 偏差
+      - gridcell "G6":
+        - generic: 检验方法/检具
+      - gridcell "H6":
+        - generic: 样本[1]
+      - gridcell "K6":
+        - generic: 判定结果
+      - gridcell "N6"
+      - gridcell "O6"
+      - gridcell "S6"
+      - gridcell "T6"
+      - gridcell "W6"
+      - gridcell "A7":
+        - generic: 气泡号
+      - gridcell "C7":
+        - generic: 技术要求内容
+      - gridcell "G7":
+        - generic: 检验方法/检具
+      - gridcell "H7":
+        - generic: 样本[1]
+      - gridcell "K7":
+        - generic: 判定结果
+      - gridcell "N7"
+      - gridcell "O7"
+      - gridcell "S7"
+      - gridcell "T7"
+      - gridcell "W7"
+      - gridcell "A8"
+      - gridcell "C8"
+      - gridcell "G8"
+      - gridcell "H8"
+      - gridcell "K8"
+      - gridcell "N8"
+      - gridcell "O8"
+      - gridcell "S8"
+      - gridcell "T8"
+      - gridcell "W8"
+      - gridcell "A9"
+      - gridcell "C9"
+      - gridcell "G9"
+      - gridcell "H9"
+      - gridcell "K9"
+      - gridcell "N9"
+      - gridcell "O9"
+      - gridcell "S9"
+      - gridcell "T9"
+      - gridcell "W9"
+      - gridcell "A10"
+      - gridcell "C10"
+      - gridcell "G10"
+      - gridcell "H10"
+      - gridcell "K10"
+      - gridcell "N10"
+      - gridcell "O10"
+      - gridcell "S10"
+      - gridcell "T10"
+      - gridcell "W10"
+      - gridcell "A11"
+      - gridcell "C11"
+      - gridcell "G11"
+      - gridcell "H11"
+      - gridcell "K11"
+      - gridcell "N11"
+      - gridcell "O11"
+      - gridcell "S11"
+      - gridcell "T11"
+      - gridcell "W11"
+      - gridcell "A12"
+      - gridcell "C12"
+      - gridcell "G12"
+      - gridcell "H12"
+      - gridcell "K12"
+      - gridcell "N12"
+      - gridcell "O12"
+      - gridcell "S12"
+      - gridcell "T12"
+      - gridcell "W12"
+      - gridcell "A13"
+      - gridcell "C13"
+      - gridcell "G13"
+      - gridcell "H13"
+      - gridcell "K13"
+      - gridcell "N13"
+      - gridcell "O13"
+      - gridcell "S13"
+      - gridcell "T13"
+      - gridcell "W13"
+      - gridcell "A14"
+      - gridcell "C14"
+      - gridcell "G14"
+      - gridcell "H14"
+      - gridcell "K14"
+      - gridcell "N14"
+      - gridcell "O14"
+      - gridcell "S14"
+      - gridcell "T14"
+      - gridcell "W14"
+      - gridcell "A15"
+      - gridcell "C15"
+      - gridcell "G15"
+      - gridcell "H15"
+      - gridcell "K15"
+      - gridcell "N15"
+      - gridcell "O15"
+      - gridcell "S15"
+      - gridcell "T15"
+      - gridcell "W15"
+      - gridcell "A16"
+      - gridcell "C16"
+      - gridcell "G16"
+      - gridcell "H16"
+      - gridcell "K16"
+      - gridcell "N16"
+      - gridcell "O16"
+      - gridcell "S16"
+      - gridcell "T16"
+      - gridcell "W16"
+      - gridcell "A17"
+      - gridcell "C17"
+      - gridcell "G17"
+      - gridcell "H17"
+      - gridcell "K17"
+      - gridcell "N17"
+      - gridcell "O17"
+      - gridcell "S17"
+      - gridcell "T17"
+      - gridcell "W17"
+      - gridcell "A18"
+      - gridcell "C18"
+      - gridcell "G18"
+      - gridcell "H18"
+      - gridcell "K18"
+      - gridcell "N18"
+      - gridcell "O18"
+      - gridcell "S18"
+      - gridcell "T18"
+      - gridcell "W18"
+      - gridcell "A19"
+      - gridcell "C19"
+      - gridcell "G19"
+      - gridcell "H19"
+      - gridcell "K19"
+      - gridcell "N19"
+      - gridcell "O19"
+      - gridcell "S19"
+      - gridcell "T19"
+      - gridcell "W19"
+      - gridcell "A20"
+      - gridcell "C20"
+      - gridcell "G20"
+      - gridcell "H20"
+      - gridcell "K20"
+      - gridcell "N20"
+      - gridcell "O20"
+      - gridcell "S20"
+      - gridcell "T20"
+      - gridcell "W20"
+      - gridcell "A21"
+      - gridcell "C21"
+      - gridcell "G21"
+      - gridcell "H21"
+      - gridcell "K21"
+      - gridcell "N21"
+      - gridcell "O21"
+      - gridcell "S21"
+      - gridcell "T21"
+      - gridcell "W21"
+      - gridcell "A22"
+      - gridcell "C22"
+      - gridcell "G22"
+      - gridcell "H22"
+      - gridcell "K22"
+      - gridcell "N22"
+      - gridcell "O22"
+      - gridcell "S22"
+      - gridcell "T22"
+      - gridcell "W22"
+      - gridcell "A23"
+      - gridcell "C23"
+      - gridcell "G23"
+      - gridcell "H23"
+      - gridcell "K23"
+      - gridcell "N23"
+      - gridcell "O23"
+      - gridcell "S23"
+      - gridcell "T23"
+      - gridcell "W23"
+      - gridcell "A24"
+      - gridcell "C24"
+      - gridcell "G24"
+      - gridcell "H24"
+      - gridcell "K24"
+      - gridcell "N24"
+      - gridcell "O24"
+      - gridcell "S24"
+      - gridcell "T24"
+      - gridcell "W24"
+      - gridcell "A25"
+      - gridcell "C25"
+      - gridcell "G25"
+      - gridcell "H25"
+      - gridcell "K25"
+      - gridcell "N25"
+      - gridcell "O25"
+      - gridcell "S25"
+      - gridcell "T25"
+      - gridcell "W25"
+      - gridcell "A26 备注：":
+        - generic: 备注：

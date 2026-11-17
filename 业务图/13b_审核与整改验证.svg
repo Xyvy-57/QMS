@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3200" height="2600" viewBox="0 0 3200 2600">
+<rect width="100%" height="100%" fill="white"/>
+<text x="90.00" y="126.92" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="72" font-weight="700" fill="#18364B" textLength="836.00" lengthAdjust="spacingAndGlyphs">13  质量审核与发现项整改</text>
+<text x="95.00" y="191.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#526879" textLength="1458.00" lengthAdjust="spacingAndGlyphs">审核报告发布、发现项本地验证和长期CAPA分别跟踪；独立性与发布权限按适用审核制度确认。</text>
+<polyline points="90,280 3110,280" fill="none" stroke="#C7D3DD" stroke-width="2" stroke-linejoin="round"/>
+<text x="95.00" y="2561.22" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="27" font-weight="400" fill="#526879" textLength="681.00" lengthAdjust="spacingAndGlyphs">QMS 系统完整设计 V3  |  业务控制与协作  |  2026-11-15</text>
+<rect x="80" y="330" width="3040" height="680" rx="10" fill="#F7F9FB" stroke="#DFE6EC" stroke-width="2"/>
+<rect x="80" y="330" width="250" height="680" rx="10" fill="#E9EFF4" stroke="#DFE6EC" stroke-width="2"/>
+<text x="100.00" y="394.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="136.00" lengthAdjust="spacingAndGlyphs">审核计划</text>
+<text x="100.00" y="438.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="136.00" lengthAdjust="spacingAndGlyphs">明确范围</text>
+<rect x="80" y="1060" width="3040" height="670" rx="10" fill="#F7F9FB" stroke="#DFE6EC" stroke-width="2"/>
+<rect x="80" y="1060" width="250" height="670" rx="10" fill="#E9EFF4" stroke="#DFE6EC" stroke-width="2"/>
+<text x="100.00" y="1124.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="136.00" lengthAdjust="spacingAndGlyphs">审核执行</text>
+<text x="100.00" y="1168.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="136.00" lengthAdjust="spacingAndGlyphs">整改责任</text>
+<rect x="80" y="1780" width="3040" height="590" rx="10" fill="#F7F9FB" stroke="#DFE6EC" stroke-width="2"/>
+<rect x="80" y="1780" width="250" height="590" rx="10" fill="#E9EFF4" stroke="#DFE6EC" stroke-width="2"/>
+<text x="100.00" y="1844.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="136.00" lengthAdjust="spacingAndGlyphs">独立验证</text>
+<text x="100.00" y="1888.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="170.00" lengthAdjust="spacingAndGlyphs">归档与承接</text>
+<rect x="400" y="400" width="500" height="220" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="425.00" y="456.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#3566A3" textLength="273.00" lengthAdjust="spacingAndGlyphs">制定计划与范围</text>
+<text x="425.00" y="513.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">审核员：依据、排程</text>
+<text x="425.00" y="556.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">受审活动和证据范围</text>
+<polygon points="1360.0,375 1610,500.0 1360.0,625 1110,500.0" fill="#FFF6DD" stroke="#A57913" stroke-width="3"/>
+<text x="1286.00" y="484.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="148.00" lengthAdjust="spacingAndGlyphs">审核人员</text>
+<text x="1249.00" y="531.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="222.00" lengthAdjust="spacingAndGlyphs">满足独立性？</text>
+<rect x="1830" y="400" width="500" height="220" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="1855.00" y="456.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#46657B" textLength="234.00" lengthAdjust="spacingAndGlyphs">确认审核任务</text>
+<text x="1855.00" y="513.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">按适用制度核对范围</text>
+<text x="1855.00" y="556.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">只使用明确对象权限</text>
+<rect x="1110" y="760" width="500" height="220" rx="18" fill="#FFF0ED" stroke="#B64035" stroke-width="3"/>
+<text x="1135.00" y="816.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#B64035" textLength="273.00" lengthAdjust="spacingAndGlyphs">重新分派审核员</text>
+<text x="1135.00" y="873.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="330.00" lengthAdjust="spacingAndGlyphs">不得审核本人负责工作</text>
+<text x="1135.00" y="916.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">无合格人员则待转交</text>
+<rect x="2550" y="400" width="500" height="220" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="2575.00" y="456.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#46657B" textLength="273.00" lengthAdjust="spacingAndGlyphs">执行检查并取证</text>
+<text x="2575.00" y="513.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">审核员：事实与准则</text>
+<text x="2575.00" y="556.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="264.00" lengthAdjust="spacingAndGlyphs">符合项不计问题数</text>
+<polygon points="2800.0,755 3050,880.0 2800.0,1005 2550,880.0" fill="#FFF6DD" stroke="#A57913" stroke-width="3"/>
+<text x="2707.50" y="864.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="185.00" lengthAdjust="spacingAndGlyphs">存在不符合</text>
+<text x="2726.00" y="911.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="148.00" lengthAdjust="spacingAndGlyphs">发现项？</text>
+<rect x="1830" y="1130" width="500" height="220" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="1855.00" y="1186.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#46657B" textLength="351.00" lengthAdjust="spacingAndGlyphs">批准并发布审核报告</text>
+<text x="1855.00" y="1243.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="363.00" lengthAdjust="spacingAndGlyphs">按明确策略：范围已覆盖</text>
+<text x="1855.00" y="1286.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="363.00" lengthAdjust="spacingAndGlyphs">有发现项才生成整改任务</text>
+<rect x="2550" y="1130" width="500" height="220" rx="18" fill="#ECF7F2" stroke="#247F59" stroke-width="3"/>
+<text x="2575.00" y="1186.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#247F59" textLength="312.00" lengthAdjust="spacingAndGlyphs">保存符合检查证据</text>
+<text x="2575.00" y="1243.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="198.00" lengthAdjust="spacingAndGlyphs">纳入审核报告</text>
+<text x="2575.00" y="1286.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">不创建虚假整改问题</text>
+<rect x="1110" y="1130" width="500" height="220" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="1135.00" y="1186.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#46657B" textLength="234.00" lengthAdjust="spacingAndGlyphs">逐项指派整改</text>
+<text x="1135.00" y="1243.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="330.00" lengthAdjust="spacingAndGlyphs">问题、直接纠正、措施</text>
+<text x="1135.00" y="1286.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="325.00" lengthAdjust="spacingAndGlyphs">责任人/期限/关闭标准</text>
+<rect x="400" y="1130" width="500" height="220" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="425.00" y="1186.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#46657B" textLength="234.00" lengthAdjust="spacingAndGlyphs">实施本项整改</text>
+<text x="425.00" y="1243.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">责任人提交实际证据</text>
+<text x="425.00" y="1286.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">自报完成只转待验证</text>
+<polygon points="650.0,1885 900,2010.0 650.0,2135 400,2010.0" fill="#FFF6DD" stroke="#A57913" stroke-width="3"/>
+<text x="576.00" y="1994.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="148.00" lengthAdjust="spacingAndGlyphs">独立验证</text>
+<text x="520.50" y="2041.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="259.00" lengthAdjust="spacingAndGlyphs">满足关闭标准？</text>
+<rect x="1110" y="1500" width="500" height="220" rx="18" fill="#FFF0ED" stroke="#B64035" stroke-width="3"/>
+<text x="1135.00" y="1556.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#B64035" textLength="312.00" lengthAdjust="spacingAndGlyphs">验证失败退回整改</text>
+<text x="1135.00" y="1613.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">独立审核员说明缺口</text>
+<text x="1135.00" y="1656.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">保留逾期与历史验证</text>
+<rect x="1110" y="1900" width="500" height="220" rx="18" fill="#ECF7F2" stroke="#247F59" stroke-width="3"/>
+<text x="1135.00" y="1956.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#247F59" textLength="234.00" lengthAdjust="spacingAndGlyphs">关闭本发现项</text>
+<text x="1135.00" y="2013.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="330.00" lengthAdjust="spacingAndGlyphs">本地纠正和规定验证齐</text>
+<text x="1135.00" y="2056.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="297.00" lengthAdjust="spacingAndGlyphs">按适用规则确认有效</text>
+<rect x="1830" y="1900" width="500" height="220" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="1855.00" y="1956.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#087F8C" textLength="386.00" lengthAdjust="spacingAndGlyphs">长期观察明确转CAPA</text>
+<text x="1855.00" y="2013.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="330.00" lengthAdjust="spacingAndGlyphs">只有长期防再发可承接</text>
+<text x="1855.00" y="2056.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="330.00" lengthAdjust="spacingAndGlyphs">责任、期限和风险控制</text>
+<polygon points="2800.0,1885 3050,2010.0 2800.0,2135 2550,2010.0" fill="#FFF6DD" stroke="#A57913" stroke-width="3"/>
+<text x="2707.50" y="1994.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="185.00" lengthAdjust="spacingAndGlyphs">全部发现项</text>
+<text x="2726.00" y="2041.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#A57913" textLength="148.00" lengthAdjust="spacingAndGlyphs">已闭环？</text>
+<rect x="2550" y="2260" width="500" height="220" rx="18" fill="#ECF7F2" stroke="#247F59" stroke-width="3"/>
+<text x="2575.00" y="2316.54" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="39" font-weight="700" fill="#247F59" textLength="351.00" lengthAdjust="spacingAndGlyphs">审核归档与关联跟踪</text>
+<text x="2575.00" y="2373.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="231.00" lengthAdjust="spacingAndGlyphs">指定责任人归档</text>
+<text x="2575.00" y="2416.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="335.00" lengthAdjust="spacingAndGlyphs">CAPA和Hold独立继续</text>
+<polyline points="900,510.0 1110,500.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1110,500.0 1093.583498947086,509.56548447177 1092.7488443187863,492.0377372774742" fill="#087F8C"/>
+<polyline points="1610,500.0 1830,510.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1830,510.0 1812.766081627304,517.9995035798013 1813.5628774917507,500.469994561974" fill="#087F8C"/>
+<text x="1650.00" y="475.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="30.00" lengthAdjust="spacingAndGlyphs">是</text>
+<polyline points="1360.0,625 1360.0,760" fill="none" stroke="#B64035" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1360.0,760 1351.226195664712,743.1470964671936 1368.773804335288,743.1470964671936" fill="#B64035"/>
+<text x="1380.00" y="705.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#B64035" textLength="30.00" lengthAdjust="spacingAndGlyphs">否</text>
+<polyline points="1110,870.0 1010,870 1010,690 650,690 650.0,620" fill="none" stroke="#B64035" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="650.0,620 658.7738043352882,636.8529035328064 641.2261956647118,636.8529035328064" fill="#B64035"/>
+<polyline points="2330,510.0 2550,510.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2550,510.0 2533.1470964671935,518.7738043352882 2533.1470964671935,501.22619566471184" fill="#087F8C"/>
+<polyline points="2800.0,620 2800.0,755" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2800.0,755 2791.2261956647117,738.1470964671936 2808.7738043352883,738.1470964671936" fill="#087F8C"/>
+<polyline points="2800.0,1005 2800.0,1130" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2800.0,1130 2791.2261956647117,1113.1470964671937 2808.7738043352883,1113.1470964671937" fill="#087F8C"/>
+<text x="2760.00" y="1065.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="30.00" lengthAdjust="spacingAndGlyphs">否</text>
+<polyline points="2550,880.0 2450,880 2450,1050 2080,1050 2080.0,1130" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2080.0,1130 2071.2261956647117,1113.1470964671937 2088.7738043352883,1113.1470964671937" fill="#087F8C"/>
+<text x="2190.00" y="1025.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="30.00" lengthAdjust="spacingAndGlyphs">是</text>
+<polyline points="2550,1240.0 2330,1240.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2330,1240.0 2346.8529035328065,1231.226195664712 2346.8529035328065,1248.773804335288" fill="#087F8C"/>
+<polyline points="1830,1240.0 1610,1240.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1610,1240.0 1626.8529035328063,1231.226195664712 1626.8529035328063,1248.773804335288" fill="#087F8C"/>
+<text x="1620.00" y="1215.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="120.00" lengthAdjust="spacingAndGlyphs">有发现项</text>
+<polyline points="1110,1240.0 900,1240.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="900,1240.0 916.8529035328064,1231.226195664712 916.8529035328064,1248.773804335288" fill="#087F8C"/>
+<polyline points="2080.0,1350 2080,1650 3100,1650 3100,2010 3050,2010.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="3050,2010.0 3066.8529035328065,2001.226195664712 3066.8529035328065,2018.773804335288" fill="#087F8C"/>
+<text x="2600.00" y="1620.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="150.00" lengthAdjust="spacingAndGlyphs">无不符合项</text>
+<polyline points="650.0,1350 650.0,1885" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="650.0,1885 641.2261956647118,1868.1470964671937 658.7738043352882,1868.1470964671937" fill="#087F8C"/>
+<polyline points="900,2010.0 1110,2010.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1110,2010.0 1093.1470964671937,2018.773804335288 1093.1470964671937,2001.226195664712" fill="#087F8C"/>
+<text x="940.00" y="1965.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="30.00" lengthAdjust="spacingAndGlyphs">是</text>
+<polyline points="650.0,1885 650,1710 1010,1710 1010,1610 1110,1610.0" fill="none" stroke="#B64035" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1110,1610.0 1093.1470964671937,1618.773804335288 1093.1470964671937,1601.226195664712" fill="#B64035"/>
+<text x="790.00" y="1685.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#B64035" textLength="30.00" lengthAdjust="spacingAndGlyphs">否</text>
+<polyline points="1360.0,1500 1360,1420 650,1420 650.0,1350" fill="none" stroke="#B64035" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="650.0,1350 658.7738043352882,1366.8529035328063 641.2261956647118,1366.8529035328063" fill="#B64035"/>
+<polyline points="1610,2010.0 1830,2010.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round" stroke-dasharray="13 11"/>
+<polygon points="1830,2010.0 1813.1470964671937,2018.773804335288 1813.1470964671937,2001.226195664712" fill="#087F8C"/>
+<text x="1620.00" y="1965.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="210.00" lengthAdjust="spacingAndGlyphs">需要长期验效时</text>
+<polyline points="1360.0,2120 1360,2190 2800,2190 2800.0,2135" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2800.0,2135 2808.7738043352883,2151.8529035328065 2791.2261956647117,2151.8529035328065" fill="#087F8C"/>
+<text x="2010.00" y="2165.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="120.00" lengthAdjust="spacingAndGlyphs">逐项汇总</text>
+<polyline points="2800.0,2135 2800.0,2260" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2800.0,2260 2791.2261956647117,2243.1470964671935 2808.7738043352883,2243.1470964671935" fill="#087F8C"/>
+<text x="2760.00" y="2210.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="30.00" lengthAdjust="spacingAndGlyphs">是</text>
+<polyline points="2800.0,1885 2800,1750 1730,1750 1730,1060 1360,1060 1360.0,1130" fill="none" stroke="#B64035" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1360.0,1130 1351.226195664712,1113.1470964671937 1368.773804335288,1113.1470964671937" fill="#B64035"/>
+<text x="1880.00" y="1725.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#B64035" textLength="270.00" lengthAdjust="spacingAndGlyphs">否：继续跟踪未结项</text>
+<text x="95.00" y="2488.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="1820.00" lengthAdjust="spacingAndGlyphs">重大风险按明确范围和动作建立Hold；独立验证要求须依据适用制度；CAPA立项或“整改已提交”均不等于发现项已关闭。</text>
+</svg>

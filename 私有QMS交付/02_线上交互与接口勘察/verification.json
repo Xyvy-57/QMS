@@ -1,0 +1,19 @@
+{
+  "all_response_json_parse": true,
+  "response_files": 13,
+  "success_responses": 8,
+  "missing_workspace_responses": 5,
+  "observed_api_urls": 82,
+  "page1_item_count": 15,
+  "page2_item_count": 4,
+  "total_matches": true,
+  "unique_templates": 19,
+  "sample_nodes": 5,
+  "sample_edges": 5,
+  "template_data_unchanged": true,
+  "row_version_before": 10,
+  "row_version_after": 10,
+  "http_status_captured": false,
+  "authenticated_xhr_response_bodies_captured": false,
+  "credentials_captured": false
+}

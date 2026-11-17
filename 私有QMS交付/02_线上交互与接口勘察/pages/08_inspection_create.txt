@@ -1,0 +1,147 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - complementary:
+    - heading "质检单分类" [level=2]
+    - generic: "0"
+    - button "刷新":
+    - button "新增分类":
+    - searchbox "搜索质检单分类"
+    - button "Close":
+    - button "全部质检单":
+      - generic: 全部质检单
+    - button "未分类":
+      - generic: 未分类
+    - generic: 暂无分类
+  - main:
+    - heading "质检单" [level=1]
+    - generic: 共 0 份
+    - generic: 管理当前空间的草稿与已完成质检单
+    - button "创建质检单" [active]:
+      - text: 创建质检单
+    - textbox "搜索质检单":
+      - /placeholder: 搜索质检单编号、图号、完整文件名或零件名称
+    - combobox "按质检单状态筛选":
+      - option "全部状态" [selected]
+      - option "草稿"
+      - option "已完成"
+    - button "查询"
+    - button "批量导出" [disabled]:
+      - text: 批量导出
+    - generic: 勾选需要导出的记录
+    - button "全选筛选结果中可导出的记录"
+    - checkbox "全选当前页可导出的质检单" [disabled]
+    - generic: 质检单编号
+    - generic: 来源图纸
+    - generic: 零件 / 批次
+    - generic: 分类
+    - generic: 状态
+    - generic: 最近更新
+    - generic: 操作
+    - generic: 暂无质检单
+    - generic: 可从已有保存标注的图纸创建质检单
+    - button "创建质检单"
+    - generic: 共 0 条，第 1 / 1 页
+    - text: 每页
+    - combobox "每页条数":
+      - option "10"
+      - option "20" [selected]
+      - option "50"
+    - text: 条
+    - button "上一页" [disabled]:
+    - button "第 1 页": "1"
+    - button "下一页" [disabled]:
+  - dialog "新建质检单":
+    - heading "新建质检单" [level=2]
+    - paragraph: 选择图纸及检验范围，或复用质检单模板
+    - button "关闭新建质检单":
+    - generic: 创建方式
+    - button "从图纸新建"
+    - button "从质检单模板新建"
+    - complementary "图纸分类":
+      - generic: 图纸分类
+      - button "全部图纸":
+        - text: 全部图纸
+    - textbox "搜索可选图纸":
+      - /placeholder: 搜索图号、完整文件名或零件名称
+    - button "查询"
+    - generic: 共 1 张可选图纸
+    - generic: 当前正在标注的图纸若已有冻结版本仍可选择；创建时使用最近冻结版本，并忽略进行中的当前标注。
+    - button "选择图纸 111":
+      - strong: "111"
+      - generic "14936972.jpg"
+      - generic "111"
+      - generic: 未分类
+      - generic: 版本 —
+      - generic: 已有 0 份质检单
+    - generic: 共 1 条，第 1 / 1 页
+    - button "上一页" [disabled]:
+    - button "第 1 页": "1"
+    - button "下一页" [disabled]:
+    - complementary:
+      - heading "创建设置" [level=3]
+      - generic: 已选来源
+      - generic: 请从左侧选择来源
+      - text: 质检单编号 *
+      - textbox "新质检单编号" [disabled]:
+        - /placeholder: 选择来源后生成
+      - text: 所属质检单分类
+      - button "新质检单所属分类":
+        - generic: 未分类
+      - heading "质检单信息" [level=3]
+      - text: 批次号
+      - textbox "批次号"
+      - text: 工单号
+      - textbox "工单号"
+      - text: 供应商
+      - textbox "供应商"
+      - text: 检验数量
+      - textbox "检验数量"
+      - text: 样本数量
+      - textbox "样本数量": "1"
+      - text: 检验日期
+      - textbox "检验日期"
+      - button "取消"
+      - button "创建并编辑"

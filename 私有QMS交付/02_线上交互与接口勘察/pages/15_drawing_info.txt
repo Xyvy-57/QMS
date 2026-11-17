@@ -1,0 +1,90 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - button "返回图纸标注列表":
+  - heading "14936972.jpg" [level=1]
+  - generic: 已有标注
+  - generic: 图号 111 · 未分类
+  - button "编辑信息":
+    - text: 编辑信息
+  - button "继续标注":
+    - text: 继续标注
+  - button "工序流程图"
+  - button "创建质检单":
+    - text: 创建质检单
+  - button "导出":
+    - text: 导出
+  - navigation:
+    - button "标注结果"
+    - button "变更历史"
+    - button "图纸信息" [active]
+  - generic "111": 零件 111
+  - generic: 版本 —
+  - generic: 0 个 PDF · 1 张图片 · 1 页
+  - generic: 最近保存 2026/11/17 10:35:09
+  - heading "图纸信息" [level=2]
+  - generic: 基础资料修改进入操作审计
+  - term: 图号
+  - definition: "111"
+  - term: 图纸文件名
+  - definition: 14936972.jpg
+  - term: 零件名称
+  - definition: "111"
+  - term: 项目编号
+  - definition: —
+  - term: 版本号
+  - definition: —
+  - term: 所属分类
+  - definition: —
+  - term: 创建人
+  - definition: demo1
+  - term: 创建时间
+  - definition: 2026/11/17 10:33:15
+  - term: 源文件组成
+  - definition: 0 个 PDF · 1 张图片 · 1 页
+  - term: 文件页数
+  - definition: "1"
+  - term: 最近更新
+  - definition: —

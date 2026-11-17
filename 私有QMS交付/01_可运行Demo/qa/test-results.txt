@@ -1,0 +1,40 @@
+✔ demo seed contains five scenarios, two untouched tasks and one completed report (2.050083ms)
+✔ task uses independent standard and workflow snapshots (1.20375ms)
+✔ reinspection starts blank and retains original values and evidence (2.090875ms)
+✔ empty or invalid measurements cannot be mistaken for a pass (1.170042ms)
+✔ inclusive decimal bounds remain exact beyond floating point precision (0.915916ms)
+✔ one-sided limits and attributes have explicit results (0.860542ms)
+✔ completion checks all measurements and required signatures, accepts real NG (1.270708ms)
+✔ invalid inputs and missing sample array entries block completion (0.819875ms)
+✔ NCR generation requires actual NG and is idempotent per round (2.042833ms)
+✔ task validation rejects unpublished standards, mismatched plans and invalid quantity (0.849875ms)
+✔ save reports storage failures and serializes data when storage is available (1.243667ms)
+✔ workflow selection snapshots only linked items and applies maximum per-item sample count (1.399875ms)
+✔ task creation rejects scenario mismatch and samples exceeding the batch (0.899791ms)
+✔ workflow validation rejects loops, dangling references, disconnected nodes and unknown items (1.085292ms)
+✔ signature completion requires a PNG image and independent reviewer identity (1.293167ms)
+✔ unfinished draft cannot be replaced by a new reinspection round (0.897458ms)
+✔ explicit round actions cannot accidentally operate on the active reinspection (0.972292ms)
+✔ storage failure is observable through both status and a browser event (1.478125ms)
+✔ reserved or malformed imported IDs cannot become dictionary keys (1.438709ms)
+✔ known NG may create NCR even while the same item has invalid or pending cells (0.840916ms)
+✔ five scenario entries share working task lists (9.5885ms)
+✔ variable per-characteristic sampling leaves unrequired cells without inputs (4.902667ms)
+✔ report keeps completed photos, signatures and values after source changes (17.1065ms)
+✔ handwriting uses high-DPI canvas and changes to measurements invalidate signatures (6.2ms)
+✔ CSV escapes spreadsheet formulas and retains snapshot scope (5.002959ms)
+✔ record content is escaped in task and report views (4.774084ms)
+✔ photo compression caps long edge and prevents completion while decoding (7.156334ms)
+✔ plan publication rejects cyclic, self and dangling dependencies (8.023625ms)
+✔ empty plans and invalid sample counts cannot be published (1.98175ms)
+✔ editing a published plan creates a revision and preserves old task snapshots (2.689959ms)
+✔ copying a plan gives every node and edge an independent identity (3.322625ms)
+✔ plan titles are escaped in the rendered interface (2.001084ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.058709

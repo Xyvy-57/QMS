@@ -1,0 +1,138 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - complementary:
+    - heading "图纸分类" [level=2]
+    - generic: "0"
+    - button "刷新":
+    - button "新增分类":
+    - searchbox "搜索图纸分类"
+    - button "Close":
+    - button "全部图纸包 2":
+      - generic: 全部图纸包
+      - generic: "2"
+    - generic: 暂无分类
+  - main:
+    - heading "图纸标注" [level=1]
+    - generic: 共 2 条
+    - generic: 管理图纸包、标注进度与已保存结果
+    - button "操作引导":
+      - text: 操作引导
+    - button "添加图纸包":
+      - text: 添加图纸包
+    - searchbox "搜索图号或图纸包名称"
+    - button "Close":
+    - button "全部结果 按标注结果筛选":
+      - generic: 全部结果
+    - combobox
+    - button "查询"
+    - button "重置"
+    - button "刷新图纸包列表":
+    - button "批量导出" [disabled]:
+      - text: 批量导出
+    - generic: 勾选需要导出的记录
+    - button "全选筛选结果中可导出的记录"
+    - checkbox "全选当前页可导出的图纸"
+    - generic: 预览
+    - generic: 图纸身份
+    - generic: 零件 / 项目
+    - generic: 分类
+    - generic: 标注情况
+    - generic: 最近更新
+    - generic: 操作
+    - article:
+      - checkbox "选择图纸 14936972.jpg"
+      - button "预览大图：未填写图号":
+        - img "14936972.jpg"
+      - link "查看图纸：未填写图号":
+        - /url: "#/drawing-packages/a96ee2de-260b-407a-ac49-d8436e166389"
+        - text: 未填写图号
+      - generic "14936972.jpg"
+      - generic: 未填写零件名称
+      - generic: 项目 — · 版本 —
+      - generic "未分类"
+      - button "存在已保存的标注结果":
+      - generic: 当前标注人
+      - generic: —
+      - generic: 2026/11/17 10:37:42
+      - generic: demo1
+      - button "标注"
+      - button "14936972.jpg编辑分类":
+        - generic: 分类
+      - button "未填写图号更多操作":
+        - text: 更多
+    - article:
+      - checkbox "选择图纸 111"
+      - button "预览大图：111":
+        - img "111"
+      - link "查看图纸：111":
+        - /url: "#/drawing-packages/998bdfc8-99de-41db-8a3b-059b27f0a75e"
+        - text: "111"
+      - generic "14936972.jpg"
+      - generic "111"
+      - generic: 项目 — · 版本 —
+      - generic "未分类"
+      - button "存在已保存的标注结果":
+      - generic: 当前标注人
+      - generic: —
+      - generic: 2026/11/17 10:33:15
+      - generic: demo1
+      - button "标注"
+      - button "111编辑分类":
+        - generic: 分类
+      - button "111更多操作":
+        - text: 更多
+    - generic: 共 2 条，第 1 / 1 页
+    - text: 每页
+    - combobox "每页条数":
+      - option "10" [selected]
+      - option "20"
+      - option "50"
+    - text: 条
+    - button "上一页" [disabled]:
+    - button "第 1 页": "1"
+    - button "下一页" [disabled]:
+- tooltip "图纸标注":
+  - generic: 图纸标注

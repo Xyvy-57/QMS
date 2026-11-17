@@ -1,0 +1,272 @@
+qms_pro_qms.html
+  FAIL 39a :241 disabled via opacity alone on .inspection-reading input[readonly],.inspection-reading select:disabled | fix: Three disabled channels: fill, ink and cursor, plus the disabled attribute
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.sidebar) | fix: Tint the base toward the anchor hue
+  REFLEX 7b :14 pure #fff: color: var(--white) (.brand-mark)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.nav-item .nav-count)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.topbar)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.search-trigger kbd)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.button)
+  REFLEX 7b :14 pure #fff: color: var(--white) (.button.primary)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.panel)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.input,.select,input[type=text],input[type=number],input[type=date],input[type=u…
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.stat-card)
+  REFLEX 7b :14 pure #fff: color: var(--white) (.quick-start)
+  REFLEX 7b :14 pure #fff: background: var(--white) (.quick-start .button)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.asset-card)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.asset-preview .tag)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.embed-logo)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.dialog)
+  REFLEX 7b :14 pure #fff: color: var(--white) (.toast)
+  REFLEX 7b :14 pure #fff: color: var(--white) (.skip-link)
+  REFLEX 7b :14 pure #fff: background: var(--surface) (.noscript)
+  REFLEX 7b :21 pure #fff: background: var(--white) (body)
+  REFLEX 7b :51 pure #fff: background: var(--pp-surface) (.pp-workspace)
+  REFLEX 7b :84 pure #fff: background: var(--pp-surface) (.pp-node)
+  REFLEX 7b :104 pure #fff: background: var(--pp-surface) (.pp-inspector)
+  REFLEX 7b :192 pure #fff: background: var(--inspection-paper) (.inspection-context)
+  REFLEX 7b :214 pure #fff: background: var(--inspection-paper) (.inspection-round)
+  REFLEX 7b :239 pure #fff: background: var(--inspection-paper) (.inspection-reading input,.inspection-reading select)
+  REFLEX 7b :288 pure #fff: background: var(--inspection-paper) (.inspection-report)
+  REFLEX 7b :317 pure #fff: background: var(--inspection-paper) (body.printing-inspection-report)
+  REFLEX 24b :14 padding: 28px 15px 0 (off the 4px scale) on .sidebar | fix: Use the 4px spacing scale
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .brand
+  REFLEX 24b :14 padding: 0 10px 27px (off the 4px scale) on .brand
+  REFLEX 24b :14 margin-left: 5px (off the 4px scale) on .brand-qms
+  REFLEX 24b :14 gap: 9px (off the 4px scale) on .workspace
+  REFLEX 24b :14 padding: 11px 9px (off the 4px scale) on .workspace
+  REFLEX 24b :14 padding-bottom: 15px (off the 4px scale) on #navigation
+  REFLEX 24b :14 padding: 0 13px (off the 4px scale) on .nav-label
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .nav-item
+  REFLEX 24b :14 margin: 3px 0 (off the 4px scale) on .nav-item
+  REFLEX 24b :14 padding: 0 5px (off the 4px scale) on .nav-item .nav-count
+  REFLEX 24b :14 gap: 7px (off the 4px scale) on .nav-item.sub
+  REFLEX 24b :14 padding-top: 10px (off the 4px scale) on .sidebar-bottom
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .sidebar-setting
+  REFLEX 24b :14 padding: 10px 12px (off the 4px scale) on .sidebar-setting
+  REFLEX 24b :14 gap: 9px (off the 4px scale) on .user-row
+  REFLEX 24b :14 padding: 15px 9px 20px (off the 4px scale) on .user-row
+  REFLEX 24b :14 margin-left: 226px (off the 4px scale) on .main-shell
+  REFLEX 24b :14 padding: 0 34px (off the 4px scale) on .topbar
+  REFLEX 24b :14 gap: 14px (off the 4px scale) on .breadcrumb
+  REFLEX 24b :14 gap: 9px (off the 4px scale) on .search-trigger
+  REFLEX 24b :14 padding: 7px 9px (off the 4px scale) on .search-trigger
+  REFLEX 24b :14 padding: 2px 7px (off the 4px scale) on .demo-badge
+  REFLEX 24b :14 padding: 32px 34px 25px (off the 4px scale) on #page
+  REFLEX 24b :14 margin-bottom: 26px (off the 4px scale) on .page-head
+  REFLEX 24b :14 margin-top: 7px (off the 4px scale) on .title-group p
+  REFLEX 24b :14 margin-left: 10px (off the 4px scale) on .title-group h1 .tag
+  REFLEX 24b :14 gap: 9px (off the 4px scale) on .actions
+  REFLEX 24b :14 padding: 8px 13px (off the 4px scale) on .button
+  REFLEX 24b :14 gap: 7px (off the 4px scale) on .button
+  REFLEX 24b :14 padding: 5px 9px (off the 4px scale) on .button.small
+  REFLEX 24b :14 padding: 20px 22px (off the 4px scale) on .panel-head
+  REFLEX 24b :14 padding: 0 22px 22px (off the 4px scale) on .panel-body
+  REFLEX 24b :14 margin: 18px 0 (off the 4px scale) on .divider
+  REFLEX 24b :14 gap: 5px (off the 4px scale) on .tag,.badge
+  REFLEX 24b :14 padding: 3px 7px (off the 4px scale) on .tag,.badge
+  REFLEX 24b :14 padding: 12px 18px (off the 4px scale) on .data-table th
+  REFLEX 24b :14 padding: 17px 18px (off the 4px scale) on .data-table td
+  REFLEX 24b :14 margin-top: 3px (off the 4px scale) on .data-table td small
+  REFLEX 24b :14 padding: 13px 20px (off the 4px scale) on .table-footer
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .toolbar
+  REFLEX 24b :14 padding: 15px 20px (off the 4px scale) on .toolbar
+  REFLEX 24b :14 padding: 9px 11px (off the 4px scale) on .input,.select,input[type=text],input[type=number],input[type=date],input[type…
+  REFLEX 24b :14 gap: 7px (off the 4px scale) on .field
+  REFLEX 24b :14 gap: 18px (off the 4px scale) on .form-grid
+  REFLEX 24b :14 gap: 15px (off the 4px scale) on .stack
+  REFLEX 24b :14 gap: 25px (off the 4px scale) on .tabs
+  REFLEX 24b :14 padding: 14px 0 (off the 4px scale) on .tab
+  REFLEX 24b :14 padding: 65px 25px (off the 4px scale) on .empty-state
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .notice
+  REFLEX 24b :14 padding: 13px 15px (off the 4px scale) on .notice
+  REFLEX 24b :14 padding: 20px 22px (off the 4px scale) on .stat-card
+  REFLEX 24b :14 margin: 12px 0 10px (off the 4px scale) on .stat-value
+  REFLEX 24b :14 margin-left: 7px (off the 4px scale) on .stat-value span
+  REFLEX 24b :14 gap: 7px (off the 4px scale) on .stat-bottom
+  REFLEX 24b :14 gap: 22px (off the 4px scale) on .overview-grid
+  REFLEX 24b :14 padding: 23px 24px (off the 4px scale) on .flow-rail
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .flow-stage
+  REFLEX 24b :14 margin-bottom: 9px (off the 4px scale) on .quick-start h2
+  REFLEX 24b :14 padding: 0 22px 16px (off the 4px scale) on .activity-list
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .activity-item
+  REFLEX 24b :14 padding: 14px 0 (off the 4px scale) on .activity-item
+  REFLEX 24b :14 margin-top: 3px (off the 4px scale) on .activity-item>svg
+  REFLEX 24b :14 gap: 18px (off the 4px scale) on .asset-grid
+  REFLEX 24b :14 padding: 15px (off the 4px scale) on .asset-preview
+  REFLEX 24b :14 padding: 18px (off the 4px scale) on .asset-info
+  REFLEX 24b :14 margin-bottom: 3px (off the 4px scale) on .asset-info h3
+  REFLEX 24b :14 gap: 14px (off the 4px scale) on .asset-meta
+  REFLEX 24b :14 padding-top: 13px (off the 4px scale) on .asset-actions
+  REFLEX 24b :14 padding: 6px 10px (off the 4px scale) on .asset-actions .button
+  REFLEX 24b :14 padding: 15px 13px (off the 4px scale) on .list-select button
+  REFLEX 24b :14 margin-bottom: 6px (off the 4px scale) on .list-select button
+  REFLEX 24b :14 margin: 6px 0 8px (off the 4px scale) on .list-select small
+  REFLEX 24b :14 gap: 18px (off the 4px scale) on .metadata-grid
+  REFLEX 24b :14 padding: 17px 22px 21px (off the 4px scale) on .metadata-grid
+  REFLEX 24b :14 padding: 13px 18px (off the 4px scale) on .embed-toolbar
+  REFLEX 24b :14 padding: 35px (off the 4px scale) on .embed-empty
+  REFLEX 24b :14 margin: 0 auto 25px (off the 4px scale) on .embed-logo
+  REFLEX 24b :14 margin-top: 25px (off the 4px scale) on .embed-empty .actions
+  REFLEX 24b :14 padding: 10px 18px (off the 4px scale) on .embed-status
+  REFLEX 24b :14 gap: 18px (off the 4px scale) on .shell-entries
+  REFLEX 24b :14 margin-bottom: 22px (off the 4px scale) on .module-entry>svg
+  REFLEX 24b :14 margin-bottom: 22px (off the 4px scale) on .module-entry p
+  REFLEX 24b :14 padding: 10px 34px 20px (off the 4px scale) on .app-footer
+  REFLEX 24b :14 gap: 18px (off the 4px scale) on .app-footer
+  REFLEX 24b :14 padding: 25px (off the 4px scale) on .overlay-backdrop
+  REFLEX 24b :14 padding: 22px 25px (off the 4px scale) on .dialog-header
+  REFLEX 24b :14 padding: 25px (off the 4px scale) on .dialog-body
+  REFLEX 24b :14 padding: 18px 25px (off the 4px scale) on .dialog-footer
+  REFLEX 24b :14 gap: 9px (off the 4px scale) on .dialog-footer
+  REFLEX 24b :14 margin-top: 15px (off the 4px scale) on .dialog-body .panel
+  REFLEX 24b :14 padding: 13px 18px (off the 4px scale) on .toast
+  REFLEX 24b :14 gap: 9px (off the 4px scale) on .toast
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on #toast-root
+  REFLEX 24b :14 gap: 5px (off the 4px scale) on .search-results
+  REFLEX 24b :14 padding: 35px (off the 4px scale) on .noscript
+  REFLEX 24b :14 margin-bottom: 22px (off the 4px scale) on .ncr-summary
+  REFLEX 24b :14 padding: 17px 22px (off the 4px scale) on .ncr-summary>div
+  REFLEX 24b :14 padding: 15px 0 (off the 4px scale) on .disposition-row
+  REFLEX 24b :14 gap: 10px (off the 4px scale) on .disposition-row-head
+  REFLEX 24b :14 margin: 5px 0 (off the 4px scale) on .disposition-row p
+  REFLEX 24b :14 margin-bottom: 15px (off the 4px scale) on .back-button
+  REFLEX 24b :14 gap: 7px (off the 4px scale) on .inline-check
+  REFLEX 24b :14 gap: 6px (off the 4px scale) on .chip-list
+  REFLEX 24b :17 padding-left: 7px (off the 4px scale) on .brand
+  REFLEX 24b :17 padding: 25px 24px (off the 4px scale) on #page
+  REFLEX 24b :17 gap: 18px (off the 4px scale) on .overview-side
+  REFLEX 24b :17 gap: 7px (off the 4px scale) on .flow-stage
+  REFLEX 24b :17 padding: 18px (off the 4px scale) on .stat-card
+  REFLEX 24b :18 gap: 10px (off the 4px scale) on .top-actions
+  REFLEX 24b :18 gap: 10px (off the 4px scale) on .stats-row
+  REFLEX 24b :19 padding: 23px 16px (off the 4px scale) on #page
+  REFLEX 24b :19 gap: 15px (off the 4px scale) on .page-head
+  REFLEX 24b :19 gap: 14px (off the 4px scale) on .flow-rail
+  REFLEX 24b :19 padding: 20px 18px (off the 4px scale) on .flow-rail
+  REFLEX 24b :19 padding: 17px (off the 4px scale) on .panel-head
+  REFLEX 24b :19 padding-left: 17px (off the 4px scale) on .panel-body
+  REFLEX 24b :19 padding-right: 17px (off the 4px scale) on .panel-body
+  REFLEX 24b :19 padding: 18px 20px (off the 4px scale) on .dialog-header
+  REFLEX 24b :19 padding: 15px 20px (off the 4px scale) on .dialog-footer
+  REFLEX 24b :19 padding: 14px 8px (off the 4px scale) on .ncr-summary>div
+  REFLEX 24b :19 padding: 10px 16px 20px (off the 4px scale) on .app-footer
+  REFLEX 24b :19 gap: 10px (off the 4px scale) on .app-footer
+  REFLEX 24b :19 padding: 14px (off the 4px scale) on .data-table td
+  REFLEX 24b :41 gap: 6px (off the 4px scale) on .pp-page .button
+  REFLEX 24b :44 padding-bottom: 22px (off the 4px scale) on .pp-page .page-head
+  REFLEX 24b :46 gap: 23px (off the 4px scale) on .pp-tabs
+  REFLEX 24b :46 margin-bottom: 22px (off the 4px scale) on .pp-tabs
+  REFLEX 24b :47 padding: 0 1px 14px (off the 4px scale) on .pp-tabs .tab
+  REFLEX 24b :49 padding: 1px 6px (off the 4px scale) on .pp-tabs .tab span
+  REFLEX 24b :50 padding-bottom: 14px (off the 4px scale) on .pp-tabs-note
+  REFLEX 24b :53 padding: 17px 15px 12px 19px (off the 4px scale) on .pp-list-heading
+  REFLEX 24b :54 padding: 6px (off the 4px scale) on .pp-list-heading .button
+  REFLEX 24b :55 margin: 0 14px 14px (off the 4px scale) on .pp-list-search
+  REFLEX 24b :55 padding: 8px 10px (off the 4px scale) on .pp-list-search
+  REFLEX 24b :57 padding: 0 9px 15px (off the 4px scale) on .pp-plans-scroll
+  REFLEX 24b :58 padding: 13px 10px (off the 4px scale) on .pp-plan
+  REFLEX 24b :58 margin-bottom: 6px (off the 4px scale) on .pp-plan
+  REFLEX 24b :61 margin-bottom: 9px (off the 4px scale) on .pp-plan strong
+  REFLEX 24b :64 padding: 2px 6px (off the 4px scale) on .pp-plan .tag
+  REFLEX 24b :65 padding: 16px 17px (off the 4px scale) on .pp-list-foot
+  REFLEX 24b :65 gap: 7px (off the 4px scale) on .pp-list-foot
+  REFLEX 24b :66 padding: 30px 8px (off the 4px scale) on .pp-list-empty
+  REFLEX 24b :68 gap: 10px (off the 4px scale) on .pp-editor-head
+  REFLEX 24b :69 gap: 10px (off the 4px scale) on .pp-plan-title
+  REFLEX 24b :71 margin: 5px 0 0 (off the 4px scale) on .pp-plan-title p
+  REFLEX 24b :73 padding: 7px (off the 4px scale) on .pp-editor-head .button
+  REFLEX 24b :74 padding: 9px 17px (off the 4px scale) on .pp-editor-toolbar
+  REFLEX 24b :75 gap: 10px (off the 4px scale) on .pp-editor-toolbar > span
+  REFLEX 24b :77 padding: 7px 6px (off the 4px scale) on .pp-editor-toolbar .button
+  REFLEX 24b :84 padding: 14px (off the 4px scale) on .pp-node
+  REFLEX 24b :87 gap: 7px (off the 4px scale) on .pp-node-top
+  REFLEX 24b :91 margin-top: 11px (off the 4px scale) on .pp-node > strong
+  REFLEX 24b :92 margin-top: 13px (off the 4px scale) on .pp-node-bottom
+  REFLEX 24b :96 padding: 12px 18px (off the 4px scale) on .pp-editor-foot
+  REFLEX 24b :97 gap: 5px (off the 4px scale) on .pp-editor-foot > span:last-child
+  REFLEX 24b :100 margin-bottom: 18px (off the 4px scale) on .pp-empty-icon
+  REFLEX 24b :103 margin: 13px 0 23px (off the 4px scale) on .pp-canvas-empty p
+  REFLEX 24b :105 padding: 20px 17px (off the 4px scale) on .pp-inspector-head
+  REFLEX 24b :108 padding: 6px (off the 4px scale) on .pp-inspector-head .button
+  REFLEX 24b :109 padding: 19px 17px (off the 4px scale) on .pp-inspector-body
+  REFLEX 24b :110 margin-bottom: 17px (off the 4px scale) on .pp-inspector-body .field
+  REFLEX 24b :112 padding: 8px 10px (off the 4px scale) on .pp-inspector-body .input
+  REFLEX 24b :113 margin: 21px 0 8px (off the 4px scale) on .pp-section-label
+  REFLEX 24b :113 padding-top: 19px (off the 4px scale) on .pp-section-label
+  REFLEX 24b :124 gap: 10px (off the 4px scale) on .pp-items
+  REFLEX 24b :126 padding: 10px 16px (off the 4px scale) on .pp-inspector-footer
+  REFLEX 24b :129 margin: 18px 0 8px (off the 4px scale) on .pp-inspector-empty h3
+  REFLEX 24b :131 padding: 23px (off the 4px scale) on .pp-library .panel-head
+  REFLEX 24b :133 padding: 14px 23px (off the 4px scale) on .pp-library .toolbar
+  REFLEX 24b :137 margin-top: 6px (off the 4px scale) on .pp-cell-sub
+  REFLEX 24b :140 padding: 5px 8px (off the 4px scale) on .pp-library td .button
+  REFLEX 24b :142 gap: 6px (off the 4px scale) on .pp-step-picker
+  REFLEX 24b :143 padding: 13px 15px (off the 4px scale) on .pp-step-option
+  REFLEX 24b :147 margin-top: 6px (off the 4px scale) on .pp-step-option small
+  REFLEX 24b :148 margin-top: 18px (off the 4px scale) on .pp-after-option
+  REFLEX 24b :149 padding: 15px (off the 4px scale) on .pp-modal-summary
+  REFLEX 24b :149 margin-bottom: 22px (off the 4px scale) on .pp-modal-summary
+  REFLEX 24b :151 margin: 6px 0 0 (off the 4px scale) on .pp-modal-summary p
+  REFLEX 24b :162 column-gap: 18px (off the 4px scale) on .pp-inspector-body
+  REFLEX 24b :168 gap: 18px (off the 4px scale) on .pp-page .page-head
+  REFLEX 24b :171 padding: 10px 15px (off the 4px scale) on .pp-list-heading
+  REFLEX 24b :173 gap: 6px (off the 4px scale) on .pp-plans-scroll
+  REFLEX 24b :173 padding: 0 12px 10px (off the 4px scale) on .pp-plans-scroll
+  REFLEX 24b :179 gap: 22px (off the 4px scale) on .pp-tabs
+  REFLEX 24b :180 padding: 14px (off the 4px scale) on .pp-library .toolbar
+  REFLEX 24b :181 padding: 17px (off the 4px scale) on .pp-library .panel-head
+  REFLEX 24b :192 padding: 18px 22px (off the 4px scale) on .inspection-context
+  REFLEX 24b :192 margin: 0 0 22px (off the 4px scale) on .inspection-context
+  REFLEX 24b :193 gap: 6px (off the 4px scale) on .inspection-context>span,.inspection-report-meta>span
+  REFLEX 24b :196 gap: 6px (off the 4px scale) on .inspection-back
+  REFLEX 24b :196 margin-bottom: 10px (off the 4px scale) on .inspection-back
+  REFLEX 24b :198 margin-bottom: 18px (off the 4px scale) on .inspection-scenario-tabs
+  REFLEX 24b :200 padding: 1px 6px (off the 4px scale) on .inspection-scenario-tabs .tab span
+  REFLEX 24b :201 gap: 9px (off the 4px scale) on .inspection-search
+  REFLEX 24b :212 gap: 10px (off the 4px scale) on .inspection-rounds
+  REFLEX 24b :214 padding: 8px 11px (off the 4px scale) on .inspection-round
+  REFLEX 24b :218 padding: 22px 24px (off the 4px scale) on .inspection-stats
+  REFLEX 24b :219 gap: 9px (off the 4px scale) on .inspection-stats>div
+  REFLEX 24b :223 margin-top: 3px (off the 4px scale) on .inspection-stats .inspection-small-value
+  REFLEX 24b :229 margin: 6px 0 0 (off the 4px scale) on .inspection-measure-panel .panel-head p,.inspection-evidence-layout .panel-head p
+  REFLEX 24b :238 gap: 5px (off the 4px scale) on .inspection-reading
+  REFLEX 24b :239 padding: 7px 9px (off the 4px scale) on .inspection-reading input,.inspection-reading select
+  REFLEX 24b :249 padding: 13px 22px (off the 4px scale) on .inspection-table-foot
+  REFLEX 24b :257 gap: 6px (off the 4px scale) on .inspection-photo-grid figcaption
+  REFLEX 24b :257 margin-top: 5px (off the 4px scale) on .inspection-photo-grid figcaption
+  REFLEX 24b :259 padding: 3px (off the 4px scale) on .inspection-photo-grid figcaption .button
+  REFLEX 24b :260 padding: 10px (off the 4px scale) on .inspection-photo-add
+  REFLEX 24b :269 gap: 5px (off the 4px scale) on .inspection-sign-head
+  REFLEX 24b :271 gap: 9px (off the 4px scale) on .inspection-sign-placeholder
+  REFLEX 24b :272 margin: 5px 0 (off the 4px scale) on .inspection-sign-image
+  REFLEX 24b :273 gap: 5px (off the 4px scale) on .inspection-sign-meta
+  REFLEX 24b :273 margin: 6px 0 10px (off the 4px scale) on .inspection-sign-meta
+  REFLEX 24b :275 margin: 15px 0 0 (off the 4px scale) on .inspection-sign-notice
+  REFLEX 24b :280 margin-top: 22px (off the 4px scale) on .inspection-bottom-actions
+  REFLEX 24b :282 gap: 9px (off the 4px scale) on .inspection-check
+  REFLEX 24b :284 padding: 14px 16px (off the 4px scale) on .inspection-plan-preview
+  REFLEX 24b :285 margin: 7px 0 (off the 4px scale) on .inspection-plan-preview p
+  REFLEX 24b :291 margin: 14px 0 7px (off the 4px scale) on .inspection-report-heading h2
+  REFLEX 24b :293 gap: 9px (off the 4px scale) on .inspection-report-heading>div:last-child
+  REFLEX 24b :294 gap: 22px 18px (off the 4px scale) on .inspection-report-meta
+  REFLEX 24b :294 padding: 25px 0 (off the 4px scale) on .inspection-report-meta
+  REFLEX 24b :296 padding: 13px 16px (off the 4px scale) on .inspection-report-callout
+  REFLEX 24b :296 gap: 6px (off the 4px scale) on .inspection-report-callout
+  REFLEX 24b :299 padding: 13px 10px (off the 4px scale) on .inspection-report .data-table td,.inspection-report .data-table th
+  REFLEX 24b :300 margin-top: 26px (off the 4px scale) on .inspection-report-section
+  REFLEX 24b :306 margin-top: 6px (off the 4px scale) on .inspection-report-photos figcaption
+  REFLEX 24b :311 gap: 14px (off the 4px scale) on .inspection-report-footer
+  REFLEX 24b :313 gap: 15px (off the 4px scale) on .inspection-stats
+  REFLEX 24b :313 padding: 26px (off the 4px scale) on .inspection-report
+  REFLEX 24b :314 gap: 22px (off the 4px scale) on .inspection-stats
+  REFLEX 24b :314 padding: 18px (off the 4px scale) on .inspection-report
+  REFLEX 24b :317 margin-top: 18px (off the 4px scale) on body.printing-inspection-report .inspection-report-footer
+  WARN 3 :296 side stripe border-left: 3px solid var(--inspection-blue) on .inspection-report-callout | fix: Hairline all round, none, or an accent square
+  WARN 11 :256 image transforms on hover (.inspection-photo-preview:hover img) | fix: Imagery sits still; give the container the feedback
+  WARN 40 :49 3.58:1 < 4.5:1 on .pp-tabs .tab span | fix: Raise the contrast to threshold
+  WARN 40 :89 3.58:1 < 4.5:1 on .pp-node-number
+  WARN 74 :28 default Tailwind palette #f8fafc on --pp-soft | fix: Mix the colour for this page in OKLCH; a stock swatch is the AI look
+  WARN F7 :14 same container recipe on 10 selectors (.button, .input, .select, input[type=text]...) | fix: Vary weight, radius, or fill by role; not every box is the same box
+  WARN F21 :1090 h1 is followed by h3 ("${E(title)}") | fix: Step heading levels one at a time; size a head with CSS, never with its level
+  WARN F24 :14 a hairline border under a wide soft shadow on .dialog | fix: Commit to one: a defined edge, or elevation by shadow
+sloplint: 1 FAIL, 261 REFLEX, 8 WARN across 1 file(s).

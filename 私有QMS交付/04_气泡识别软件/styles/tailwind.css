@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自研气泡识别软件的设计令牌与组件类：与 QMS 原型（03_前端原型/styles/tailwind.css）保持一致，内嵌到 QMS 时看起来是同一个产品 */
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  body { @apply bg-canvas text-ink font-sans text-[13px]; }
+  input, select, textarea, button { font: inherit; }
+  button { -webkit-tap-highlight-color: transparent; }
+}
+
+@layer components {
+  .card { @apply bg-white rounded-2xl border border-black/[0.06] shadow-soft; }
+  .card-hover { @apply transition-all duration-300 ease-apple hover:shadow-lift hover:-translate-y-0.5; }
+
+  .btn { @apply inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl text-[13px] font-medium transition-all duration-200 ease-apple select-none whitespace-nowrap active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100; }
+  .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700 shadow-[0_1px_2px_rgba(31,99,224,.35)]; }
+  .btn-secondary { @apply btn bg-white text-ink border border-black/10 hover:bg-black/[0.03]; }
+  .btn-ghost { @apply btn text-ink-2 hover:bg-black/[0.05]; }
+  .btn-danger { @apply btn bg-rose-600 text-white hover:bg-rose-700; }
+  .btn-success { @apply btn bg-emerald-600 text-white hover:bg-emerald-700; }
+  .btn-soft { @apply btn bg-brand-50 text-brand-700 hover:bg-brand-100; }
+  .btn-sm { @apply h-8 px-2.5 text-xs rounded-lg; }
+  .btn-xs { @apply h-7 px-2 text-[11px] rounded-lg; }
+  .btn-icon { @apply btn h-8 w-8 px-0 text-ink-3 hover:bg-black/[0.05] hover:text-ink; }
+
+  .input { @apply h-9 w-full rounded-xl border border-black/10 bg-white px-3 text-[13px] text-ink placeholder:text-ink-5 transition-all duration-200 focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 disabled:bg-black/[0.03] disabled:text-ink-3; }
+  .input-sm { @apply input h-8 px-2.5 text-[12.5px] rounded-lg; }
+  .textarea { @apply input h-auto py-2 leading-relaxed; }
+  .label { @apply block text-xs font-medium text-ink-3 mb-1.5; }
+
+  .chip { @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium whitespace-nowrap; }
+  .chip-gray { @apply chip bg-black/[0.05] text-ink-2; }
+  .chip-blue { @apply chip bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-600/15; }
+  .chip-brand { @apply chip bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-600/15; }
+  .chip-green { @apply chip bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/15; }
+  .chip-red { @apply chip bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-600/15; }
+  .chip-amber { @apply chip bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20; }
+  .chip-violet { @apply chip bg-violet-50 text-violet-700 ring-1 ring-inset ring-violet-600/15; }
+
+  .page-title { @apply text-[22px] font-semibold tracking-tight text-ink; }
+  .section-title { @apply text-[15px] font-semibold tracking-tight text-ink; }
+  .link { @apply text-brand-600 hover:text-brand-700 hover:underline underline-offset-2 cursor-pointer; }
+  .kbd { @apply inline-flex items-center justify-center min-w-[20px] h-5 px-1 rounded-md border border-black/10 bg-white text-[10px] font-medium text-ink-3 shadow-[0_1px_0_rgba(0,0,0,.08)]; }
+
+  .tbl { @apply w-full text-left border-collapse; }
+  .tbl th { @apply sticky top-0 z-10 bg-[#fafafa]/95 backdrop-blur px-3 py-2.5 text-[11px] font-medium text-ink-3 border-b border-black/[0.06] whitespace-nowrap; }
+  .tbl td { @apply px-3 py-3 border-b border-black/[0.04] align-middle whitespace-nowrap; }
+  .tbl tbody tr { @apply transition-colors duration-150; }
+  .tbl tbody tr.row-link { @apply cursor-pointer hover:bg-brand-50/40; }
+
+  .balloon-badge { @apply inline-flex items-center justify-center h-6 min-w-[24px] px-1 rounded-full text-[11px] font-bold tabular-nums ring-2; }
+}

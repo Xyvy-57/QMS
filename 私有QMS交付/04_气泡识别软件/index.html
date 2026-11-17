@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Worlder 气泡识别 · 开发入口</title>
+<!--
+  开发入口（不需要构建）：由 node server.mjs 提供，逐个加载 src/ 下的源码，样式用 Tailwind 运行时生成。
+  正式使用请先 node build.mjs，服务端会优先提供 dist/bubble.html。
+  源码清单必须与 src/ 目录一致（build.mjs 会检查）。
+-->
+<link rel="stylesheet" href="/styles/app.css">
+<script src="/vendor/tailwind.play.js"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { brand: { 50: '#eef5ff', 100: '#d9e8ff', 200: '#bcd6ff', 300: '#8ebcff', 400: '#5996ff', 500: '#3478f6', 600: '#1f63e0', 700: '#1a4fb8', 800: '#1b4392', 900: '#1c3a74' }, ink: { DEFAULT: '#1d1d1f', 2: '#424245', 3: '#6e6e73', 4: '#86868b', 5: '#aeaeb2' }, canvas: '#f5f5f7' },
+    fontFamily: { sans: ['-apple-system', 'BlinkMacSystemFont', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'], mono: ['"SF Mono"', 'ui-monospace', 'Menlo', 'Consolas', 'monospace'] },
+    boxShadow: { soft: '0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04)', lift: '0 2px 6px rgba(0,0,0,.05), 0 18px 40px rgba(0,0,0,.08)', pop: '0 24px 64px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.08)' },
+    transitionTimingFunction: { apple: 'cubic-bezier(.32,.72,0,1)', spring: 'cubic-bezier(.34,1.56,.64,1)' },
+  } } };
+</script>
+</head>
+<body>
+<div id="app" v-cloak></div>
+<div id="boot" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#f5f5f7;font:500 13px -apple-system,'PingFang SC',sans-serif;color:#6e6e73;z-index:9999;transition:opacity .4s"><span id="boot-msg">正在加载开发入口…</span></div>
+<script>
+(function () {
+  var SRC = ['10_dec.js', '11_tol.js', '12_parse.js', '13_group.js', '14_layout.js', '15_map.js', '16_sha.js', '20_io.js', '30_core.js', '40_ui.js', '45_flow.js', '50_library.js', '60_annotate.js', '70_compare.js', '80_tolerance.js', '85_settings.js', '90_app.js'];
+  var msg = document.getElementById('boot-msg');
+  window.addEventListener('error', function (e) { msg.textContent = '脚本出错：' + (e.filename || '').split('/').pop() + ':' + e.lineno + '  ' + e.message; msg.style.color = '#be123c'; });
+  fetch('/styles/tailwind.css').then(function (r) { return r.text(); }).then(function (css) {
+    var st = document.createElement('style'); st.type = 'text/tailwindcss'; st.textContent = css; document.head.appendChild(st);
+  });
+  var list = ['/vendor/vue.global.prod.js'].concat(SRC.map(function (f) { return '/src/' + f; }));
+  (function next(i) {
+    if (i >= list.length) return;
+    var s = document.createElement('script'); s.src = list[i];
+    s.onload = function () { next(i + 1); };
+    s.onerror = function () { msg.textContent = '加载失败：' + list[i] + '（先执行 node build.mjs 准备 vendor 目录）'; msg.style.color = '#be123c'; };
+    document.body.appendChild(s);
+  })(0);
+})();
+</script>
+</body>
+</html>

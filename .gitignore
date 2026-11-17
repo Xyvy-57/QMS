@@ -1,0 +1,16 @@
+# 依赖包：npm install 重新安装
+node_modules/
+
+# 气泡识别软件：运行时数据、构建产物、从 node_modules 复制的运行库（node build.mjs 重新生成）
+私有QMS交付/04_气泡识别软件/data/
+私有QMS交付/04_气泡识别软件/dist/
+私有QMS交付/04_气泡识别软件/vendor/
+
+# QMS 原型：构建中间文件、测试截图
+私有QMS交付/03_前端原型/*.tw.css
+私有QMS交付/03_前端原型/shots/
+
+# 本机配置与系统文件
+.claude/settings.local.json
+.DS_Store
+*.tmp

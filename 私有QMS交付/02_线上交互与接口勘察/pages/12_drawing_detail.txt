@@ -1,0 +1,1211 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - button "返回图纸标注列表":
+  - heading "14936972.jpg" [level=1]
+  - generic: 已有标注
+  - generic: 图号 111 · 未分类
+  - button "编辑信息":
+    - text: 编辑信息
+  - button "继续标注":
+    - text: 继续标注
+  - button "工序流程图"
+  - button "创建质检单":
+    - text: 创建质检单
+  - button "导出":
+    - text: 导出
+  - navigation:
+    - button "标注结果"
+    - button "变更历史"
+    - button "图纸信息"
+  - generic "111": 零件 111
+  - generic: 版本 —
+  - generic: 0 个 PDF · 1 张图片 · 1 页
+  - button "选择标注结果版本":
+    - generic: "初始版本（变更 #1）"
+  - generic: 当前结果
+  - generic "图纸预览"
+  - generic: 第 1 / 1 页
+  - generic: 本页 69 个标注 / 共 69 个
+  - button "缩小图纸" [disabled]:
+  - generic: 100%
+  - button "放大图纸":
+  - button "适应窗口" [disabled]:
+  - button "重置图纸缩放" [disabled]:
+  - img "第 1 页"
+  - region "图纸标注画布，当前平移模式":
+  - generic: 尺寸单位：沿用识别结果
+  - button "识别结果" [pressed]:
+    - generic: 识别结果
+  - button "自定义标注项":
+    - generic: 自定义标注项
+  - checkbox "全选导出气泡" [checked]
+  - text: 全选导出气泡
+  - generic: 已选 69 / 69 个气泡
+  - generic: 共 69 项
+  - textbox "搜索标注结果":
+    - /placeholder: 搜索内容/检具
+  - button "筛选":
+    - text: 筛选
+  - table:
+    - rowgroup:
+      - row "导出 ☆ 气泡序号 项类型 内容 检验方法/检具 结果状态":
+        - columnheader "导出"
+        - columnheader "☆"
+        - columnheader "气泡序号"
+        - columnheader "项类型"
+        - columnheader "内容"
+        - columnheader "检验方法/检具"
+        - columnheader "结果状态"
+    - rowgroup:
+      - row "导出气泡 1 非重点项 1 其他 下色料喷镀 公制 — 查看气泡 1详情":
+        - cell "导出气泡 1":
+          - checkbox "导出气泡 1" [checked]
+        - cell "非重点项": ☆
+        - cell "1"
+        - cell "其他"
+        - cell "下色料喷镀 公制":
+          - generic "下色料喷镀"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 1详情":
+          - button "查看气泡 1详情":
+            - generic: 待确认
+      - row "导出气泡 2 非重点项 2 其他 下色喷油 公制 — 查看气泡 2详情":
+        - cell "导出气泡 2":
+          - checkbox "导出气泡 2" [checked]
+        - cell "非重点项": ☆
+        - cell "2"
+        - cell "其他"
+        - cell "下色喷油 公制":
+          - generic "下色喷油"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 2详情":
+          - button "查看气泡 2详情":
+            - generic: 待确认
+      - row "导出气泡 3 非重点项 3 其他 红色涂料喷枪 公制 — 查看气泡 3详情":
+        - cell "导出气泡 3":
+          - checkbox "导出气泡 3" [checked]
+        - cell "非重点项": ☆
+        - cell "3"
+        - cell "其他"
+        - cell "红色涂料喷枪 公制":
+          - generic "红色涂料喷枪"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 3详情":
+          - button "查看气泡 3详情":
+            - generic: 待确认
+      - row "导出气泡 4 非重点项 4 其他 TGA 涂料喷涂 公制 — 查看气泡 4详情":
+        - cell "导出气泡 4":
+          - checkbox "导出气泡 4" [checked]
+        - cell "非重点项": ☆
+        - cell "4"
+        - cell "其他"
+        - cell "TGA 涂料喷涂 公制":
+          - generic "TGA 涂料喷涂"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 4详情":
+          - button "查看气泡 4详情":
+            - generic: 待确认
+      - row "导出气泡 5 非重点项 5 尺寸 9.550 公制 标准值 9.550 — 查看气泡 5详情":
+        - cell "导出气泡 5":
+          - checkbox "导出气泡 5" [checked]
+        - cell "非重点项": ☆
+        - cell "5"
+        - cell "尺寸"
+        - cell "9.550 公制 标准值 9.550":
+          - generic "9.550"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：9.550":
+            - generic: 标准值
+            - generic: "9.550"
+        - cell "—"
+        - cell "查看气泡 5详情":
+          - button "查看气泡 5详情":
+            - generic: 待确认
+      - row "导出气泡 6 非重点项 6 其他 点 5000011 公制 — 查看气泡 6详情":
+        - cell "导出气泡 6":
+          - checkbox "导出气泡 6" [checked]
+        - cell "非重点项": ☆
+        - cell "6"
+        - cell "其他"
+        - cell "点 5000011 公制":
+          - generic "点 5000011"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 6详情":
+          - button "查看气泡 6详情":
+            - generic: 待确认
+      - row "导出气泡 7 非重点项 7 尺寸 36.20 公制 标准值 36.20 — 查看气泡 7详情":
+        - cell "导出气泡 7":
+          - checkbox "导出气泡 7" [checked]
+        - cell "非重点项": ☆
+        - cell "7"
+        - cell "尺寸"
+        - cell "36.20 公制 标准值 36.20":
+          - generic "36.20"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：36.20":
+            - generic: 标准值
+            - generic: "36.20"
+        - cell "—"
+        - cell "查看气泡 7详情":
+          - button "查看气泡 7详情":
+            - generic: 待确认
+      - row "导出气泡 8 非重点项 8 尺寸 9.550 公制 标准值 9.550 — 查看气泡 8详情":
+        - cell "导出气泡 8":
+          - checkbox "导出气泡 8" [checked]
+        - cell "非重点项": ☆
+        - cell "8"
+        - cell "尺寸"
+        - cell "9.550 公制 标准值 9.550":
+          - generic "9.550"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：9.550":
+            - generic: 标准值
+            - generic: "9.550"
+        - cell "—"
+        - cell "查看气泡 8详情":
+          - button "查看气泡 8详情":
+            - generic: 待确认
+      - row "导出气泡 9 非重点项 9 尺寸 3050 公制 标准值 3050 千分尺 查看气泡 9详情":
+        - cell "导出气泡 9":
+          - checkbox "导出气泡 9" [checked]
+        - cell "非重点项": ☆
+        - cell "9"
+        - cell "尺寸"
+        - cell "3050 公制 标准值 3050":
+          - generic "3050"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3050":
+            - generic: 标准值
+            - generic: "3050"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 9详情":
+          - button "查看气泡 9详情":
+            - generic: 待确认
+      - row "导出气泡 10 非重点项 10 尺寸 3050 公制 标准值 3050 千分尺 查看气泡 10详情":
+        - cell "导出气泡 10":
+          - checkbox "导出气泡 10" [checked]
+        - cell "非重点项": ☆
+        - cell "10"
+        - cell "尺寸"
+        - cell "3050 公制 标准值 3050":
+          - generic "3050"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3050":
+            - generic: 标准值
+            - generic: "3050"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 10详情":
+          - button "查看气泡 10详情":
+            - generic: 待确认
+      - row "导出气泡 11 非重点项 11 尺寸 6.000 公制 标准值 6.000 — 查看气泡 11详情":
+        - cell "导出气泡 11":
+          - checkbox "导出气泡 11" [checked]
+        - cell "非重点项": ☆
+        - cell "11"
+        - cell "尺寸"
+        - cell "6.000 公制 标准值 6.000":
+          - generic "6.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：6.000":
+            - generic: 标准值
+            - generic: "6.000"
+        - cell "—"
+        - cell "查看气泡 11详情":
+          - button "查看气泡 11详情":
+            - generic: 待确认
+      - row "导出气泡 12 非重点项 12 尺寸 6.000 公制 标准值 6.000 — 查看气泡 12详情":
+        - cell "导出气泡 12":
+          - checkbox "导出气泡 12" [checked]
+        - cell "非重点项": ☆
+        - cell "12"
+        - cell "尺寸"
+        - cell "6.000 公制 标准值 6.000":
+          - generic "6.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：6.000":
+            - generic: 标准值
+            - generic: "6.000"
+        - cell "—"
+        - cell "查看气泡 12详情":
+          - button "查看气泡 12详情":
+            - generic: 待确认
+      - row "导出气泡 13 非重点项 13 尺寸 1500 500 公制 标准值 1500 千分尺 查看气泡 13详情":
+        - cell "导出气泡 13":
+          - checkbox "导出气泡 13" [checked]
+        - cell "非重点项": ☆
+        - cell "13"
+        - cell "尺寸"
+        - cell "1500 500 公制 标准值 1500":
+          - generic "1500 500"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：1500":
+            - generic: 标准值
+            - generic: "1500"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 13详情":
+          - button "查看气泡 13详情":
+            - generic: 待确认
+      - row "导出气泡 14 非重点项 14 尺寸 3000 450 公制 标准值 3000 千分尺 查看气泡 14详情":
+        - cell "导出气泡 14":
+          - checkbox "导出气泡 14" [checked]
+        - cell "非重点项": ☆
+        - cell "14"
+        - cell "尺寸"
+        - cell "3000 450 公制 标准值 3000":
+          - generic "3000 450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3000":
+            - generic: 标准值
+            - generic: "3000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 14详情":
+          - button "查看气泡 14详情":
+            - generic: 待确认
+      - row "导出气泡 15 非重点项 15 尺寸 3000 公制 标准值 3000 千分尺 查看气泡 15详情":
+        - cell "导出气泡 15":
+          - checkbox "导出气泡 15" [checked]
+        - cell "非重点项": ☆
+        - cell "15"
+        - cell "尺寸"
+        - cell "3000 公制 标准值 3000":
+          - generic "3000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3000":
+            - generic: 标准值
+            - generic: "3000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 15详情":
+          - button "查看气泡 15详情":
+            - generic: 待确认
+      - row "导出气泡 16 非重点项 16 尺寸 10450 公制 标准值 10450 千分尺 查看气泡 16详情":
+        - cell "导出气泡 16":
+          - checkbox "导出气泡 16" [checked]
+        - cell "非重点项": ☆
+        - cell "16"
+        - cell "尺寸"
+        - cell "10450 公制 标准值 10450":
+          - generic "10450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：10450":
+            - generic: 标准值
+            - generic: "10450"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 16详情":
+          - button "查看气泡 16详情":
+            - generic: 待确认
+      - row "导出气泡 17 非重点项 17 尺寸 10000 公制 标准值 10000 千分尺 查看气泡 17详情":
+        - cell "导出气泡 17":
+          - checkbox "导出气泡 17" [checked]
+        - cell "非重点项": ☆
+        - cell "17"
+        - cell "尺寸"
+        - cell "10000 公制 标准值 10000":
+          - generic "10000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：10000":
+            - generic: 标准值
+            - generic: "10000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 17详情":
+          - button "查看气泡 17详情":
+            - generic: 待确认
+      - row "导出气泡 18 非重点项 18 尺寸 3.000 公制 标准值 3.000 — 查看气泡 18详情":
+        - cell "导出气泡 18":
+          - checkbox "导出气泡 18" [checked]
+        - cell "非重点项": ☆
+        - cell "18"
+        - cell "尺寸"
+        - cell "3.000 公制 标准值 3.000":
+          - generic "3.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3.000":
+            - generic: 标准值
+            - generic: "3.000"
+        - cell "—"
+        - cell "查看气泡 18详情":
+          - button "查看气泡 18详情":
+            - generic: 待确认
+      - row "导出气泡 19 非重点项 19 尺寸 500 1000 1400 500 公制 标准值 500 千分尺 查看气泡 19详情":
+        - cell "导出气泡 19":
+          - checkbox "导出气泡 19" [checked]
+        - cell "非重点项": ☆
+        - cell "19"
+        - cell "尺寸"
+        - cell "500 1000 1400 500 公制 标准值 500":
+          - generic "500 1000 1400 500"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：500":
+            - generic: 标准值
+            - generic: "500"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 19详情":
+          - button "查看气泡 19详情":
+            - generic: 待确认
+      - row "导出气泡 20 非重点项 20 尺寸 6501000 公制 标准值 650 偏差 +1000 / 0 千分尺 查看气泡 20详情":
+        - cell "导出气泡 20":
+          - checkbox "导出气泡 20" [checked]
+        - cell "非重点项": ☆
+        - cell "20"
+        - cell "尺寸"
+        - cell "6501000 公制 标准值 650 偏差 +1000 / 0":
+          - generic "6501000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：650":
+            - generic: 标准值
+            - generic: "650"
+          - generic "上偏差 / 下偏差：+1000 / 0":
+            - generic: 偏差
+            - generic: +1000 / 0
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 20详情":
+          - button "查看气泡 20详情":
+            - generic: 待确认
+      - row "导出气泡 21 非重点项 21 尺寸 3.000 公制 标准值 3.000 — 查看气泡 21详情":
+        - cell "导出气泡 21":
+          - checkbox "导出气泡 21" [checked]
+        - cell "非重点项": ☆
+        - cell "21"
+        - cell "尺寸"
+        - cell "3.000 公制 标准值 3.000":
+          - generic "3.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3.000":
+            - generic: 标准值
+            - generic: "3.000"
+        - cell "—"
+        - cell "查看气泡 21详情":
+          - button "查看气泡 21详情":
+            - generic: 待确认
+      - row "导出气泡 22 非重点项 22 尺寸 19:350=6650 公制 千分尺 查看气泡 22详情":
+        - cell "导出气泡 22":
+          - checkbox "导出气泡 22" [checked]
+        - cell "非重点项": ☆
+        - cell "22"
+        - cell "尺寸"
+        - cell "19:350=6650 公制":
+          - generic "19:350=6650"
+          - generic "当前尺寸为公制": 公制
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 22详情":
+          - button "查看气泡 22详情":
+            - generic: 待确认
+      - row "导出气泡 23 非重点项 23 尺寸 2200 公制 标准值 2200 千分尺 查看气泡 23详情":
+        - cell "导出气泡 23":
+          - checkbox "导出气泡 23" [checked]
+        - cell "非重点项": ☆
+        - cell "23"
+        - cell "尺寸"
+        - cell "2200 公制 标准值 2200":
+          - generic "2200"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：2200":
+            - generic: 标准值
+            - generic: "2200"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 23详情":
+          - button "查看气泡 23详情":
+            - generic: 待确认
+      - row "导出气泡 24 非重点项 24 尺寸 3450 公制 标准值 3450 千分尺 查看气泡 24详情":
+        - cell "导出气泡 24":
+          - checkbox "导出气泡 24" [checked]
+        - cell "非重点项": ☆
+        - cell "24"
+        - cell "尺寸"
+        - cell "3450 公制 标准值 3450":
+          - generic "3450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3450":
+            - generic: 标准值
+            - generic: "3450"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 24详情":
+          - button "查看气泡 24详情":
+            - generic: 待确认
+      - row "导出气泡 25 非重点项 25 尺寸 3000 公制 标准值 3000 千分尺 查看气泡 25详情":
+        - cell "导出气泡 25":
+          - checkbox "导出气泡 25" [checked]
+        - cell "非重点项": ☆
+        - cell "25"
+        - cell "尺寸"
+        - cell "3000 公制 标准值 3000":
+          - generic "3000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3000":
+            - generic: 标准值
+            - generic: "3000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 25详情":
+          - button "查看气泡 25详情":
+            - generic: 待确认
+      - row "导出气泡 26 非重点项 26 尺寸 2400 公制 标准值 2400 千分尺 查看气泡 26详情":
+        - cell "导出气泡 26":
+          - checkbox "导出气泡 26" [checked]
+        - cell "非重点项": ☆
+        - cell "26"
+        - cell "尺寸"
+        - cell "2400 公制 标准值 2400":
+          - generic "2400"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：2400":
+            - generic: 标准值
+            - generic: "2400"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 26详情":
+          - button "查看气泡 26详情":
+            - generic: 待确认
+      - row "导出气泡 27 非重点项 27 尺寸 1850 公制 标准值 1850 千分尺 查看气泡 27详情":
+        - cell "导出气泡 27":
+          - checkbox "导出气泡 27" [checked]
+        - cell "非重点项": ☆
+        - cell "27"
+        - cell "尺寸"
+        - cell "1850 公制 标准值 1850":
+          - generic "1850"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：1850":
+            - generic: 标准值
+            - generic: "1850"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 27详情":
+          - button "查看气泡 27详情":
+            - generic: 待确认
+      - row "导出气泡 28 非重点项 28 尺寸 ±0.000 公制 — 查看气泡 28详情":
+        - cell "导出气泡 28":
+          - checkbox "导出气泡 28" [checked]
+        - cell "非重点项": ☆
+        - cell "28"
+        - cell "尺寸"
+        - cell "±0.000 公制":
+          - generic "±0.000"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 28详情":
+          - button "查看气泡 28详情":
+            - generic: 待确认
+      - row "导出气泡 29 非重点项 29 尺寸 ±0.000 公制 — 查看气泡 29详情":
+        - cell "导出气泡 29":
+          - checkbox "导出气泡 29" [checked]
+        - cell "非重点项": ☆
+        - cell "29"
+        - cell "尺寸"
+        - cell "±0.000 公制":
+          - generic "±0.000"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 29详情":
+          - button "查看气泡 29详情":
+            - generic: 待确认
+      - row "导出气泡 30 非重点项 30 尺寸 60d 公制 标准值 60 千分尺 查看气泡 30详情":
+        - cell "导出气泡 30":
+          - checkbox "导出气泡 30" [checked]
+        - cell "非重点项": ☆
+        - cell "30"
+        - cell "尺寸"
+        - cell "60d 公制 标准值 60":
+          - generic "60d"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：60":
+            - generic: 标准值
+            - generic: "60"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 30详情":
+          - button "查看气泡 30详情":
+            - generic: 待确认
+      - row "导出气泡 31 非重点项 31 尺寸 450 公制 标准值 450 千分尺 查看气泡 31详情":
+        - cell "导出气泡 31":
+          - checkbox "导出气泡 31" [checked]
+        - cell "非重点项": ☆
+        - cell "31"
+        - cell "尺寸"
+        - cell "450 公制 标准值 450":
+          - generic "450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：450":
+            - generic: 标准值
+            - generic: "450"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 31详情":
+          - button "查看气泡 31详情":
+            - generic: 待确认
+      - row "导出气泡 32 非重点项 32 尺寸 -0.450 公制 标准值 -0.450 偏差 0 / -0.450 — 查看气泡 32详情":
+        - cell "导出气泡 32":
+          - checkbox "导出气泡 32" [checked]
+        - cell "非重点项": ☆
+        - cell "32"
+        - cell "尺寸"
+        - cell "-0.450 公制 标准值 -0.450 偏差 0 / -0.450":
+          - generic "-0.450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：-0.450":
+            - generic: 标准值
+            - generic: "-0.450"
+          - generic "上偏差 / 下偏差：0 / -0.450":
+            - generic: 偏差
+            - generic: 0 / -0.450
+        - cell "—"
+        - cell "查看气泡 32详情":
+          - button "查看气泡 32详情":
+            - generic: 待确认
+      - row "导出气泡 33 非重点项 33 尺寸 16900 公制 标准值 16900 千分尺 查看气泡 33详情":
+        - cell "导出气泡 33":
+          - checkbox "导出气泡 33" [checked]
+        - cell "非重点项": ☆
+        - cell "33"
+        - cell "尺寸"
+        - cell "16900 公制 标准值 16900":
+          - generic "16900"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：16900":
+            - generic: 标准值
+            - generic: "16900"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 33详情":
+          - button "查看气泡 33详情":
+            - generic: 待确认
+      - row "导出气泡 34 非重点项 34 尺寸 13500 公制 标准值 13500 千分尺 查看气泡 34详情":
+        - cell "导出气泡 34":
+          - checkbox "导出气泡 34" [checked]
+        - cell "非重点项": ☆
+        - cell "34"
+        - cell "尺寸"
+        - cell "13500 公制 标准值 13500":
+          - generic "13500"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：13500":
+            - generic: 标准值
+            - generic: "13500"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 34详情":
+          - button "查看气泡 34详情":
+            - generic: 待确认
+      - row "导出气泡 35 非重点项 35 其他 1# 楼南立面图 1:100 公制 — 查看气泡 35详情":
+        - cell "导出气泡 35":
+          - checkbox "导出气泡 35" [checked]
+        - cell "非重点项": ☆
+        - cell "35"
+        - cell "其他"
+        - cell "1# 楼南立面图 1:100 公制":
+          - generic "1# 楼南立面图 1:100"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 35详情":
+          - button "查看气泡 35详情":
+            - generic: 待确认
+      - row "导出气泡 36 非重点项 36 其他 1#楼西立面图 1:100 公制 — 查看气泡 36详情":
+        - cell "导出气泡 36":
+          - checkbox "导出气泡 36" [checked]
+        - cell "非重点项": ☆
+        - cell "36"
+        - cell "其他"
+        - cell "1#楼西立面图 1:100 公制":
+          - generic "1#楼西立面图 1:100"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 36详情":
+          - button "查看气泡 36详情":
+            - generic: 待确认
+      - row "导出气泡 37 非重点项 37 其他 百年涂料喷枪 公制 — 查看气泡 37详情":
+        - cell "导出气泡 37":
+          - checkbox "导出气泡 37" [checked]
+        - cell "非重点项": ☆
+        - cell "37"
+        - cell "其他"
+        - cell "百年涂料喷枪 公制":
+          - generic "百年涂料喷枪"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 37详情":
+          - button "查看气泡 37详情":
+            - generic: 待确认
+      - row "导出气泡 38 非重点项 38 尺寸 9.550 公制 标准值 9.550 — 查看气泡 38详情":
+        - cell "导出气泡 38":
+          - checkbox "导出气泡 38" [checked]
+        - cell "非重点项": ☆
+        - cell "38"
+        - cell "尺寸"
+        - cell "9.550 公制 标准值 9.550":
+          - generic "9.550"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：9.550":
+            - generic: 标准值
+            - generic: "9.550"
+        - cell "—"
+        - cell "查看气泡 38详情":
+          - button "查看气泡 38详情":
+            - generic: 待确认
+      - row "导出气泡 39 非重点项 39 尺寸 9.550 公制 标准值 9.550 — 查看气泡 39详情":
+        - cell "导出气泡 39":
+          - checkbox "导出气泡 39" [checked]
+        - cell "非重点项": ☆
+        - cell "39"
+        - cell "尺寸"
+        - cell "9.550 公制 标准值 9.550":
+          - generic "9.550"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：9.550":
+            - generic: 标准值
+            - generic: "9.550"
+        - cell "—"
+        - cell "查看气泡 39详情":
+          - button "查看气泡 39详情":
+            - generic: 待确认
+      - row "导出气泡 40 非重点项 40 尺寸 3 公制 标准值 3 千分尺 查看气泡 40详情":
+        - cell "导出气泡 40":
+          - checkbox "导出气泡 40" [checked]
+        - cell "非重点项": ☆
+        - cell "40"
+        - cell "尺寸"
+        - cell "3 公制 标准值 3":
+          - generic "3"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3":
+            - generic: 标准值
+            - generic: "3"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 40详情":
+          - button "查看气泡 40详情":
+            - generic: 待确认
+      - row "导出气泡 41 非重点项 41 尺寸 3050 公制 标准值 3050 千分尺 查看气泡 41详情":
+        - cell "导出气泡 41":
+          - checkbox "导出气泡 41" [checked]
+        - cell "非重点项": ☆
+        - cell "41"
+        - cell "尺寸"
+        - cell "3050 公制 标准值 3050":
+          - generic "3050"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3050":
+            - generic: 标准值
+            - generic: "3050"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 41详情":
+          - button "查看气泡 41详情":
+            - generic: 待确认
+      - row "导出气泡 42 非重点项 42 尺寸 3050 公制 标准值 3050 千分尺 查看气泡 42详情":
+        - cell "导出气泡 42":
+          - checkbox "导出气泡 42" [checked]
+        - cell "非重点项": ☆
+        - cell "42"
+        - cell "尺寸"
+        - cell "3050 公制 标准值 3050":
+          - generic "3050"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3050":
+            - generic: 标准值
+            - generic: "3050"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 42详情":
+          - button "查看气泡 42详情":
+            - generic: 待确认
+      - row "导出气泡 43 非重点项 43 尺寸 6.000 公制 标准值 6.000 — 查看气泡 43详情":
+        - cell "导出气泡 43":
+          - checkbox "导出气泡 43" [checked]
+        - cell "非重点项": ☆
+        - cell "43"
+        - cell "尺寸"
+        - cell "6.000 公制 标准值 6.000":
+          - generic "6.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：6.000":
+            - generic: 标准值
+            - generic: "6.000"
+        - cell "—"
+        - cell "查看气泡 43详情":
+          - button "查看气泡 43详情":
+            - generic: 待确认
+      - row "导出气泡 44 非重点项 44 粗糙度 6.000 公制 标准值 6.000 μm 粗糙度仪 查看气泡 44详情":
+        - cell "导出气泡 44":
+          - checkbox "导出气泡 44" [checked]
+        - cell "非重点项": ☆
+        - cell "44"
+        - cell "粗糙度"
+        - cell "6.000 公制 标准值 6.000 μm":
+          - generic "6.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：6.000 μm":
+            - generic: 标准值
+            - generic: 6.000 μm
+        - cell "粗糙度仪":
+          - generic "粗糙度仪"
+        - cell "查看气泡 44详情":
+          - button "查看气泡 44详情":
+            - generic: 待确认
+      - row "导出气泡 45 非重点项 45 尺寸 3000 公制 标准值 3000 千分尺 查看气泡 45详情":
+        - cell "导出气泡 45":
+          - checkbox "导出气泡 45" [checked]
+        - cell "非重点项": ☆
+        - cell "45"
+        - cell "尺寸"
+        - cell "3000 公制 标准值 3000":
+          - generic "3000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3000":
+            - generic: 标准值
+            - generic: "3000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 45详情":
+          - button "查看气泡 45详情":
+            - generic: 待确认
+      - row "导出气泡 46 非重点项 46 尺寸 10000 公制 标准值 10000 千分尺 查看气泡 46详情":
+        - cell "导出气泡 46":
+          - checkbox "导出气泡 46" [checked]
+        - cell "非重点项": ☆
+        - cell "46"
+        - cell "尺寸"
+        - cell "10000 公制 标准值 10000":
+          - generic "10000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：10000":
+            - generic: 标准值
+            - generic: "10000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 46详情":
+          - button "查看气泡 46详情":
+            - generic: 待确认
+      - row "导出气泡 47 非重点项 47 尺寸 1500 公制 标准值 1500 千分尺 查看气泡 47详情":
+        - cell "导出气泡 47":
+          - checkbox "导出气泡 47" [checked]
+        - cell "非重点项": ☆
+        - cell "47"
+        - cell "尺寸"
+        - cell "1500 公制 标准值 1500":
+          - generic "1500"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：1500":
+            - generic: 标准值
+            - generic: "1500"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 47详情":
+          - button "查看气泡 47详情":
+            - generic: 待确认
+      - row "导出气泡 48 非重点项 48 尺寸 3000 公制 标准值 3000 千分尺 查看气泡 48详情":
+        - cell "导出气泡 48":
+          - checkbox "导出气泡 48" [checked]
+        - cell "非重点项": ☆
+        - cell "48"
+        - cell "尺寸"
+        - cell "3000 公制 标准值 3000":
+          - generic "3000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3000":
+            - generic: 标准值
+            - generic: "3000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 48详情":
+          - button "查看气泡 48详情":
+            - generic: 待确认
+      - row "导出气泡 49 非重点项 49 尺寸 10000 公制 标准值 10000 千分尺 查看气泡 49详情":
+        - cell "导出气泡 49":
+          - checkbox "导出气泡 49" [checked]
+        - cell "非重点项": ☆
+        - cell "49"
+        - cell "尺寸"
+        - cell "10000 公制 标准值 10000":
+          - generic "10000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：10000":
+            - generic: 标准值
+            - generic: "10000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 49详情":
+          - button "查看气泡 49详情":
+            - generic: 待确认
+      - row "导出气泡 50 非重点项 50 尺寸 3.000 公制 标准值 3.000 — 查看气泡 50详情":
+        - cell "导出气泡 50":
+          - checkbox "导出气泡 50" [checked]
+        - cell "非重点项": ☆
+        - cell "50"
+        - cell "尺寸"
+        - cell "3.000 公制 标准值 3.000":
+          - generic "3.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3.000":
+            - generic: 标准值
+            - generic: "3.000"
+        - cell "—"
+        - cell "查看气泡 50详情":
+          - button "查看气泡 50详情":
+            - generic: 待确认
+      - row "导出气泡 51 非重点项 51 尺寸 3.000 公制 标准值 3.000 — 查看气泡 51详情":
+        - cell "导出气泡 51":
+          - checkbox "导出气泡 51" [checked]
+        - cell "非重点项": ☆
+        - cell "51"
+        - cell "尺寸"
+        - cell "3.000 公制 标准值 3.000":
+          - generic "3.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3.000":
+            - generic: 标准值
+            - generic: "3.000"
+        - cell "—"
+        - cell "查看气泡 51详情":
+          - button "查看气泡 51详情":
+            - generic: 待确认
+      - row "导出气泡 52 非重点项 52 尺寸 1500 600.900 公制 标准值 1500 千分尺 查看气泡 52详情":
+        - cell "导出气泡 52":
+          - checkbox "导出气泡 52" [checked]
+        - cell "非重点项": ☆
+        - cell "52"
+        - cell "尺寸"
+        - cell "1500 600.900 公制 标准值 1500":
+          - generic "1500 600.900"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：1500":
+            - generic: 标准值
+            - generic: "1500"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 52详情":
+          - button "查看气泡 52详情":
+            - generic: 待确认
+      - row "导出气泡 53 非重点项 53 尺寸 3000 公制 标准值 3000 千分尺 查看气泡 53详情":
+        - cell "导出气泡 53":
+          - checkbox "导出气泡 53" [checked]
+        - cell "非重点项": ☆
+        - cell "53"
+        - cell "尺寸"
+        - cell "3000 公制 标准值 3000":
+          - generic "3000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3000":
+            - generic: 标准值
+            - generic: "3000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 53详情":
+          - button "查看气泡 53详情":
+            - generic: 待确认
+      - row "导出气泡 54 非重点项 54 尺寸 3000 公制 标准值 3000 千分尺 查看气泡 54详情":
+        - cell "导出气泡 54":
+          - checkbox "导出气泡 54" [checked]
+        - cell "非重点项": ☆
+        - cell "54"
+        - cell "尺寸"
+        - cell "3000 公制 标准值 3000":
+          - generic "3000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：3000":
+            - generic: 标准值
+            - generic: "3000"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 54详情":
+          - button "查看气泡 54详情":
+            - generic: 待确认
+      - row "导出气泡 55 非重点项 55 其他 4.50 1600 公制 — 查看气泡 55详情":
+        - cell "导出气泡 55":
+          - checkbox "导出气泡 55" [checked]
+        - cell "非重点项": ☆
+        - cell "55"
+        - cell "其他"
+        - cell "4.50 1600 公制":
+          - generic "4.50 1600"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 55详情":
+          - button "查看气泡 55详情":
+            - generic: 待确认
+      - row "导出气泡 56 非重点项 56 粗糙度 ±0.000 公制 标准值 0 mm 粗糙度仪 查看气泡 56详情":
+        - cell "导出气泡 56":
+          - checkbox "导出气泡 56" [checked]
+        - cell "非重点项": ☆
+        - cell "56"
+        - cell "粗糙度"
+        - cell "±0.000 公制 标准值 0 mm":
+          - generic "±0.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：0 mm":
+            - generic: 标准值
+            - generic: 0 mm
+        - cell "粗糙度仪":
+          - generic "粗糙度仪"
+        - cell "查看气泡 56详情":
+          - button "查看气泡 56详情":
+            - generic: 待确认
+      - row "导出气泡 57 非重点项 57 尺寸 1850 公制 标准值 1850 千分尺 查看气泡 57详情":
+        - cell "导出气泡 57":
+          - checkbox "导出气泡 57" [checked]
+        - cell "非重点项": ☆
+        - cell "57"
+        - cell "尺寸"
+        - cell "1850 公制 标准值 1850":
+          - generic "1850"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：1850":
+            - generic: 标准值
+            - generic: "1850"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 57详情":
+          - button "查看气泡 57详情":
+            - generic: 待确认
+      - row "导出气泡 58 非重点项 58 尺寸 900 公制 标准值 900 千分尺 查看气泡 58详情":
+        - cell "导出气泡 58":
+          - checkbox "导出气泡 58" [checked]
+        - cell "非重点项": ☆
+        - cell "58"
+        - cell "尺寸"
+        - cell "900 公制 标准值 900":
+          - generic "900"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：900":
+            - generic: 标准值
+            - generic: "900"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 58详情":
+          - button "查看气泡 58详情":
+            - generic: 待确认
+      - row "导出气泡 59 非重点项 59 尺寸 ±0.000 公制 标准值 0 偏差 0 / 0 千分尺 查看气泡 59详情":
+        - cell "导出气泡 59":
+          - checkbox "导出气泡 59" [checked]
+        - cell "非重点项": ☆
+        - cell "59"
+        - cell "尺寸"
+        - cell "±0.000 公制 标准值 0 偏差 0 / 0":
+          - generic "±0.000"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：0":
+            - generic: 标准值
+            - generic: "0"
+          - generic "上偏差 / 下偏差：0 / 0":
+            - generic: 偏差
+            - generic: 0 / 0
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 59详情":
+          - button "查看气泡 59详情":
+            - generic: 待确认
+      - row "导出气泡 60 非重点项 60 尺寸 450 公制 标准值 450 千分尺 查看气泡 60详情":
+        - cell "导出气泡 60":
+          - checkbox "导出气泡 60" [checked]
+        - cell "非重点项": ☆
+        - cell "60"
+        - cell "尺寸"
+        - cell "450 公制 标准值 450":
+          - generic "450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：450":
+            - generic: 标准值
+            - generic: "450"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 60详情":
+          - button "查看气泡 60详情":
+            - generic: 待确认
+      - row "导出气泡 61 非重点项 61 尺寸 450 公制 标准值 450 千分尺 查看气泡 61详情":
+        - cell "导出气泡 61":
+          - checkbox "导出气泡 61" [checked]
+        - cell "非重点项": ☆
+        - cell "61"
+        - cell "尺寸"
+        - cell "450 公制 标准值 450":
+          - generic "450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：450":
+            - generic: 标准值
+            - generic: "450"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 61详情":
+          - button "查看气泡 61详情":
+            - generic: 待确认
+      - row "导出气泡 62 非重点项 62 粗糙度 0.450 公制 标准值 0.450 mm 粗糙度仪 查看气泡 62详情":
+        - cell "导出气泡 62":
+          - checkbox "导出气泡 62" [checked]
+        - cell "非重点项": ☆
+        - cell "62"
+        - cell "粗糙度"
+        - cell "0.450 公制 标准值 0.450 mm":
+          - generic "0.450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：0.450 mm":
+            - generic: 标准值
+            - generic: 0.450 mm
+        - cell "粗糙度仪":
+          - generic "粗糙度仪"
+        - cell "查看气泡 62详情":
+          - button "查看气泡 62详情":
+            - generic: 待确认
+      - row "导出气泡 63 非重点项 63 尺寸 450 公制 标准值 450 千分尺 查看气泡 63详情":
+        - cell "导出气泡 63":
+          - checkbox "导出气泡 63" [checked]
+        - cell "非重点项": ☆
+        - cell "63"
+        - cell "尺寸"
+        - cell "450 公制 标准值 450":
+          - generic "450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：450":
+            - generic: 标准值
+            - generic: "450"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 63详情":
+          - button "查看气泡 63详情":
+            - generic: 待确认
+      - row "导出气泡 64 非重点项 64 尺寸 0.450 公制 标准值 0.450 — 查看气泡 64详情":
+        - cell "导出气泡 64":
+          - checkbox "导出气泡 64" [checked]
+        - cell "非重点项": ☆
+        - cell "64"
+        - cell "尺寸"
+        - cell "0.450 公制 标准值 0.450":
+          - generic "0.450"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：0.450":
+            - generic: 标准值
+            - generic: "0.450"
+        - cell "—"
+        - cell "查看气泡 64详情":
+          - button "查看气泡 64详情":
+            - generic: 待确认
+      - row "导出气泡 65 非重点项 65 其他 文化工厂 公制 — 查看气泡 65详情":
+        - cell "导出气泡 65":
+          - checkbox "导出气泡 65" [checked]
+        - cell "非重点项": ☆
+        - cell "65"
+        - cell "其他"
+        - cell "文化工厂 公制":
+          - generic "文化工厂"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 65详情":
+          - button "查看气泡 65详情":
+            - generic: 待确认
+      - row "导出气泡 66 非重点项 66 尺寸 16900 公制 标准值 16900 千分尺 查看气泡 66详情":
+        - cell "导出气泡 66":
+          - checkbox "导出气泡 66" [checked]
+        - cell "非重点项": ☆
+        - cell "66"
+        - cell "尺寸"
+        - cell "16900 公制 标准值 16900":
+          - generic "16900"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：16900":
+            - generic: 标准值
+            - generic: "16900"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 66详情":
+          - button "查看气泡 66详情":
+            - generic: 待确认
+      - row "导出气泡 67 非重点项 67 尺寸 13500 公制 标准值 13500 千分尺 查看气泡 67详情":
+        - cell "导出气泡 67":
+          - checkbox "导出气泡 67" [checked]
+        - cell "非重点项": ☆
+        - cell "67"
+        - cell "尺寸"
+        - cell "13500 公制 标准值 13500":
+          - generic "13500"
+          - generic "当前尺寸为公制": 公制
+          - generic "标准值：13500":
+            - generic: 标准值
+            - generic: "13500"
+        - cell "千分尺":
+          - generic "千分尺"
+        - cell "查看气泡 67详情":
+          - button "查看气泡 67详情":
+            - generic: 待确认
+      - row "导出气泡 68 非重点项 68 其他 1# 楼北立面图 1:100 公制 — 查看气泡 68详情":
+        - cell "导出气泡 68":
+          - checkbox "导出气泡 68" [checked]
+        - cell "非重点项": ☆
+        - cell "68"
+        - cell "其他"
+        - cell "1# 楼北立面图 1:100 公制":
+          - generic "1# 楼北立面图 1:100"
+          - generic "当前尺寸为公制": 公制
+        - cell "—"
+        - cell "查看气泡 68详情":
+          - button "查看气泡 68详情":
+            - generic: 待确认
+      - row "导出气泡 69 非重点项 69 其他 1# 楼东立面图 1:100 英制 — 查看气泡 69详情":
+        - cell "导出气泡 69":
+          - checkbox "导出气泡 69" [checked]
+        - cell "非重点项": ☆
+        - cell "69"
+        - cell "其他"
+        - cell "1# 楼东立面图 1:100 英制":
+          - generic "1# 楼东立面图 1:100"
+          - generic "当前尺寸为英制": 英制
+        - cell "—"
+        - cell "查看气泡 69详情":
+          - button "查看气泡 69详情":
+            - generic: 待确认

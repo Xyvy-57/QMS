@@ -1,0 +1,66 @@
+
+
+===== SHEET 中文 (30x7) =====
+序号 | 模块名称 | 功能描述 | 适用场景 | 功能亮点 |  | 
+1 | 来料管控 | 采购物料检验管理（检验任务分配，合单/拆单，检验检验进度升级等等），数据存储、分析，PP/PPK分析等。系统根据检验标准及录入数据自动进行合格/不合格判断 | 需要对采购原材料进行质量检验 | 支持多种抽样，数据快速录入，对物料，供应商进行对比分析 |  | 
+2 | 过程管控 | 生产过程物料检验管理（检验任务分配，合单/拆单，检验检验进度升级等等），如首检，巡检，质量数据分析：如直通率，饼图，柏拉图，箱型图等。系统根据检验标准及录入数据自动进行合格/不合格判断 | 对生产过程进行质量管控 | 多产线，多班次，多工序，多机台对比分析，能够对生产要素进行分析，对尺寸配合，多模多穴产品交叉互配分析，实时计算PP/PPK，相关性分析以及质量风险预警 |  | 
+3 | 最终检验 | 半成品/成品最终检验管理（检验任务分配，合单/拆单，检验检验进度升级等等）。检验数据录入、存储、报表分析。 系统根据检验标准及录入数据自动进行合格/不合格判断。 | 入库前进行最终检验管理 | 产线，班次等对比分析 |  | 
+4 | 出货管控 | 产品出货前检验管理（检验任务分配，合单/拆单，检验检验进度升级等等），检验数据录入、存储、分析。 系统根据检验标准及录入数据自动进行合格/不合格判断。 | 产品出货前进行检验 | 快速图表分析，如箱型图，柏拉图，折线图等 |  | 
+5 | 周期性试验 | 周期性试验/检验管理，如型式试验，特殊试验，寿命试验等，可按固定数量或固定时间间隔进行试验任务提醒。 | 物料/试验种类多，要求不统一，非日常性的周期性（按数量或者时间）检验管理。 | 自动计算时间以及数量，自定义通知 |  | 
+6 | 不合格品管理 | 不合格产品管理及审批：不合格产品登记，汇总，处置，如特采，报废，挑选等。 | 检验发生不合格，客诉投诉不合格品产，库存检不合格品管理 | 自定义处理方式以及审批流程，关联检验，客诉等。 |  | 
+7 | 客户投诉 | 客户投诉登记，处理。根据设定路线进行问题升级处理。 | 客户邮件投诉，电话投诉，电商平台投诉，即时通讯工具投诉，口头投诉等 | 跨部门协同以及自定义处理流程，可触发CAPA |  | 
+8 | 问题发现 | 临时发现问题登记、处理。根据设定路线进行问题升级处理。 | 针对非客诉及常规评审/稽查发现的问题管理 | 日常问题统一管理，根据需求触发CAPA |  | 
+9 | 评审管理 | 评审管理，如体系评审，5S稽查，分层审核等 | 内审，第三方评审等 | 评审计划，自动生成评审发现，评审记录以及评审分析图表，可打通供应商直接提交整改报告 |  | 
+10 | 纠正预防 | 不合格品、评审发现、客诉、未达标质量指标的分析整改（8D） | 持续改善 | 整改任务的分配以及跟踪，跨部门，跨区域协同 |  | 
+11 | 项目管理 | 质量相关项目管理，进行项目任务分配，项目计划管理（甘特图） | 新产品/样品认证，质量改善项目 | 任务统一跟踪，多种任务展示方式，如甘特图，看板，列表 |  | 
+12 | 量具管理 | 质量测量设备/工具台账管理，校准提醒 | 测量设备管理 | 校准计划管理以及多次校准提醒 |  | 
+13 | 质量成本 | 质量成本登记汇总，可对接不合格品及客诉模块 | 需要针对不合格及客诉造成质量损失进行跟踪。 | 质量费用责任划分 |  | 
+14 | 文档管控中心 | 文档的存储，编辑 | 文档统一保存及更新管理 | 文档更新统一管理 |  | 
+15 | 网络销售 | 网络销售产品评分管理（如亚马逊，京东等） | 通过网络销售商品以及通过客户反馈进行质量改进 | 通过对接自动拉取退货、客诉、评分信息 |  | 
+16 | 任务管理 | 个人任务列表，跟踪处理 | 个人任务统一跟踪列表 | 任务与任务来源关联展示，方便追踪与管理 |  | 
+17 | 质量目标 | 质量目标设定，绩效跟踪 | 内部绩效及供应商绩效跟踪监控 | 绩效不达标通知及集成纠正预防 |  | 
+18 | 供应商录入 | 供应商根据授权账号进行检验数据录入，整改提交等 | 需要供应商直接提供信息、文档及整改 | 打通供应商，提高沟通效率 |  | 
+19 | 采购订单 | 采购订单跟踪，产品报检 | 采购中心，贸易公司，第三方检测机构，设计中心 | 打通供应商端，对订单进行跟踪、协同管理，并可触发检验管理 |  | 
+20 | 自定义字段名称 | 客户对系统中字段名称进行自定义设置 | 企业有特定的字段名称要求，以及自定义字段 | 自行增加字段 |  | 
+21 | 系统对接 | ERP，MES,OA等 | 公司有多个系统 | 节省人工操作，避免人工错误，提高效率 |  | 
+22 | 报表板 | 用户自定义配置质量数据分析报表展示，如柏拉图，箱型图，供应商合格率对比及趋势图等。 | 质量数据数据看板，自动展示周会报表，月度会议报表等 | 每个客户个个性化配置，最多可同时配置80个报表 |  | 
+23 | 工作台 | 个人任务列表展示 | 个人任务看板 | 个人待办任务统一管理，便于安排处理，以及防止遗漏 |  | 
+24 | 检验规则 | 产品检验标准的统一管理 | 需要对产品进行质量检验管理 | 检验方法，检验内容，缺陷描述等进行标准化，规范化，便于进行数据分析 |  | 
+25 | 登录方式 | 用户名密码，绑定企业微信，钉钉 | 系统用户 | 适应不同公司的不同操作习惯，以及实时通知 |  | 
+26 | 数据录入方式 | 手动录入，设备对接自动录入，系统对接 | 数据录入 | 数据录入快速 |  | 
+27 | 系统语言 | 中文，英文，具备支持其他语言功能，如越南语 | 跨国公司或有国外供应商/客户 | 多语言支持 |  | 
+28 | 部署方式 | 公有云，私有云，本地服务器 | 系统部署 | 适应不同公司的数据存储以及系统登陆需求 |  | 
+29 | 数据安全 | 密码，权限，冷备， 热备 | 云部署 | 数据安全以及系统安全保证 |  | 
+
+
+===== SHEET Eng (30x6) =====
+No | Module Name | Description | Scenario | Highlights | 
+1 | IQC | Inspection management for incoming parts,eg. Data entry,store and analysis(Pareto, Pie, trend chart, PP/PPK,etc). QMS system will judge the result of "Pass/Fail" according to the data entered. | The parties whole has to/would like to check the quality of the incoming parts. | Multiple sampling plan is embedded, AQL,Fixed, Percentage. Realtime quality performance comparison among suppliers, components. | 
+2 | IPQC | Inspection management for in process parts. Eg First Article Inspeciton, Patrol Inspection. Quality data analyssi: FPY,Pie chart, Pareto Chart,Box plot charts, etc. QMS system will judge the result of "Pass/Fail" according to the data entered. | Needs of in process quality control | Early warning alerts for potential quality issues. Inspection tasks management. Quality data analysis on production lines, shifs,processes, working unites,etc. Components matching analysis,multiple molds, multiple cavities parts analysis,Realtime and automatic calculation of PP/PPK, Correlation analysis. | 
+3 | FQC | Final inspection for finished or semi-finished goods. Data entry,store and analysis(Pareto, Pie, trend chart, PP/PPK,etc). QMS system will judge the result of "Pass/Fail" according to the data entered. | Inspection before the transaction of putting the goods to warehouse | Auto generation of quality data analysis charts.eg Pie chart, run chart,etc. | 
+4 | OQC | Out going Inspection before delivery.Data entry,store and analysis(Pareto, Pie, trend chart, PP/PPK,etc). QMS system will judge the result of "Pass/Fail" according to the data entered. | Inspection before delivering goods to customers. | Auto generation of COC, Quality data analysis. | 
+5 | Periodic Test | Periodic test management. Eg, special test, type test, life test, Rohs test. It can be time-based or quantity-based test. Task notification available. | Too many different test to be managed. | System will calculate the time or quantity and notification will be triggered. | 
+6 | NCR | Nonconfirmance recording and management. Nonformance analysis. | To manage the conformance from inspection, customer complaints, warehouse check.etc. | Customized NCR disposal result. Configurable approval flow | 
+7 | Customer Complaint | To record customer complaints, and complaints tracking. | Central platform to managing the customer complaints from email, phone, online ,instant message ,oral, etc. | Easy for tasks followingup, Cross parties/department/location cooridination on the issues tracking, integrated with CAR/CAPA. | 
+8 | Issue Tracking | Module to manage the Ad hoc issues, Andon alarmings,etc. | To manage the issues which are NOT coming from customer complaints/audit | Issue "bank" for continuous improvement. Trigger CAR/CAPA when it is necessary. | 
+9 | Audit&Assessment | Audit & assessment management, et, Supplier audit ,Internal audit, 5S audit, Layered Process Audit,etc | Supplier audit ,Internal audit, 5S audit, Layered Process Audit,etc | Generation of audit plan, and audit task assignment on line, audit history display during audit, auto generation of audit analysis,auto generation of finding list. Integrated with CAPA module. | 
+10 | CAPA | (8D)Corrective Action and Preventive Action management for NCR,Audit, Customer complaints,unachieved quality objective. | The organization needs to implement continuous improvement. | Tasks assigement across organizations/department. The organization can issue the CAR to suppliers via the system.  Suppliers are able to provide the actions via the system directly | 
+11 | Project Management | Quality project management. Task assignment and following up. Gantt chart for project plan. | New product introduction, new sample qualification,quality improvement. | Task list and Kanban for  tracking and monitor. | 
+12 | Gage Management | Gage list and calibration management | Gage management | Gage list and gage calibration schedule | 
+13 | Cost of Quality | Record of quality cost caused by the disposal of NCR and customer complaints. | Significant cost caused by NCR and customer complaints. | Analysis on the quality cost and owner. | 
+14 | Doc Management | Documents store and sharing. | Drawings, specifications, procedures,etc | One user can lock and unlock the documents during the modification. | 
+15 | Online Seller | Customer satisfaction review(from Amazon, JD,etc) | Selling goods online and do the improvement base on customers feedback | Get the score, comments and goods return information automatically. | 
+16 | Task  Management | To list the tasks for each user | Each user's task list. | Central plantform for task management, divided by modules. | 
+17 | Objective  Management | Define and monitor quality objectives for department/personal/subordinates/suppliers.. | Quality objectives to monitor. | CAR can be triggered when miss the target. | 
+18 | Supplier Entry | The authorized suppliers can input the inspection data,corrective action information via the system directly. | Check supplier inspection status and result,get supplier action report and periodic test report.etc. | Communication with suppliers via the system for inspection,CAPA, periodic test report,etc | 
+19 | PO Management | Following of PO status and trigger the inspection before deliveries | IPO, Trading Company, 3rd Inpsection agent,Design house. | Online coordination between buyer and seller, online inspection management. | 
+20 | Field  Management |   Modify the names of the field in the system, and to add more field. | The user of the QMS system has their familiar field names, and special fields. | Users can add specific fields or to change the field names which they like. | 
+21 | Systems Integration | Integration with other systems, eg. ERP，MES,OA | Mutiple systems are being used in the organization. | Integrated with other systems to avoid human mistakes and improve efficiency. | 
+22 | DashBoard | Configurable visual displays of information that provide a quick look into specific quality details,eg.FPY,PPM, Pareto chart of incoming parts during a specific period. | Daily monitor of quality detials ,or defined weekly reports, monthly report,etc. | Up to 80 configurable charts for each user. Display on big screen in workshops, and refresh automatically every 5 minutes to show the latest information. | 
+23 | Workplace | Personal task list | Personal task list for user to follow | Easy for user to manage and priotize personal tasks, | 
+24 | Inspection Plan | Standardized inspection requirements. | Inspection standards for internal and to define standard inspection requirements for customers. | Standardized inspection method,s details, defect details,enhance the ability of quality  data analysis and requriement management. | 
+25 | Log In | Login by username&passwork, Wechat, DingTalk | Each user of the system | Multiple approaches for login | 
+26 | Approach of Data Entry | Manual entry, integrate with gage/measuring equipments, integrate with other systems, eg. ERP,MES. | Data entry | Flexible and multiple approaches of data entry,reliable and efficient data entry method. | 
+27 | Language | Chinese and English | Multinternational corporations,  suppliers or customers in oversea countries. | Multiple language available | 
+28 | Deployment | Public cloud, private cloud, on-premise | System deployment | Deploy according to organization's requirement on IT policy | 
+29 | Data Security | Password, access control,cold standby,hot backup | cold standby and hot backup for deployed in cloud | Safety and security of system | 

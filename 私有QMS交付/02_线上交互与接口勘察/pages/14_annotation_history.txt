@@ -1,0 +1,1045 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - button "返回图纸标注列表":
+  - heading "14936972.jpg" [level=1]
+  - generic: 已有标注
+  - generic: 图号 111 · 未分类
+  - button "编辑信息":
+    - text: 编辑信息
+  - button "继续标注":
+    - text: 继续标注
+  - button "工序流程图"
+  - button "创建质检单":
+    - text: 创建质检单
+  - button "导出":
+    - text: 导出
+  - navigation:
+    - button "标注结果"
+    - button "变更历史" [active]
+    - button "图纸信息"
+  - generic "111": 零件 111
+  - generic: 版本 —
+  - generic: 0 个 PDF · 1 张图片 · 1 页
+  - generic: 最近保存 2026/11/17 10:35:09
+  - complementary:
+    - text: 变更记录
+    - generic: 共 1 条
+    - button "刷新变更历史":
+    - 'button "初始版本（变更 #1） 当前使用 2026/11/17 10:35:09 手动保存 demo1"':
+      - generic: "初始版本（变更 #1）"
+      - generic: 当前使用
+      - generic: 2026/11/17 10:35:09
+      - generic: 手动保存
+      - generic: demo1
+  - 'heading "初始版本（变更 #1）" [level=2]'
+  - generic: 当前使用
+  - paragraph: 2026/11/17 10:35:09 · 手动保存 · 历史基线
+  - button "回滚到此变更点" [disabled]:
+    - text: 回滚到此变更点
+  - generic: 初始标注共 78 项
+  - table:
+    - rowgroup:
+      - row "阶段 球标 / 变更页 原文 / 内容 类型 名义值 上偏差 下偏差 状态":
+        - columnheader "阶段"
+        - columnheader "球标 / 变更页"
+        - columnheader "原文 / 内容"
+        - columnheader "类型"
+        - columnheader "名义值"
+        - columnheader "上偏差"
+        - columnheader "下偏差"
+        - columnheader "状态"
+    - rowgroup:
+      - row "初始 1 P1 下色料喷镀 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "1 P1":
+          - generic: "1"
+          - generic: P1
+        - cell "下色料喷镀"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 2 P1 下色喷油 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "2 P1":
+          - generic: "2"
+          - generic: P1
+        - cell "下色喷油"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 3 P1 红色涂料喷枪 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "3 P1":
+          - generic: "3"
+          - generic: P1
+        - cell "红色涂料喷枪"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 4 P1 TGA 涂料喷涂 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "4 P1":
+          - generic: "4"
+          - generic: P1
+        - cell "TGA 涂料喷涂"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 5 P1 9.550 尺寸 9.550 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "5 P1":
+          - generic: "5"
+          - generic: P1
+        - cell "9.550"
+        - cell "尺寸"
+        - cell "9.550"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 6 P1 点 5000011 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "6 P1":
+          - generic: "6"
+          - generic: P1
+        - cell "点 5000011"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 7 P1 36.20 尺寸 36.20 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "7 P1":
+          - generic: "7"
+          - generic: P1
+        - cell "36.20"
+        - cell "尺寸"
+        - cell "36.20"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 8 P1 9.550 尺寸 9.550 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "8 P1":
+          - generic: "8"
+          - generic: P1
+        - cell "9.550"
+        - cell "尺寸"
+        - cell "9.550"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 9 P1 3050 尺寸 3050 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "9 P1":
+          - generic: "9"
+          - generic: P1
+        - cell "3050"
+        - cell "尺寸"
+        - cell "3050"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 10 P1 3050 尺寸 3050 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "10 P1":
+          - generic: "10"
+          - generic: P1
+        - cell "3050"
+        - cell "尺寸"
+        - cell "3050"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 11 P1 6.000 尺寸 6.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "11 P1":
+          - generic: "11"
+          - generic: P1
+        - cell "6.000"
+        - cell "尺寸"
+        - cell "6.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 12 P1 6.000 尺寸 6.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "12 P1":
+          - generic: "12"
+          - generic: P1
+        - cell "6.000"
+        - cell "尺寸"
+        - cell "6.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 13 P1 1500 500 尺寸 1500 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "13 P1":
+          - generic: "13"
+          - generic: P1
+        - cell "1500 500"
+        - cell "尺寸"
+        - cell "1500"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 14 P1 3000 450 尺寸 3000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "14 P1":
+          - generic: "14"
+          - generic: P1
+        - cell "3000 450"
+        - cell "尺寸"
+        - cell "3000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 15 P1 3000 尺寸 3000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "15 P1":
+          - generic: "15"
+          - generic: P1
+        - cell "3000"
+        - cell "尺寸"
+        - cell "3000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 16 P1 10450 尺寸 10450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "16 P1":
+          - generic: "16"
+          - generic: P1
+        - cell "10450"
+        - cell "尺寸"
+        - cell "10450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 17 P1 10000 尺寸 10000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "17 P1":
+          - generic: "17"
+          - generic: P1
+        - cell "10000"
+        - cell "尺寸"
+        - cell "10000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 18 P1 3.000 尺寸 3.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "18 P1":
+          - generic: "18"
+          - generic: P1
+        - cell "3.000"
+        - cell "尺寸"
+        - cell "3.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 19 P1 500 1000 1400 500 尺寸 500 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "19 P1":
+          - generic: "19"
+          - generic: P1
+        - cell "500 1000 1400 500"
+        - cell "尺寸"
+        - cell "500"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 20 P1 6501000 尺寸 650 +1000 0 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "20 P1":
+          - generic: "20"
+          - generic: P1
+        - cell "6501000"
+        - cell "尺寸"
+        - cell "650"
+        - cell "+1000"
+        - cell "0"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 21 P1 3.000 尺寸 3.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "21 P1":
+          - generic: "21"
+          - generic: P1
+        - cell "3.000"
+        - cell "尺寸"
+        - cell "3.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 22 P1 19:350=6650 尺寸 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "22 P1":
+          - generic: "22"
+          - generic: P1
+        - cell "19:350=6650"
+        - cell "尺寸"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 23 P1 2200 尺寸 2200 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "23 P1":
+          - generic: "23"
+          - generic: P1
+        - cell "2200"
+        - cell "尺寸"
+        - cell "2200"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 24 P1 3450 尺寸 3450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "24 P1":
+          - generic: "24"
+          - generic: P1
+        - cell "3450"
+        - cell "尺寸"
+        - cell "3450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 25 P1 3000 尺寸 3000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "25 P1":
+          - generic: "25"
+          - generic: P1
+        - cell "3000"
+        - cell "尺寸"
+        - cell "3000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 26 P1 2400 尺寸 2400 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "26 P1":
+          - generic: "26"
+          - generic: P1
+        - cell "2400"
+        - cell "尺寸"
+        - cell "2400"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 27 P1 1850 尺寸 1850 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "27 P1":
+          - generic: "27"
+          - generic: P1
+        - cell "1850"
+        - cell "尺寸"
+        - cell "1850"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 28 P1 ±0.000 尺寸 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "28 P1":
+          - generic: "28"
+          - generic: P1
+        - cell "±0.000"
+        - cell "尺寸"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 29 P1 ±0.000 尺寸 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "29 P1":
+          - generic: "29"
+          - generic: P1
+        - cell "±0.000"
+        - cell "尺寸"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 30 P1 60d 尺寸 60 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "30 P1":
+          - generic: "30"
+          - generic: P1
+        - cell "60d"
+        - cell "尺寸"
+        - cell "60"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 31 P1 450 尺寸 450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "31 P1":
+          - generic: "31"
+          - generic: P1
+        - cell "450"
+        - cell "尺寸"
+        - cell "450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 32 P1 -0.450 尺寸 -0.450 0 -0.450 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "32 P1":
+          - generic: "32"
+          - generic: P1
+        - cell "-0.450"
+        - cell "尺寸"
+        - cell "-0.450"
+        - cell "0"
+        - cell "-0.450"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 33 P1 16900 尺寸 16900 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "33 P1":
+          - generic: "33"
+          - generic: P1
+        - cell "16900"
+        - cell "尺寸"
+        - cell "16900"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 34 P1 13500 尺寸 13500 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "34 P1":
+          - generic: "34"
+          - generic: P1
+        - cell "13500"
+        - cell "尺寸"
+        - cell "13500"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 35 P1 1# 楼南立面图 1:100 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "35 P1":
+          - generic: "35"
+          - generic: P1
+        - cell "1# 楼南立面图 1:100"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 36 P1 1#楼西立面图 1:100 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "36 P1":
+          - generic: "36"
+          - generic: P1
+        - cell "1#楼西立面图 1:100"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 37 P1 百年涂料喷枪 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "37 P1":
+          - generic: "37"
+          - generic: P1
+        - cell "百年涂料喷枪"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 38 P1 9.550 尺寸 9.550 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "38 P1":
+          - generic: "38"
+          - generic: P1
+        - cell "9.550"
+        - cell "尺寸"
+        - cell "9.550"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 39 P1 9.550 尺寸 9.550 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "39 P1":
+          - generic: "39"
+          - generic: P1
+        - cell "9.550"
+        - cell "尺寸"
+        - cell "9.550"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 40 P1 3 尺寸 3 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "40 P1":
+          - generic: "40"
+          - generic: P1
+        - cell "3"
+        - cell "尺寸"
+        - cell "3"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 41 P1 3050 尺寸 3050 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "41 P1":
+          - generic: "41"
+          - generic: P1
+        - cell "3050"
+        - cell "尺寸"
+        - cell "3050"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 42 P1 3050 尺寸 3050 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "42 P1":
+          - generic: "42"
+          - generic: P1
+        - cell "3050"
+        - cell "尺寸"
+        - cell "3050"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 43 P1 6.000 尺寸 6.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "43 P1":
+          - generic: "43"
+          - generic: P1
+        - cell "6.000"
+        - cell "尺寸"
+        - cell "6.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 44 P1 6.000 粗糙度 6.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "44 P1":
+          - generic: "44"
+          - generic: P1
+        - cell "6.000"
+        - cell "粗糙度"
+        - cell "6.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 45 P1 3000 尺寸 3000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "45 P1":
+          - generic: "45"
+          - generic: P1
+        - cell "3000"
+        - cell "尺寸"
+        - cell "3000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 46 P1 10000 尺寸 10000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "46 P1":
+          - generic: "46"
+          - generic: P1
+        - cell "10000"
+        - cell "尺寸"
+        - cell "10000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 47 P1 1500 尺寸 1500 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "47 P1":
+          - generic: "47"
+          - generic: P1
+        - cell "1500"
+        - cell "尺寸"
+        - cell "1500"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 48 P1 3000 尺寸 3000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "48 P1":
+          - generic: "48"
+          - generic: P1
+        - cell "3000"
+        - cell "尺寸"
+        - cell "3000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 49 P1 10000 尺寸 10000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "49 P1":
+          - generic: "49"
+          - generic: P1
+        - cell "10000"
+        - cell "尺寸"
+        - cell "10000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 50 P1 3.000 尺寸 3.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "50 P1":
+          - generic: "50"
+          - generic: P1
+        - cell "3.000"
+        - cell "尺寸"
+        - cell "3.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 51 P1 3.000 尺寸 3.000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "51 P1":
+          - generic: "51"
+          - generic: P1
+        - cell "3.000"
+        - cell "尺寸"
+        - cell "3.000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 52 P1 1500 600.900 尺寸 1500 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "52 P1":
+          - generic: "52"
+          - generic: P1
+        - cell "1500 600.900"
+        - cell "尺寸"
+        - cell "1500"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 53 P1 3000 尺寸 3000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "53 P1":
+          - generic: "53"
+          - generic: P1
+        - cell "3000"
+        - cell "尺寸"
+        - cell "3000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 54 P1 3000 尺寸 3000 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "54 P1":
+          - generic: "54"
+          - generic: P1
+        - cell "3000"
+        - cell "尺寸"
+        - cell "3000"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 55 P1 4.50 1600 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "55 P1":
+          - generic: "55"
+          - generic: P1
+        - cell "4.50 1600"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 56 P1 ±0.000 粗糙度 0 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "56 P1":
+          - generic: "56"
+          - generic: P1
+        - cell "±0.000"
+        - cell "粗糙度"
+        - cell "0"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 57 P1 1850 尺寸 1850 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "57 P1":
+          - generic: "57"
+          - generic: P1
+        - cell "1850"
+        - cell "尺寸"
+        - cell "1850"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 58 P1 900 尺寸 900 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "58 P1":
+          - generic: "58"
+          - generic: P1
+        - cell "900"
+        - cell "尺寸"
+        - cell "900"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 59 P1 ±0.000 尺寸 0 0 0 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "59 P1":
+          - generic: "59"
+          - generic: P1
+        - cell "±0.000"
+        - cell "尺寸"
+        - cell "0"
+        - cell "0"
+        - cell "0"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 60 P1 450 尺寸 450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "60 P1":
+          - generic: "60"
+          - generic: P1
+        - cell "450"
+        - cell "尺寸"
+        - cell "450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 61 P1 450 尺寸 450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "61 P1":
+          - generic: "61"
+          - generic: P1
+        - cell "450"
+        - cell "尺寸"
+        - cell "450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 62 P1 0.450 粗糙度 0.450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "62 P1":
+          - generic: "62"
+          - generic: P1
+        - cell "0.450"
+        - cell "粗糙度"
+        - cell "0.450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 63 P1 450 尺寸 450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "63 P1":
+          - generic: "63"
+          - generic: P1
+        - cell "450"
+        - cell "尺寸"
+        - cell "450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 64 P1 0.450 尺寸 0.450 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "64 P1":
+          - generic: "64"
+          - generic: P1
+        - cell "0.450"
+        - cell "尺寸"
+        - cell "0.450"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 65 P1 文化工厂 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "65 P1":
+          - generic: "65"
+          - generic: P1
+        - cell "文化工厂"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 66 P1 16900 尺寸 16900 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "66 P1":
+          - generic: "66"
+          - generic: P1
+        - cell "16900"
+        - cell "尺寸"
+        - cell "16900"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 67 P1 13500 尺寸 13500 — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "67 P1":
+          - generic: "67"
+          - generic: P1
+        - cell "13500"
+        - cell "尺寸"
+        - cell "13500"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 68 P1 1# 楼北立面图 1:100 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "68 P1":
+          - generic: "68"
+          - generic: P1
+        - cell "1# 楼北立面图 1:100"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 69 P1 1# 楼东立面图 1:100 其他 — — — 待确认":
+        - cell "初始":
+          - generic: 初始
+        - cell "69 P1":
+          - generic: "69"
+          - generic: P1
+        - cell "1# 楼东立面图 1:100"
+        - cell "其他"
+        - cell "—"
+        - cell "—"
+        - cell "—"
+        - cell "待确认":
+          - generic: 待确认
+      - row "初始 标注配置变更 配置已更新 —":
+        - cell "初始":
+          - generic: 初始
+        - cell "标注配置变更"
+        - cell "配置已更新"
+        - cell "—"
+      - row "初始 标注配置变更 source_upright_normalized_v1 —":
+        - cell "初始":
+          - generic: 初始
+        - cell "标注配置变更"
+        - cell "source_upright_normalized_v1"
+        - cell "—"
+      - row "初始 标注配置变更 uniform —":
+        - cell "初始":
+          - generic: 初始
+        - cell "标注配置变更"
+        - cell "uniform"
+        - cell "—"
+      - row "初始 球标排布规则 球标自动排布规则 —":
+        - cell "初始":
+          - generic: 初始
+        - cell "球标排布规则"
+        - cell "球标自动排布规则"
+        - cell "—"
+      - row "初始 球标基础尺寸 1.24% 图宽 —":
+        - cell "初始":
+          - generic: 初始
+        - cell "球标基础尺寸"
+        - cell "1.24% 图宽"
+        - cell "—"
+      - row "初始 球标缩放 100% —":
+        - cell "初始":
+          - generic: 初始
+        - cell "球标缩放"
+        - cell "100%"
+        - cell "—"
+      - row "初始 标注配置变更 配置已更新 —":
+        - cell "初始":
+          - generic: 初始
+        - cell "标注配置变更"
+        - cell "配置已更新"
+        - cell "—"
+      - row "初始 单位制式 尺寸单位：沿用识别结果 —":
+        - cell "初始":
+          - generic: 初始
+        - cell "单位制式"
+        - cell "尺寸单位：沿用识别结果"
+        - cell "—"
+      - row "初始 标注配置变更 — —":
+        - cell "初始":
+          - generic: 初始
+        - cell "标注配置变更"
+        - cell "—"
+        - cell "—"

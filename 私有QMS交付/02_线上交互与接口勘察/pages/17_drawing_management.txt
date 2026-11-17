@@ -1,0 +1,92 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本" [active]:
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - complementary:
+    - heading "自定义目录" [level=2]
+    - generic: "0"
+    - button "刷新":
+    - button "新增分类":
+    - searchbox "搜索图纸管理目录"
+    - button "Close":
+    - button "全部图纸 0":
+      - generic: 全部图纸
+      - generic: "0"
+    - button "未分类 0":
+      - generic: 未分类
+      - generic: "0"
+    - generic: 暂无分类
+  - main:
+    - heading "图纸管理" [level=2]
+    - paragraph: 按目录管理整份图纸，客户可独立筛选。
+    - button "新建图纸":
+      - text: 新建图纸
+    - text: 客户
+    - combobox "按客户筛选":
+      - option "全部客户" [selected]
+    - textbox "搜索受管理图纸":
+      - /placeholder: 图纸名称、图号或客户
+    - button "查询"
+    - button "重置筛选"
+    - generic: 共 0 份图纸
+    - table "图纸管理列表":
+      - rowgroup:
+        - row "图纸名称 图号 客户 目录 版本数 当前版本 更新时间 操作":
+          - columnheader "图纸名称"
+          - columnheader "图号"
+          - columnheader "客户"
+          - columnheader "目录"
+          - columnheader "版本数"
+          - columnheader "当前版本"
+          - columnheader "更新时间"
+          - columnheader "操作"
+      - rowgroup:
+        - row "当前筛选下暂无图纸":
+          - cell "当前筛选下暂无图纸"
+    - generic: 共 0 条，第 1 / 1 页
+    - button "上一页" [disabled]:
+    - button "第 1 页": "1"
+    - button "下一页" [disabled]:
+- tooltip "图纸版本":
+  - generic: 图纸版本

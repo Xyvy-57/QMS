@@ -1,0 +1,75 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集" [active]:
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - main:
+    - heading "图纸库数据集" [level=1]
+    - paragraph: 汇聚工程图纸资产，连接设计与制造经验，让历史成果成为可检索、可参考、可复用的工程知识。
+    - region "图纸库搜索":
+      - search:
+        - generic: 输入图纸名称或图号
+        - textbox "输入图纸名称或图号":
+          - /placeholder: 输入图纸名称、图号，或上传图纸
+        - button "上传查询图纸":
+          - generic: 上传图纸
+        - button "搜索"
+    - region "图纸统计":
+      - article:
+        - generic: 图纸总量
+        - strong: 231份
+        - paragraph: 7 个分类
+      - article:
+        - generic: 新增收录
+        - strong: +2份
+        - paragraph: 今日新增
+      - article:
+        - generic: 删除收录
+        - strong: —份
+        - paragraph: 暂无删除统计
+      - article:
+        - generic: 入库就绪
+        - strong: 231页
+        - paragraph: 0 页待入库 · 0 页失败
+- tooltip "图纸库数据集":
+  - generic: 图纸库数据集

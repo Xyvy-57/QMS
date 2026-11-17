@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3600" height="2820" viewBox="0 0 3600 2820">
+<rect width="100%" height="100%" fill="white"/>
+<text x="140.00" y="80.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="82" dominant-baseline="text-before-edge">16  技术组件与事务</text>
+<text x="144.00" y="205.00" fill="#526A7B" font-family="Heiti SC, sans-serif" font-weight="400" font-size="48" dominant-baseline="text-before-edge">一套业务契约、一份实测事实账；当前核心独立运行，外部系统按需集成。</text>
+<rect x="140" y="350" width="920" height="350" rx="22" fill="#F4F8FB" stroke="#CAD5DF" stroke-width="3"/>
+<text x="176.00" y="384.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">React 业务界面</text>
+<text x="176.00" y="472.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">检验任务 / 范围 / 报告</text>
+<text x="176.00" y="541.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">正常入口，多单并行</text>
+<rect x="1340" y="350" width="920" height="350" rx="22" fill="#F4F8FB" stroke="#CAD5DF" stroke-width="3"/>
+<text x="1376.00" y="384.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">原生 Axis 工作台</text>
+<text x="1376.00" y="472.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">气泡 / 方案 / 表图实测</text>
+<text x="1376.00" y="541.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">原生交互，统一业务契约</text>
+<rect x="2540" y="350" width="920" height="350" rx="22" fill="#EAF5F5" stroke="#087F8C" stroke-width="3"/>
+<text x="2576.00" y="384.00" fill="#087F8C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">同一 BFF / OIDC 会话</text>
+<text x="2576.00" y="472.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">CSRF与当前身份</text>
+<text x="2576.00" y="541.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">任务 / 轮次 / 版本上下文</text>
+<rect x="140" y="930" width="920" height="400" rx="22" fill="#F4F8FB" stroke="#CAD5DF" stroke-width="3"/>
+<text x="176.00" y="964.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">业务依据服务</text>
+<text x="176.00" y="1052.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">标准版/方案版/场景定义</text>
+<text x="176.00" y="1121.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">各自引用与采用快照</text>
+<text x="176.00" y="1190.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">旧版本不随新版本覆盖</text>
+<rect x="1340" y="930" width="920" height="400" rx="22" fill="#EAF5F5" stroke="#087F8C" stroke-width="3"/>
+<text x="1376.00" y="964.00" fill="#087F8C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">检验执行服务</text>
+<text x="1376.00" y="1052.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">轮次 / 样本 / 服务器判定</text>
+<text x="1376.00" y="1121.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">原生适配器，实测不双录</text>
+<text x="1376.00" y="1190.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">事实保存与采纳分开</text>
+<rect x="2540" y="930" width="920" height="400" rx="22" fill="#F4F8FB" stroke="#CAD5DF" stroke-width="3"/>
+<text x="2576.00" y="964.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">风险与权限服务</text>
+<text x="2576.00" y="1052.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">NCR / Hold / 明确权限</text>
+<text x="2576.00" y="1121.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">产品、批次与动作范围</text>
+<text x="2576.00" y="1190.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">不依赖额度或资格平台</text>
+<rect x="140" y="1570" width="2120" height="450" rx="22" fill="#EAF5F5" stroke="#087F8C" stroke-width="3"/>
+<text x="176.00" y="1604.00" fill="#087F8C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">PostgreSQL 唯一业务事务</text>
+<text x="176.00" y="1692.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="56" dominant-baseline="text-before-edge">依据 / 实测事实 / 判定 / 处置</text>
+<text x="176.00" y="1766.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="56" dominant-baseline="text-before-edge">幂等 + 版本 + 精确数值 + 审计</text>
+<text x="176.00" y="1840.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="56" dominant-baseline="text-before-edge">业务变更与 outbox 同时提交</text>
+<rect x="2540" y="1570" width="920" height="350" rx="22" fill="#F4F8FB" stroke="#CAD5DF" stroke-width="3"/>
+<text x="2576.00" y="1604.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">私有附件与快照</text>
+<text x="2576.00" y="1692.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">原始文件 / 固定报告</text>
+<text x="2576.00" y="1761.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">摘要绑定，鉴权下载</text>
+<rect x="140" y="2260" width="920" height="350" rx="22" fill="#F4F8FB" stroke="#CAD5DF" stroke-width="3"/>
+<text x="176.00" y="2294.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">可选集成投递</text>
+<text x="176.00" y="2382.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">启用集成时使用outbox</text>
+<text x="176.00" y="2451.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">重试 / 幂等 / 事务外联网</text>
+<rect x="1340" y="2260" width="920" height="350" rx="22" fill="#FFF8E8" stroke="#A77422" stroke-width="3"/>
+<text x="1376.00" y="2294.00" fill="#8B601C" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">可选外部系统</text>
+<text x="1376.00" y="2382.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">ERP / MES / WMS</text>
+<text x="1376.00" y="2451.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">QMS支持独立运行</text>
+<rect x="2540" y="2260" width="920" height="350" rx="22" fill="#FFF2EF" stroke="#A13A35" stroke-width="3"/>
+<text x="2576.00" y="2294.00" fill="#A13A35" font-family="Heiti SC, sans-serif" font-weight="700" font-size="60" dominant-baseline="text-before-edge">可选集成结果记录</text>
+<text x="2576.00" y="2382.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">外部来源 / 映射 / 返回结果</text>
+<text x="2576.00" y="2451.00" fill="#17354C" font-family="Heiti SC, sans-serif" font-weight="400" font-size="52" dominant-baseline="text-before-edge">接口失败不改写已存实测</text>
+<polyline points="600,350 600,285 3000,285 3000,350" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="3000.0,350.0 2987.1,325.2 3012.9,325.2" fill="#087F8C"/>
+<polyline points="2260,525 2540,525" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="2540.0,525.0 2515.2,537.9 2515.2,512.1" fill="#087F8C"/>
+<polyline points="2800,700 2800,820 600,820 600,930" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="600.0,930.0 587.1,905.2 612.9,905.2" fill="#087F8C"/>
+<polyline points="2800,700 2800,820 1800,820 1800,930" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="1800.0,930.0 1787.1,905.2 1812.9,905.2" fill="#087F8C"/>
+<polyline points="3000,700 3000,930" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="3000.0,930.0 2987.1,905.2 3012.9,905.2" fill="#087F8C"/>
+<polyline points="600,1330 600,1570" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="600.0,1570.0 587.1,1545.2 612.9,1545.2" fill="#087F8C"/>
+<polyline points="1800,1330 1800,1570" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="1800.0,1570.0 1787.1,1545.2 1812.9,1545.2" fill="#087F8C"/>
+<polyline points="3000,1330 3000,1450 2200,1450 2200,1570" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="2200.0,1570.0 2187.1,1545.2 2212.9,1545.2" fill="#087F8C"/>
+<polyline points="2260,1780 2540,1780" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="2540.0,1780.0 2515.2,1792.9 2515.2,1767.1" fill="#087F8C"/>
+<polyline points="600,2020 600,2260" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="600.0,2260.0 587.1,2235.2 612.9,2235.2" fill="#087F8C"/>
+<polyline points="1060,2435 1340,2435" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="1340.0,2435.0 1315.2,2447.9 1315.2,2422.1" fill="#087F8C"/>
+<polyline points="2260,2435 2540,2435" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="2540.0,2435.0 2515.2,2447.9 2515.2,2422.1" fill="#087F8C"/>
+<polyline points="3000,2260 3000,2140 1800,2140 1800,2020" fill="none" stroke="#087F8C" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="1800.0,2020.0 1812.9,2044.8 1787.1,2044.8" fill="#087F8C"/>
+<text x="144.00" y="2695.00" fill="#526A7B" font-family="Heiti SC, sans-serif" font-weight="400" font-size="48" dominant-baseline="text-before-edge">当前主链不依赖门户、资格委托或额度账；外部系统未连接时仍可完成检验与质量记录。</text>
+</svg>

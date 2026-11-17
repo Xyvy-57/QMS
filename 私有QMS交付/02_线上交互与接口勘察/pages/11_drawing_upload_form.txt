@@ -1,0 +1,86 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - button "返回图纸标注列表":
+  - heading "添加图纸包" [level=1]
+  - generic: 上传并核对图纸信息
+  - generic: "1"
+  - text: 上传图纸
+  - generic: "2"
+  - text: 核对图纸信息
+  - generic: "3"
+  - text: 进入标注
+  - button "操作引导":
+    - text: 操作引导
+  - generic: 图纸文件
+  - generic: 支持 PDF、PNG、JPG、DWG、DXF
+  - generic: 将图纸文件拖拽到这里
+  - generic: 或点击选择文件
+  - generic: 支持 PDF、PNG、JPG、DWG、DXF
+  - complementary:
+    - heading "核对图纸信息" [level=2]
+    - generic: 解析结果可修改
+    - generic: 图号*
+    - textbox "图号":
+      - /placeholder: 请输入图号
+    - generic: 图纸包名称*
+    - textbox "图纸包名称":
+      - /placeholder: 请输入图纸包名称
+    - generic: 零件名称*
+    - textbox "零件名称":
+      - /placeholder: 请输入零件名称
+    - generic: 图纸版本号
+    - textbox "图纸版本号":
+      - /placeholder: 如 A、Rev.02
+    - generic: 项目编号
+    - textbox "项目编号":
+      - /placeholder: 请输入项目编号
+    - generic: 所属分类（选填）
+    - button "所属分类":
+      - generic: 不设置分类
+    - generic: 未注公差标准将在进入标注器后选择，并应用于当前图纸包。
+    - button "取消"
+    - button "开始标注" [disabled]:
+      - text: 开始标注

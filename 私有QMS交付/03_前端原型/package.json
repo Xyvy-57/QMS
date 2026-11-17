@@ -1,0 +1,15 @@
+{
+  "name": "worlder-qms-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Worlder QMS 首期可运行原型：源码在 src/，构建为单文件 qms_pro_qms.html（可离线打开）",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests/smoke.mjs --html qms_pro_qms.html"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^23.0.0",
+    "tailwindcss": "3.4.17"
+  }
+}

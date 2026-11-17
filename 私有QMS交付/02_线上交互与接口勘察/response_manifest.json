@@ -1,0 +1,149 @@
+{
+  "captureMethod": "Authenticated browser navigation to known GET endpoint, JSON read from rendered document body. No network-panel headers/status captured. No cookies/tokens extracted.",
+  "responses": [
+    {
+      "file": "responses/01_process_templates_page1.json",
+      "url": "https://223.106.198.62:3080/api/v1/process-templates?page=1&page_size=15",
+      "capturedAt": "2026-11-17T03:12:01.556Z",
+      "code": 0,
+      "keys": [
+        "items",
+        "total",
+        "page",
+        "page_size"
+      ],
+      "total": 19
+    },
+    {
+      "file": "responses/02_process_template_detail.json",
+      "url": "https://223.106.198.62:3080/api/v1/process-templates/cec2d8d3-7d6f-4b03-a36e-997ce2a17c86",
+      "capturedAt": "2026-11-17T03:12:32.729Z",
+      "code": 0,
+      "keys": [
+        "id",
+        "name",
+        "description",
+        "graph",
+        "row_version",
+        "created_by",
+        "creator_name",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    {
+      "file": "responses/03_process_templates_keyword.json",
+      "url": "https://223.106.198.62:3080/api/v1/process-templates?page=1&page_size=15&keyword=2026-10-31",
+      "capturedAt": "2026-11-17T03:13:43.729Z",
+      "code": 0,
+      "keys": [
+        "items",
+        "total",
+        "page",
+        "page_size"
+      ],
+      "total": 1
+    },
+    {
+      "file": "responses/04_process_templates_page2.json",
+      "url": "https://223.106.198.62:3080/api/v1/process-templates?page=2&page_size=15",
+      "capturedAt": "2026-11-17T03:13:59.762Z",
+      "code": 0,
+      "keys": [
+        "items",
+        "total",
+        "page",
+        "page_size"
+      ],
+      "total": 19
+    },
+    {
+      "file": "responses/05_process_templates_empty.json",
+      "url": "https://223.106.198.62:3080/api/v1/process-templates?page=1&page_size=15&keyword=%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%A8%A1%E6%9D%BF-QMS-%E5%8F%AA%E8%AF%BB%E6%B5%8B%E8%AF%95",
+      "capturedAt": "2026-11-17T03:15:00.445Z",
+      "code": 0,
+      "keys": [
+        "items",
+        "total",
+        "page",
+        "page_size"
+      ],
+      "total": 0
+    },
+    {
+      "file": "responses/06_tolerances_catalog_no_workspace.json",
+      "url": "https://223.106.198.62:3080/api/v1/tolerances/standards/catalog?scope=all&page=1&page_size=10",
+      "capturedAt": "2026-11-17T03:16:00.071Z",
+      "code": "WORKSPACE_REQUIRED",
+      "keys": []
+    },
+    {
+      "file": "responses/07_tolerance_system_detail.json",
+      "url": "https://223.106.198.62:3080/api/v1/tolerances/system-standards/830fa764-d0a5-474d-9543-a1bf5f5cd723",
+      "capturedAt": "2026-11-17T03:16:34.827Z",
+      "code": "WORKSPACE_REQUIRED",
+      "keys": []
+    },
+    {
+      "file": "responses/08_gauge_applicable_types.json",
+      "url": "https://223.106.198.62:3080/api/v1/basic-data/gauge-applicable-types",
+      "capturedAt": "2026-11-17T03:18:02.619Z",
+      "code": 0,
+      "keys": [
+        "revision",
+        "items"
+      ]
+    },
+    {
+      "file": "responses/09_report_templates_system.json",
+      "url": "https://223.106.198.62:3080/api/v1/inspection-templates/system",
+      "capturedAt": "2026-11-17T03:19:38.843Z",
+      "code": "WORKSPACE_REQUIRED",
+      "keys": []
+    },
+    {
+      "file": "responses/10_workspace_search.json",
+      "url": "https://223.106.198.62:3080/api/v1/workspaces/mine/search?page=1&page_size=1",
+      "capturedAt": "2026-11-17T03:21:24.095Z",
+      "code": 0,
+      "keys": [
+        "items",
+        "total",
+        "page",
+        "page_size"
+      ],
+      "total": 1
+    },
+    {
+      "file": "responses/11_report_field_dictionary.json",
+      "url": "https://223.106.198.62:3080/api/v1/inspection-templates/fields",
+      "capturedAt": "2026-11-17T03:26:30.571Z",
+      "code": "WORKSPACE_REQUIRED",
+      "keys": []
+    },
+    {
+      "file": "responses/12_drawing_library_status.json",
+      "url": "https://223.106.198.62:3080/api/v1/drawing-library/status",
+      "capturedAt": "2026-11-17T03:30:34.385Z",
+      "code": "WORKSPACE_REQUIRED",
+      "keys": []
+    },
+    {
+      "file": "responses/13_process_template_after_checks.json",
+      "url": "https://223.106.198.62:3080/api/v1/process-templates/cec2d8d3-7d6f-4b03-a36e-997ce2a17c86",
+      "capturedAt": "2026-11-17T03:31:32.263Z",
+      "code": 0,
+      "keys": [
+        "id",
+        "name",
+        "description",
+        "graph",
+        "row_version",
+        "created_by",
+        "creator_name",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  ]
+}

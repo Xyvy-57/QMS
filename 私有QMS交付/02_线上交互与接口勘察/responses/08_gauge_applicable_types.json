@@ -1,0 +1,51 @@
+{
+  "code": 0,
+  "data": {
+    "revision": 0,
+    "items": [
+      {
+        "code": "linear_dimension",
+        "name": "线性尺寸",
+        "enabled": true,
+        "sort_order": 0,
+        "builtin": true
+      },
+      {
+        "code": "angular_dimension",
+        "name": "角度尺寸",
+        "enabled": true,
+        "sort_order": 1,
+        "builtin": true
+      },
+      {
+        "code": "geometric_tolerance",
+        "name": "形位公差",
+        "enabled": true,
+        "sort_order": 2,
+        "builtin": true
+      },
+      {
+        "code": "thread",
+        "name": "螺纹",
+        "enabled": true,
+        "sort_order": 3,
+        "builtin": true
+      },
+      {
+        "code": "surface_roughness",
+        "name": "表面粗糙度",
+        "enabled": true,
+        "sort_order": 4,
+        "builtin": true
+      },
+      {
+        "code": "welding",
+        "name": "焊接",
+        "enabled": true,
+        "sort_order": 5,
+        "builtin": true
+      }
+    ]
+  },
+  "message": "ok"
+}

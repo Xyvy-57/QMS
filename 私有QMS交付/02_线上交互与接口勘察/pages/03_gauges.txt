@@ -1,0 +1,263 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索":
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法" [active]:
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - complementary:
+    - heading "筛选" [level=2]
+    - button "重置"
+    - heading "适用公差类型" [level=3]
+    - button "全部 10" [pressed]:
+      - generic: 全部
+      - generic: "10"
+    - button "线性尺寸 3":
+      - generic "线性尺寸"
+      - generic: "3"
+    - button "角度尺寸 1":
+      - generic "角度尺寸"
+      - generic: "1"
+    - button "形位公差 1":
+      - generic "形位公差"
+      - generic: "1"
+    - button "螺纹 1":
+      - generic "螺纹"
+      - generic: "1"
+    - button "表面粗糙度 1":
+      - generic "表面粗糙度"
+      - generic: "1"
+    - button "焊接 0":
+      - generic "焊接"
+      - generic: "0"
+    - heading "类别" [level=3]
+    - button "全部 10" [pressed]:
+      - generic: 全部
+      - generic: "10"
+    - button "检具 10":
+      - generic: 检具
+      - generic: "10"
+    - button "检验方法 0":
+      - generic: 检验方法
+      - generic: "0"
+  - main:
+    - heading "检具与检验方法" [level=1]
+    - generic: 共 10 项
+    - paragraph: 维护质检单可选的检验手段，并按适用公差类型快速定位。
+    - button "默认推荐设置":
+      - text: 默认推荐设置
+    - button "新建检验手段":
+      - text: 新建检验手段
+    - searchbox "搜索检具与检验方法"
+    - button "Close":
+    - generic: 全部检验手段
+    - article:
+      - heading "千分尺" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 量程与精度
+        - generic: 精度 0.05
+        - generic: 公差类别
+        - generic: 线性尺寸
+      - button "编辑 千分尺":
+        - text: 编辑
+      - button "删除 千分尺":
+        - text: 删除
+    - article:
+      - heading "投影仪" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: R
+        - generic: 半径
+        - generic: ↧
+        - generic: 深度
+        - generic: ⌀
+        - generic: 直径
+      - button "编辑 投影仪":
+        - text: 编辑
+      - button "删除 投影仪":
+        - text: 删除
+    - article:
+      - heading "卡尺" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: R
+        - generic: 半径
+        - generic: 量程与精度
+        - generic: 并且
+        - generic: 精度 0.1
+        - generic: 公差类别
+        - generic: 线性尺寸
+      - button "编辑 卡尺":
+        - text: 编辑
+      - button "删除 卡尺":
+        - text: 删除
+    - article:
+      - heading "三次元" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - generic "CMM": 别名：CMM
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: ⌖
+        - generic: 位置度
+        - generic: ↗
+        - generic: 圆跳动
+        - generic: ⌒
+        - generic: 线轮廓度
+        - generic: ⏥
+        - generic: 平面度
+        - generic: ⌭
+        - generic: 圆柱度
+        - generic: ⌓
+        - generic: 面轮廓度
+        - generic: ⟂
+        - generic: 垂直度
+        - generic: ∥
+        - generic: 平行度
+        - generic: ∠
+        - generic: 倾斜度
+        - generic: ◎
+        - generic: 同心度
+        - generic: ⌰
+        - generic: 全跳动
+        - generic: ○
+        - generic: 圆度
+        - generic: ⌯
+        - generic: 对称度
+        - generic: 公差类别
+        - generic: 形位公差
+      - button "编辑 三次元":
+        - text: 编辑
+      - button "删除 三次元":
+        - text: 删除
+    - article:
+      - heading "卡尺" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: ⌵
+        - generic: 沉头孔
+        - generic: ⌴
+        - generic: 沉孔
+      - button "编辑 卡尺":
+        - text: 编辑
+      - button "删除 卡尺":
+        - text: 删除
+    - article:
+      - heading "投影仪" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: °
+        - generic: 角度尺寸
+        - generic: 公差类别
+        - generic: 角度尺寸
+      - button "编辑 投影仪":
+        - text: 编辑
+      - button "删除 投影仪":
+        - text: 删除
+    - article:
+      - heading "粗糙度仪" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: Ra
+        - generic: 粗糙度
+        - generic: 公差类别
+        - generic: 表面粗糙度
+      - button "编辑 粗糙度仪":
+        - text: 编辑
+      - button "删除 粗糙度仪":
+        - text: 删除
+    - article:
+      - heading "螺纹规" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: M
+        - generic: 螺纹
+        - generic: 公差类别
+        - generic: 螺纹
+      - button "编辑 螺纹规":
+        - text: 编辑
+      - button "删除 螺纹规":
+        - text: 删除
+    - article:
+      - heading "千分尺" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 量程与精度
+        - generic: 精度 0.05
+        - generic: 公差类别
+        - generic: 线性尺寸
+      - button "编辑 千分尺":
+        - text: 编辑
+      - button "删除 千分尺":
+        - text: 删除
+    - article:
+      - heading "高度规" [level=2]
+      - generic: 检具
+      - generic: 系统
+      - group "已配置条件":
+        - generic: 检测项
+        - generic: ↧
+        - generic: 深度
+      - button "编辑 高度规":
+        - text: 编辑
+      - button "删除 高度规":
+        - text: 删除
+    - generic: 共 10 条，第 1 / 1 页
+    - button "上一页" [disabled]:
+    - button "第 1 页": "1"
+    - button "下一页" [disabled]:
+- tooltip "检具与检验方法":
+  - generic: 检具与检验方法

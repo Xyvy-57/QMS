@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "data": {
+    "items": [
+      {
+        "id": "04070d72-4224-4e83-83e9-7aba9086c0f9",
+        "name": "demo1的个人空间",
+        "type": "personal",
+        "owner_user_id": "7ffdc62b-3c47-4283-aeea-71db672d6f82",
+        "status": "active",
+        "created_at": "2026-11-16T08:11:51.814017Z",
+        "member_role": "admin",
+        "member_count": 0,
+        "admin_names": []
+      }
+    ],
+    "total": 1,
+    "page": 1,
+    "page_size": 1
+  },
+  "message": "ok"
+}

@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3200" height="3360" viewBox="0 0 3200 3360">
+<rect width="100%" height="100%" fill="white"/>
+<text x="90.00" y="126.92" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="72" font-weight="700" fill="#18364B" textLength="1088.00" lengthAdjust="spacingAndGlyphs">02  场景 标准 方案与检验生命周期</text>
+<text x="95.00" y="191.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#526879" textLength="1598.00" lengthAdjust="spacingAndGlyphs">场景限定方案适用；气泡或手录形成标准版本；方案确定引用，任务固定采用；五类检验按实际业务进入。</text>
+<polyline points="90,280 3110,280" fill="none" stroke="#C7D3DD" stroke-width="2" stroke-linejoin="round"/>
+<text x="95.00" y="3321.22" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="27" font-weight="400" fill="#526879" textLength="681.00" lengthAdjust="spacingAndGlyphs">QMS 系统完整设计 V3  |  业务控制与协作  |  2026-11-15</text>
+<rect x="80" y="330" width="3040" height="1130" rx="16" fill="#F7F9FB" stroke="#DFE6EC" stroke-width="2"/>
+<text x="100.00" y="379.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="442.00" lengthAdjust="spacingAndGlyphs">基础定义与技术策划对象关系</text>
+<rect x="1800" y="490" width="650" height="230" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="1825.00" y="547.40" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="40" font-weight="700" fill="#3566A3" textLength="320.00" lengthAdjust="spacingAndGlyphs">五类检验场景定义</text>
+<text x="1825.00" y="607.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="395.00" lengthAdjust="spacingAndGlyphs">名称/对象/触发/结果用途</text>
+<text x="1825.00" y="652.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="385.00" lengthAdjust="spacingAndGlyphs">启停与definitionVersion</text>
+<rect x="100" y="870" width="650" height="280" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="125.00" y="927.40" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="40" font-weight="700" fill="#087F8C" textLength="280.00" lengthAdjust="spacingAndGlyphs">气泡或手录来源</text>
+<text x="125.00" y="987.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="350.00" lengthAdjust="spacingAndGlyphs">图纸与特性来源可追溯</text>
+<text x="125.00" y="1032.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="350.00" lengthAdjust="spacingAndGlyphs">不由场景派生技术要求</text>
+<rect x="950" y="870" width="650" height="280" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="975.00" y="927.40" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="40" font-weight="700" fill="#087F8C" textLength="320.00" lengthAdjust="spacingAndGlyphs">独立技术标准版本</text>
+<text x="975.00" y="987.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="395.00" lengthAdjust="spacingAndGlyphs">产品/图版/项目/单位公差</text>
+<text x="975.00" y="1032.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="280.00" lengthAdjust="spacingAndGlyphs">标准不隶属于场景</text>
+<rect x="1800" y="870" width="650" height="280" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="1825.00" y="927.40" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="40" font-weight="700" fill="#087F8C" textLength="240.00" lengthAdjust="spacingAndGlyphs">确定方案修订</text>
+<text x="1825.00" y="987.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="350.00" lengthAdjust="spacingAndGlyphs">选标准版本及该版项目</text>
+<text x="1825.00" y="1032.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="315.00" lengthAdjust="spacingAndGlyphs">适用场景和执行安排</text>
+<rect x="2650" y="870" width="450" height="280" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="2675.00" y="927.40" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="40" font-weight="700" fill="#087F8C" textLength="240.00" lengthAdjust="spacingAndGlyphs">任务固定采用</text>
+<text x="2675.00" y="987.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="310.00" lengthAdjust="spacingAndGlyphs">场景/标准/方案快照</text>
+<text x="2675.00" y="1032.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="315.00" lengthAdjust="spacingAndGlyphs">实际样本数仅归本轮</text>
+<polyline points="750,1010.0 950,1010.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="950,1010.0 933.1470964671936,1018.7738043352882 933.1470964671936,1001.2261956647118" fill="#087F8C"/>
+<polyline points="1600,1010.0 1800,1010.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1800,1010.0 1783.1470964671937,1018.7738043352882 1783.1470964671937,1001.2261956647118" fill="#087F8C"/>
+<polyline points="2450,1010.0 2650,1010.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2650,1010.0 2633.1470964671935,1018.7738043352882 2633.1470964671935,1001.2261956647118" fill="#087F8C"/>
+<polyline points="2125.0,720 2125.0,870" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2125.0,870 2116.2261956647117,853.1470964671936 2133.7738043352883,853.1470964671936" fill="#087F8C"/>
+<text x="2170.00" y="795.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="120.00" lengthAdjust="spacingAndGlyphs">方案适用</text>
+<rect x="2650" y="1240" width="450" height="190" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="2675.00" y="1293.96" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="36" font-weight="700" fill="#087F8C" textLength="261.00" lengthAdjust="spacingAndGlyphs">记录 报告与分析</text>
+<text x="2675.00" y="1348.66" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="31" font-weight="400" fill="#18364B" textLength="279.00" lengthAdjust="spacingAndGlyphs">真实实测与固定采用</text>
+<text x="2675.00" y="1388.66" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="31" font-weight="400" fill="#18364B" textLength="275.00" lengthAdjust="spacingAndGlyphs">支持本轮报告及SPC</text>
+<polyline points="2875.0,1150 2875.0,1240" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2875.0,1240 2866.2261956647117,1223.1470964671937 2883.7738043352883,1223.1470964671937" fill="#087F8C"/>
+<text x="120.00" y="1270.96" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="36" font-weight="700" fill="#18364B" textLength="900.00" lengthAdjust="spacingAndGlyphs">新标准须由新方案修订显式采用；新方案不回写旧任务。</text>
+<text x="120.00" y="1317.96" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="36" font-weight="700" fill="#18364B" textLength="1076.00" lengthAdjust="spacingAndGlyphs">停用只阻止新采用，在途录测/提交/复检及历史分析继续按原快照。</text>
+<rect x="80" y="1550" width="3040" height="620" rx="10" fill="#F7F9FB" stroke="#DFE6EC" stroke-width="2"/>
+<rect x="80" y="1550" width="250" height="620" rx="10" fill="#E9EFF4" stroke="#DFE6EC" stroke-width="2"/>
+<text x="100.00" y="1614.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="204.00" lengthAdjust="spacingAndGlyphs">五类检验的业</text>
+<text x="100.00" y="1658.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="102.00" lengthAdjust="spacingAndGlyphs">务位置</text>
+<rect x="370" y="1710" width="490" height="290" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="395.00" y="1764.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#3566A3" textLength="259.00" lengthAdjust="spacingAndGlyphs">到货与来料检验</text>
+<text x="395.00" y="1820.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="317.00" lengthAdjust="spacingAndGlyphs">IQC：实际样本和项目</text>
+<text x="395.00" y="1861.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="320.00" lengthAdjust="spacingAndGlyphs">结论覆盖明确来料范围</text>
+<rect x="940" y="1710" width="490" height="290" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="965.00" y="1764.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#3566A3" textLength="259.00" lengthAdjust="spacingAndGlyphs">开工与设置确认</text>
+<text x="965.00" y="1820.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="192.00" lengthAdjust="spacingAndGlyphs">生产首件确认</text>
+<text x="965.00" y="1861.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="288.00" lengthAdjust="spacingAndGlyphs">仅覆盖当前设置条件</text>
+<rect x="1510" y="1710" width="490" height="290" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="1535.00" y="1764.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#3566A3" textLength="148.00" lengthAdjust="spacingAndGlyphs">过程加工</text>
+<text x="1535.00" y="1820.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="318.00" lengthAdjust="spacingAndGlyphs">IPQC：时段/工序证据</text>
+<text x="1535.00" y="1861.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="288.00" lengthAdjust="spacingAndGlyphs">异常定位受影响范围</text>
+<rect x="2080" y="1710" width="490" height="290" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="2105.00" y="1764.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#3566A3" textLength="222.00" lengthAdjust="spacingAndGlyphs">完工范围检验</text>
+<text x="2105.00" y="1820.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="326.00" lengthAdjust="spacingAndGlyphs">FQC：实测与适用判批</text>
+<text x="2105.00" y="1861.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="256.00" lengthAdjust="spacingAndGlyphs">实物入库另有确认</text>
+<rect x="2650" y="1710" width="490" height="290" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="2675.00" y="1764.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#3566A3" textLength="222.00" lengthAdjust="spacingAndGlyphs">待发运与交付</text>
+<text x="2675.00" y="1820.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="306.00" lengthAdjust="spacingAndGlyphs">OQC与明确客户资料</text>
+<text x="2675.00" y="1861.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="288.00" lengthAdjust="spacingAndGlyphs">检验不代表实际交付</text>
+<polyline points="860,1855.0 940,1855.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="940,1855.0 923.1470964671936,1863.773804335288 923.1470964671936,1846.226195664712" fill="#087F8C"/>
+<polyline points="1430,1855.0 1510,1855.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1510,1855.0 1493.1470964671937,1863.773804335288 1493.1470964671937,1846.226195664712" fill="#087F8C"/>
+<polyline points="2000,1855.0 2080,1855.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2080,1855.0 2063.1470964671935,1863.773804335288 2063.1470964671935,1846.226195664712" fill="#087F8C"/>
+<polyline points="2570,1855.0 2650,1855.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2650,1855.0 2633.1470964671935,1863.773804335288 2633.1470964671935,1846.226195664712" fill="#087F8C"/>
+<text x="390.00" y="2066.66" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="31" font-weight="400" fill="#18364B" textLength="899.00" lengthAdjust="spacingAndGlyphs">按实际事件进入；同批可有独立任务，不强制依次走完五个场景。</text>
+<rect x="80" y="2260" width="3040" height="580" rx="10" fill="#F7F9FB" stroke="#DFE6EC" stroke-width="2"/>
+<rect x="80" y="2260" width="250" height="580" rx="10" fill="#E9EFF4" stroke="#DFE6EC" stroke-width="2"/>
+<text x="100.00" y="2324.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="204.00" lengthAdjust="spacingAndGlyphs">跨阶段问题与</text>
+<text x="100.00" y="2368.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="700" fill="#18364B" textLength="68.00" lengthAdjust="spacingAndGlyphs">保障</text>
+<rect x="370" y="2410" width="490" height="300" rx="18" fill="#FFF0ED" stroke="#B64035" stroke-width="3"/>
+<text x="395.00" y="2464.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#B64035" textLength="259.00" lengthAdjust="spacingAndGlyphs">本次不合格处置</text>
+<text x="395.00" y="2520.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="352.00" lengthAdjust="spacingAndGlyphs">事实、范围、处置与凭据</text>
+<text x="395.00" y="2561.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="288.00" lengthAdjust="spacingAndGlyphs">当前问题验证后关闭</text>
+<rect x="940" y="2410" width="490" height="300" rx="18" fill="#FFF0ED" stroke="#B64035" stroke-width="3"/>
+<text x="965.00" y="2464.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#B64035" textLength="222.00" lengthAdjust="spacingAndGlyphs">明确质量限制</text>
+<text x="965.00" y="2520.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="320.00" lengthAdjust="spacingAndGlyphs">按选定对象与动作建立</text>
+<text x="965.00" y="2561.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="288.00" lengthAdjust="spacingAndGlyphs">解除仅作用所选记录</text>
+<rect x="1510" y="2410" width="490" height="300" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="1535.00" y="2464.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#46657B" textLength="259.00" lengthAdjust="spacingAndGlyphs">必要的系统改进</text>
+<text x="1535.00" y="2520.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="320.00" lengthAdjust="spacingAndGlyphs">根因、措施、长期验效</text>
+<text x="1535.00" y="2561.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="261.00" lengthAdjust="spacingAndGlyphs">不是每条NCR必走</text>
+<rect x="2080" y="2410" width="490" height="300" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="2105.00" y="2464.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#46657B" textLength="264.00" lengthAdjust="spacingAndGlyphs">量具与MSA研究</text>
+<text x="2105.00" y="2520.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="270.00" lengthAdjust="spacingAndGlyphs">量具建档/校准资料</text>
+<text x="2105.00" y="2561.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="291.00" lengthAdjust="spacingAndGlyphs">Gage R&amp;R研究矩阵</text>
+<rect x="2650" y="2410" width="490" height="300" rx="18" fill="#F4F7FA" stroke="#46657B" stroke-width="3"/>
+<text x="2675.00" y="2464.82" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="37" font-weight="700" fill="#46657B" textLength="259.00" lengthAdjust="spacingAndGlyphs">文件培训与追溯</text>
+<text x="2675.00" y="2520.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="288.00" lengthAdjust="spacingAndGlyphs">受控文件与必要培训</text>
+<text x="2675.00" y="2561.52" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="32" font-weight="400" fill="#18364B" textLength="288.00" lengthAdjust="spacingAndGlyphs">保留原值和历史依据</text>
+<text x="390.00" y="2776.66" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="31" font-weight="400" fill="#18364B" textLength="1147.00" lengthAdjust="spacingAndGlyphs">异常可在任何质量控制点触发；下排能力按需要关联，不按方框先后串成强制流程。</text>
+<text x="110.00" y="2970.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="2949.00" lengthAdjust="spacingAndGlyphs">普通实测不自动整批接受，只证明被检样本与项目；计数批接受须有明确方案。质量问题按需要进入NCR/CAPA/8D并反馈技术标准与方案的新修订。场景维护不是BPM，不新增自定义场景或</text>
+<text x="110.00" y="3015.10" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="35" font-weight="400" fill="#18364B" textLength="175.00" lengthAdjust="spacingAndGlyphs">动态菜单。</text>
+<text x="110.00" y="3188.38" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="33" font-weight="400" fill="#18364B" textLength="1287.00" lengthAdjust="spacingAndGlyphs">量具、文件、培训按需提供准备并持续保障；工程开发分期不是本图中的质量生命周期。</text>
+</svg>

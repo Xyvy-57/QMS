@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3400" height="2580" viewBox="0 0 3400 2580">
+<rect width="100%" height="100%" fill="white"/>
+<text x="90.00" y="126.92" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="72" font-weight="700" fill="#18364B" textLength="980.00" lengthAdjust="spacingAndGlyphs">07  质量限制、处置与范围核验</text>
+<text x="95.00" y="191.24" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="34" font-weight="400" fill="#526879" textLength="1156.00" lengthAdjust="spacingAndGlyphs">检验结果、限制和处置记录分别管理；当前不建设额度许可或物流执行平台。</text>
+<polyline points="90,280 3310,280" fill="none" stroke="#C7D3DD" stroke-width="2" stroke-linejoin="round"/>
+<text x="95.00" y="2541.22" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="27" font-weight="400" fill="#526879" textLength="681.00" lengthAdjust="spacingAndGlyphs">QMS 系统完整设计 V3  |  业务控制与协作  |  2026-11-15</text>
+<rect x="100" y="390" width="700" height="300" rx="18" fill="#EDF3FC" stroke="#3566A3" stroke-width="3"/>
+<text x="125.00" y="459.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#3566A3" textLength="324.00" lengthAdjust="spacingAndGlyphs">当前质量事实</text>
+<text x="125.00" y="539.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="462.00" lengthAdjust="spacingAndGlyphs">技术结论/样本/轮次</text>
+<text x="125.00" y="606.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="468.00" lengthAdjust="spacingAndGlyphs">依据与历史失败保留</text>
+<rect x="1300" y="390" width="700" height="300" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="1325.00" y="459.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#087F8C" textLength="324.00" lengthAdjust="spacingAndGlyphs">明确本次范围</text>
+<text x="1325.00" y="539.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="364.00" lengthAdjust="spacingAndGlyphs">批次或指定样本</text>
+<text x="1325.00" y="606.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="468.00" lengthAdjust="spacingAndGlyphs">数量与单位分别记录</text>
+<polygon points="2850.0,365 3200,540.0 2850.0,715 2500,540.0" fill="#FFF6DD" stroke="#A57913" stroke-width="3"/>
+<text x="2742.00" y="518.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#A57913" textLength="216.00" lengthAdjust="spacingAndGlyphs">存在适用</text>
+<text x="2769.00" y="586.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#A57913" textLength="162.00" lengthAdjust="spacingAndGlyphs">限制？</text>
+<rect x="2500" y="1120" width="700" height="300" rx="18" fill="#ECF7F2" stroke="#247F59" stroke-width="3"/>
+<text x="2525.00" y="1189.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#247F59" textLength="378.00" lengthAdjust="spacingAndGlyphs">按当前条件继续</text>
+<text x="2525.00" y="1269.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="416.00" lengthAdjust="spacingAndGlyphs">普通检验汇总事实</text>
+<text x="2525.00" y="1336.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="468.00" lengthAdjust="spacingAndGlyphs">不额外制造放行申请</text>
+<rect x="1300" y="1120" width="700" height="300" rx="18" fill="#FFF0ED" stroke="#B64035" stroke-width="3"/>
+<text x="1325.00" y="1189.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#B64035" textLength="378.00" lengthAdjust="spacingAndGlyphs">保留限制并说明</text>
+<text x="1325.00" y="1269.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="468.00" lengthAdjust="spacingAndGlyphs">仅限制明确选定动作</text>
+<text x="1325.00" y="1336.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="468.00" lengthAdjust="spacingAndGlyphs">检验与证据仍可保存</text>
+<rect x="100" y="1120" width="700" height="300" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="125.00" y="1189.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#087F8C" textLength="324.00" lengthAdjust="spacingAndGlyphs">记录本次处置</text>
+<text x="125.00" y="1269.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="491.00" lengthAdjust="spacingAndGlyphs">返工/复检等实际证据</text>
+<text x="125.00" y="1336.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="468.00" lengthAdjust="spacingAndGlyphs">不改写原测量或失败</text>
+<rect x="100" y="1870" width="700" height="300" rx="18" fill="#EAF7F6" stroke="#087F8C" stroke-width="3"/>
+<text x="125.00" y="1939.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#087F8C" textLength="432.00" lengthAdjust="spacingAndGlyphs">核对处置覆盖范围</text>
+<text x="125.00" y="2019.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="468.00" lengthAdjust="spacingAndGlyphs">复检只说明被检范围</text>
+<text x="125.00" y="2086.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="520.00" lengthAdjust="spacingAndGlyphs">局部符合不接受原整批</text>
+<rect x="1300" y="1870" width="1900" height="300" rx="18" fill="#FFF6DD" stroke="#A57913" stroke-width="3"/>
+<text x="1325.00" y="1939.44" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="54" font-weight="700" fill="#A57913" textLength="486.00" lengthAdjust="spacingAndGlyphs">限制解除按明确策略</text>
+<text x="1325.00" y="2019.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="572.00" lengthAdjust="spacingAndGlyphs">未配置解除规则则待明确</text>
+<text x="1325.00" y="2086.72" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="52" font-weight="400" fill="#18364B" textLength="584.00" lengthAdjust="spacingAndGlyphs">解除一项不解除其他Hold</text>
+<polyline points="800,540.0 1300,540.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1300,540.0 1283.1470964671937,548.7738043352882 1283.1470964671937,531.2261956647118" fill="#087F8C"/>
+<polyline points="2000,540.0 2500,540.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2500,540.0 2483.1470964671935,548.7738043352882 2483.1470964671935,531.2261956647118" fill="#087F8C"/>
+<polyline points="2850.0,715 2850.0,1120" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="2850.0,1120 2841.2261956647117,1103.1470964671937 2858.7738043352883,1103.1470964671937" fill="#087F8C"/>
+<text x="2890.00" y="925.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#087F8C" textLength="30.00" lengthAdjust="spacingAndGlyphs">无</text>
+<polyline points="3200,540.0 3310,540 3310,1620 1650,1620 1650.0,1420" fill="none" stroke="#B64035" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1650.0,1420 1658.773804335288,1436.8529035328063 1641.226195664712,1436.8529035328063" fill="#B64035"/>
+<text x="2240.00" y="1565.80" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="30" font-weight="700" fill="#B64035" textLength="30.00" lengthAdjust="spacingAndGlyphs">有</text>
+<polyline points="1300,1270.0 800,1270.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="800,1270.0 816.8529035328064,1261.226195664712 816.8529035328064,1278.773804335288" fill="#087F8C"/>
+<polyline points="450.0,1420 450.0,1870" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="450.0,1870 441.22619566471184,1853.1470964671937 458.77380433528816,1853.1470964671937" fill="#087F8C"/>
+<polyline points="800,2020.0 1300,2020.0" fill="none" stroke="#087F8C" stroke-width="5" stroke-linejoin="round"/>
+<polygon points="1300,2020.0 1283.1470964671937,2028.773804335288 1283.1470964671937,2011.226195664712" fill="#087F8C"/>
+<text x="100.00" y="2352.14" font-family="Heiti SC,STHeiti,Arial Unicode MS,sans-serif" font-size="49" font-weight="700" fill="#18364B" textLength="2173.00" lengthAdjust="spacingAndGlyphs">Hold必须明确范围与use/ship等限制动作；NCR登记不自动冻结整批。外部系统连接属于候选集成。</text>
+</svg>

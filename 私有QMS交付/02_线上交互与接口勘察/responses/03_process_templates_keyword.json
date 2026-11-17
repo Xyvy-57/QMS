@@ -1,0 +1,108 @@
+{
+  "code": 0,
+  "data": {
+    "items": [
+      {
+        "id": "cec2d8d3-7d6f-4b03-a36e-997ce2a17c86",
+        "name": "工序模版 2026-10-31 16:49:38",
+        "description": "",
+        "graph": {
+          "version": 1,
+          "nodes": [
+            {
+              "id": "1d8e7863-10db-46da-866d-964737a6eb5e",
+              "code": "1",
+              "name": "清洗",
+              "description": "",
+              "position": {
+                "x": 197,
+                "y": 60
+              }
+            },
+            {
+              "id": "00a3afcc-7a5a-42c1-8251-48c4d22a08ad",
+              "code": "2.1",
+              "name": "工序2.1",
+              "description": "",
+              "position": {
+                "x": 80,
+                "y": 236
+              }
+            },
+            {
+              "id": "e56f7370-1dab-4e07-bba1-c711ee94c3ea",
+              "code": "2.2",
+              "name": "工序2.2",
+              "description": "",
+              "position": {
+                "x": 314,
+                "y": 236
+              }
+            },
+            {
+              "id": "ee68a9db-7619-49c7-95d9-7a923952af98",
+              "code": "3",
+              "name": "工序3",
+              "description": "",
+              "position": {
+                "x": 197,
+                "y": 412
+              }
+            },
+            {
+              "id": "98a03318-27bf-40a0-8100-8504a646e0f3",
+              "code": "4",
+              "name": "工序4",
+              "description": "",
+              "position": {
+                "x": 200.86328125,
+                "y": 540.11328125
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "70e34542-ad1a-40e5-b638-e29601088a8e",
+              "source": "1d8e7863-10db-46da-866d-964737a6eb5e",
+              "target": "00a3afcc-7a5a-42c1-8251-48c4d22a08ad"
+            },
+            {
+              "id": "35c9da61-defc-4a70-ad9f-1fe5c2cb34f4",
+              "source": "1d8e7863-10db-46da-866d-964737a6eb5e",
+              "target": "e56f7370-1dab-4e07-bba1-c711ee94c3ea"
+            },
+            {
+              "id": "cb24481e-46b3-4ae3-b41b-a9bcab258ef5",
+              "source": "00a3afcc-7a5a-42c1-8251-48c4d22a08ad",
+              "target": "ee68a9db-7619-49c7-95d9-7a923952af98"
+            },
+            {
+              "id": "0c086298-14ea-4815-a38e-3c22dde41ff5",
+              "source": "e56f7370-1dab-4e07-bba1-c711ee94c3ea",
+              "target": "ee68a9db-7619-49c7-95d9-7a923952af98"
+            },
+            {
+              "id": "983bf071-b865-4834-a697-9cc5a3be5e46",
+              "source": "ee68a9db-7619-49c7-95d9-7a923952af98",
+              "target": "98a03318-27bf-40a0-8100-8504a646e0f3"
+            }
+          ],
+          "viewport": {
+            "x": 284.985023638593,
+            "y": 24.76622457699017,
+            "zoom": 0.9895549325678996
+          }
+        },
+        "row_version": 10,
+        "created_by": "f47f6063-cc6b-4e24-9f94-411858115c19",
+        "creator_name": "杨园园",
+        "created_at": "2026-10-31T08:49:40.800930Z",
+        "updated_at": "2026-10-31T08:50:09.840455Z"
+      }
+    ],
+    "total": 1,
+    "page": 1,
+    "page_size": 15
+  },
+  "message": "ok"
+}

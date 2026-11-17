@@ -1,0 +1,110 @@
+- banner:
+  - link "访问 Worlder 官网（新标签页打开）":
+    - /url: https://www.worlder.tech/
+    - img "Worlder"
+  - button "Worlder 气泡图，返回首页":
+    - generic: Worlder 气泡图
+    - generic: BUBBLE ANNOTATION
+  - navigation "业务模块":
+    - button "标注管理":
+      - generic: 标注
+    - group "标注管理功能":
+      - button "图纸标注":
+      - button "公差管理":
+    - button "图纸管理":
+      - generic: 图纸
+    - group "图纸管理功能":
+      - button "相似图纸搜索" [active]:
+      - button "图纸库数据集":
+      - button "图纸版本":
+      - button "图纸对比":
+    - button "工序管理":
+      - generic: 工序
+    - group "工序管理功能":
+      - button "图纸工序":
+      - button "工序模板":
+    - button "质检管理":
+      - generic: 质检
+    - group "质检管理功能":
+      - button "质检单":
+      - button "质检单模板":
+    - button "量具管理":
+      - generic: 量具
+    - group "量具管理功能":
+      - button "检具与检验方法":
+    - button "模板管理":
+      - generic: 模板
+    - group "模板管理功能":
+      - button "质检报告模板":
+  - button "当前空间":
+    - generic: demo1的个人空间
+  - button "d demo1 普通用户":
+    - generic: d
+    - generic "demo1"
+    - generic: 普通用户
+- main:
+  - heading "相似图纸搜索" [level=1]
+  - paragraph: 上传图纸或选择已有图纸，查找相似图纸
+  - button "图纸库数据集":
+    - text: 图纸库数据集
+  - search "查询图纸搜索":
+    - heading "搜索图纸" [level=2]
+    - button "选择查询图纸":
+      - generic: 选择查询图纸
+      - generic: 上传图纸或从已有图纸中选择
+    - button "搜索相似图纸" [disabled]:
+      - text: 搜索相似图纸
+  - searchbox "查询图纸"
+  - combobox "搜索分类":
+    - option "全部搜索分类" [selected]
+    - option "未分类"
+  - textbox "图纸版本":
+    - /placeholder: 全部版本
+  - textbox "搜索开始日期":
+    - /placeholder: 开始时间
+  - generic: 开始时间
+  - generic: ～
+  - textbox "搜索结束日期":
+    - /placeholder: 结束时间
+  - generic: 结束时间
+  - button "查询"
+  - button "重置"
+  - tablist "搜索结果视图":
+    - tab "搜索结果":
+      - text: 搜索结果
+      - generic "数量：0": "0"
+    - tab "历史搜索" [selected]:
+      - text: 历史搜索
+      - generic "数量：1": "1"
+    - tab "收藏":
+      - text: 收藏
+      - generic "数量：0": "0"
+  - generic: 共 1 条历史搜索
+  - tabpanel "历史搜索":
+    - checkbox "选择当前页全部记录"
+    - text: 全选当前页
+    - generic: 历史记录跟随账号保存，按当前空间显示
+    - button "归入分类" [disabled]
+    - button "新建分类"
+    - button "管理分类"
+    - list:
+      - checkbox "选择搜索记录 111"
+      - generic "序号": "1"
+      - generic "111 · 第 1 页":
+        - img "111 · 第 1 页"
+      - heading "111" [level=3]
+      - paragraph: 图号：111
+      - paragraph:
+        - generic: 已有图纸 · 第 1 页
+        - generic: ·
+        - time: 2026/11/17 10:36:46
+      - group "相似图纸缩略图":
+        - paragraph: 暂无相似图纸
+      - generic "未分类"
+      - generic: 0 份结果
+      - button "收藏搜索记录 111":
+        - text: 收藏
+      - button "查看结果":
+        - text: 查看结果
+- tooltip "相似图纸搜索":
+  - generic: 相似图纸搜索

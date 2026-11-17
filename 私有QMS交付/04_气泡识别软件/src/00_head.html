@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#f5f5f7" />
+<title>Worlder 气泡识别 · 自研私有化版</title>
+<!--
+  自研气泡识别软件（首期原型）
+  · 设计说明：私有QMS交付/04_气泡识别软件/设计说明.md
+  · 运行方式：node server.mjs（同时提供本页面、识别结果接口，并托管 QMS 原型）
+  · 识别在浏览器里完成：pdf.js 读取矢量 PDF 文字，tesseract.js 本地 OCR 扫描件；不调用任何云服务
+  · 内联依赖：Vue 3.4.38（MIT）、Tailwind CSS 3.4.17 预编译样式（MIT）；pdf.js（Apache-2.0）、tesseract.js（Apache-2.0）按需从 /vendor 加载
+  · 本文件由 build.mjs 生成，请勿直接修改；源码在 src/ 与 styles/
+-->
+<style>
+/*__TAILWIND__*/
+</style>
+<style>
+/*__APP_CSS__*/
+</style>
+</head>
+<body>
+<div id="app" v-cloak></div>
+<div id="boot" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#f5f5f7;font:500 13px -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#6e6e73;z-index:9999;transition:opacity .4s">
+  <div style="text-align:center"><div style="width:44px;height:44px;margin:0 auto 12px;border-radius:50%;border:3px solid #1f63e0;color:#1f63e0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px">1</div><span id="boot-msg">正在启动气泡识别…</span></div>
+</div>
