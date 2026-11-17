@@ -66,7 +66,8 @@ if (dup.length) fail('存在同名源码文件：' + [...new Set(dup)].join(', '
 /* 乱码检查：U+FFFD 说明源码里有被损坏的字符，逐处列出便于修复 */
 const BAD = String.fromCharCode(0xfffd);
 const bad = [];
-for (const f of [...jsFiles, join(srcDir, '00_head.html'), join(root, 'styles/app.css'), join(root, 'styles/tailwind.css')]) {
+const testFiles = existsSync(join(root, 'tests')) ? readdirSync(join(root, 'tests')).filter((f) => f.endsWith('.mjs')).map((f) => join(root, 'tests', f)) : [];
+for (const f of [...jsFiles, join(srcDir, '00_head.html'), join(root, 'styles/app.css'), join(root, 'styles/tailwind.css'), ...testFiles]) {
   readFileSync(f, 'utf8').split('\n').forEach((line, i) => { const k = line.indexOf(BAD); if (k >= 0) bad.push(basename(f) + ':' + (i + 1) + '  …' + line.slice(Math.max(0, k - 16), k + 16) + '…'); });
 }
 if (bad.length) fail('源码中存在乱码字符 U+FFFD，请先修复：\n  ' + bad.join('\n  '));

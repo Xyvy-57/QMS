@@ -341,6 +341,134 @@ let newFai = null;
   ok('选“仍要开检”：开出工序 40 的巡检单，带上机台', !!t && t.scene === 'IPQC' && t.ctx.op === '40 精车' && t.ctx.machine === 'CNC-03', t ? JSON.stringify(t.ctx) : '没有建单');
 }
 
+/* ---------------- 5. 审查代理发现的问题（回归）：每条都用构造的数据复现一遍 ---------------- */
+console.log('\n[5] 审查发现的问题（回归）');
+{
+  const J = JSON.stringify;
+  let seq = 0;
+  const nid = (p) => (p || 'rv') + (++seq);
+  const now = () => new Date().toISOString();
+  const ago = (h) => new Date(Date.now() - h * 3600e3).toISOString();
+  const mkO = (wo, partId, qtyIn, extra) => { S.orders.push(Object.assign({ id: nid('ot'), wo, partId, qty: qtyIn || 10, qtyIn, due: '', inLots: [], outLot: '', createdAt: ago(30), createdBy: 'u4', work: [], setups: [] }, extra || {})); return S.orders[S.orders.length - 1]; };
+  const wk = (o, op, good, bad, extra) => { o.work.push(Object.assign({ id: nid('wt'), op, opNo: op.split(' ')[0], machine: '', good, bad: bad || 0, reason: bad ? '测试' : '', ncrId: '', shift: '白班', by: 'u4', at: now() }, extra || {})); return o.work[o.work.length - 1]; };
+  const mkN = (f) => { S.ncrs.push(Object.assign({ id: nid('nt'), code: nid('NCR-T-'), title: '回归测试', severity: '一般', status: 'closed', partId: 'p3', batch: '', taskId: '', roundId: '', cids: [], desc: '', qtySuspect: 0, qtyConfirmed: 0, createdBy: 'u2', createdAt: now(), photos: [], disp: [], holds: [], log: [] }, f)); return S.ncrs[S.ncrs.length - 1]; };
+  const ln = (action, qty) => ({ id: nid('dt'), qty, action, reason: '测试', by: 'u2', approved: true, executed: true });
+  const mkT = (partId, scene, ctx, agoH, status) => { const at = ago(agoH || 1); S.tasks.push({ id: nid('tt'), code: nid(scene + '-T-'), scene, partId, planId: '', lot: 0, ctx, assignee: 'u7', due: at, status: status || 'pass', rounds: [{ id: nid('rd'), no: 1, status: 'submitted', submittedAt: at, photos: [] }], reportIds: [], createdAt: at, createdBy: 'u2' }); return S.tasks[S.tasks.length - 1]; };
+  const Q = (o) => F('orderQty')(o);
+  const brief = (q) => J({ input: q.input, stocked: q.stocked, scrap: q.scrap, returned: q.returned, concession: q.concession, pending: q.pending, wip: q.wip, defects: q.defects });
+
+  /* 数量台账（p3 路线：10 刃具来料 → 20 组装（首件）→ 30 终检（完工）→ 40 出货（出货）） */
+  { const o = mkO('WO-T-01', 'p3', 100); wk(o, '20 组装', 100); const w = wk(o, '30 终检', 97, 3);
+    const n = mkN({ batch: o.wo, workId: w.id, op: '30 终检', qtySuspect: 3, qtyConfirmed: 3, disp: [ln('让步接收', 3)] }); w.ncrId = n.id;
+    const q = Q(o);
+    ok('终检工序上让步接收的 3 件算进入库合格：投产 100 = 入库 100，能放行', q.balanced && q.stocked === 100 && q.concession === 3 && q.wip === 0, brief(q)); }
+  { const o = mkO('WO-T-02', 'p3', 100, { outLot: 'FG-T-02' }); wk(o, '20 组装', 100); wk(o, '30 终检', 100);
+    const t = mkT('p3', 'OQC', { customer: '锐驰装备（示例）', shipment: 'DN-T-02', batch: 'FG-T-02' }, 1, 'fail');
+    mkN({ batch: 'FG-T-02', taskId: t.id, qtySuspect: 3, qtyConfirmed: 3, disp: [ln('报废', 3)] });
+    const q = Q(o);
+    ok('出货检验（按成品批次开单、没写工序）判退报废 3 件：从入库合格里扣，100 = 97 + 3', q.balanced && q.stocked === 97 && q.scrap === 3 && q.wip === 0, brief(q)); }
+  { const o = mkO('WO-T-03', 'p3', 100); wk(o, '20 组装', 100); wk(o, '30 终检', 100); const w = wk(o, '40 出货', 98, 2);
+    const n = mkN({ batch: o.wo, workId: w.id, op: '40 出货', qtySuspect: 2, qtyConfirmed: 2, disp: [ln('报废', 2)] }); w.ncrId = n.id;
+    const q = Q(o);
+    ok('终检之后的工序报废 2 件：100 = 98 + 2，在制不会变负', q.balanced && q.stocked === 98 && q.wip === 0, brief(q)); }
+  { const o = mkO('WO-T-04', 'p3', 100, { inLots: ['LOT-T-04'] }); wk(o, '20 组装', 100); wk(o, '30 终检', 100);
+    const t = mkT('p3', 'IQC', { supplier: '恒科五金（示例）', batch: 'LOT-T-04' }, 30, 'fail');
+    const n = mkN({ batch: 'LOT-T-04', taskId: t.id, status: 'disposing', qtySuspect: 20, qtyConfirmed: 20, disp: [ln('退货', 20)] });
+    const q = Q(o), ml = F('mainlineOf')(o), rel = ml.stages[ml.stages.length - 1];
+    ok('来料检验的不合格不进工单数量（退货 20 不算本工单的），没关闭时照样挡放行', q.balanced && q.returned === 0 && q.defects === 0 && ml.ncrs.indexOf(n) >= 0 && rel.checks.some((c) => !c.ok && /没有关闭/.test(c.text)), brief(q)); }
+  { S.me = 'u4';
+    const o = mkO('WO-T-05', 'p3', 100); const w = wk(o, '20 组装', 90, 10);
+    const n = mkN({ batch: o.wo, workId: w.id, op: '20 组装', qtySuspect: 10, qtyConfirmed: 10, disp: [ln('报废', 10)] }); w.ncrId = n.id;
+    const m1 = attempt(() => F('reportWork')(o, { op: '30 终检', good: 100 }));
+    const m2 = attempt(() => F('reportWork')(o, { op: '30 终检', good: 90 }));
+    ok('前道报废 10 件，终检最多报 90 件：报 100 被拦下，报 90 数量平衡', /能到这道工序的 90 件/.test(m1) && !m2 && Q(o).balanced, m1 + ' | ' + m2 + ' | ' + brief(Q(o))); }
+  { S.me = 'u4';
+    const o = mkO('WO-T-06', 'p3', 100); wk(o, '20 组装', 100);
+    const r1 = F('reportWork')(o, { op: '30 终检', good: 60, bad: 2, reason: '报错测试' });
+    const before = Q(o).rows.find((r) => r.key === '30 终检').processed;
+    const m = attempt(() => F('voidWork')(o, r1.w.id, '数量报错'));
+    const q = Q(o);
+    ok('撤销报工：这条报工不再计算，自动登记的不合格随之关闭（0 件）', !m && before === 62 && q.rows.find((r) => r.key === '30 终检').processed === 0 && r1.n.status === 'closed' && r1.n.qtyConfirmed === 0 && q.pending === 0, m + ' ' + before + ' ' + brief(q));
+    F('reportWork')(o, { op: '30 终检', good: 100 });
+    ok('撤销后重新报 100 件，数量平衡', Q(o).balanced, brief(Q(o)));
+    const o2 = mkO('WO-T-07', 'p3', 100); wk(o2, '20 组装', 100);
+    const r2 = F('reportWork')(o2, { op: '30 终检', good: 95, bad: 5, reason: '测试' });
+    Object.assign(r2.n, { status: 'scoped', qtyConfirmed: 5 });
+    ok('报工的不合格已经在处置时不能撤销，仓库执行人不能撤销', /已经在处置/.test(attempt(() => F('voidWork')(o2, r2.w.id, '测试'))) && (S.me = 'u5', /无权限/.test(attempt(() => F('voidWork')(o2, r2.w.id, '测试')))));
+    S.me = 'u4'; }
+  { const o = mkO('WO-T-08', 'p3', 300);
+    mkN({ batch: o.wo, op: '20 组装', qtySuspect: 5, qtyConfirmed: 5, disp: [ln('报废', 5)] });
+    const w = wk(o, '20 组装', 295, 5); const nd = mkN({ batch: o.wo, workId: w.id, op: '20 组装', status: 'registered', qtySuspect: 5 }); w.ncrId = nd.id;
+    const b1 = Q(o).rows.find((r) => r.key === '20 组装').bad;
+    Object.assign(nd, { status: 'closed', qtyConfirmed: 0 });
+    const b2 = Q(o).rows.find((r) => r.key === '20 组装').bad;
+    ok('报工重复登记的不良：确认 0 件关闭后不再重复计算（10 → 5）', b1 === 10 && b2 === 5, b1 + ' → ' + b2); }
+
+  /* 首件、巡检、看板 */
+  { S.me = 'u4';
+    const o = mkO('WO-T-09', 'p3', 0);
+    const ev = F('addSetup')(o, { op: '20 组装', machine: '装配线 A', trigger: '开工' });
+    const r0 = F('faiReqs')(o).map((r) => r.machine).sort().join(',');
+    S.me = 'u7';
+    F('startPoint')(o, F('orderPoints')(o).find((p) => p.b.scene === 'FIRST'), { machine: '装配线 A', trigger: '开工', setupId: ev.id });
+    const reqs = F('faiReqs')(o);
+    ok('另一台机台先做了首件，路线默认机台（装配线 B）的开工首件要求还在', r0 === '装配线 A,装配线 B' && reqs.length === 2 && reqs.some((r) => r.machine === '装配线 B' && r.implicit && !r.task) && reqs.some((r) => r.machine === '装配线 A' && !!r.task), J(reqs.map((r) => ({ m: r.machine, t: r.trigger, imp: !!r.implicit, task: r.task && r.task.code })))); }
+  { const o = mkO('WO-T-10', 'p3', 100); const w = wk(o, '20 组装', 95, 5);
+    const n = mkN({ batch: o.wo, workId: w.id, op: '20 组装', qtySuspect: 5, qtyConfirmed: 5, disp: [ln('报废', 5)] }); w.ncrId = n.id;
+    wk(o, '30 终检', 95);
+    const part = F('partOf')('p3'), op = (key) => F('opByKey')(part, key);
+    ok('前道报废 5 件、后道报满 95 件：两道工序都算做完了（不再要求开班首件、不再提醒巡检）', !F('opRunning')(o, op('20 组装')) && !F('opRunning')(o, op('30 终检')) && Q(o).balanced, brief(Q(o))); }
+  { const mk = (wo, at50) => { const o = mkO(wo, 'p2', 10); ['10 下料', '20 粗车', '40 精车'].forEach((key) => wk(o, key, 10)); wk(o, '50 磨削', at50);
+      ['20 粗车', '40 精车', '50 磨削'].forEach((key) => mkT('p2', 'IPQC', { wo, op: key }, 3)); return o; };
+    const fin = mk('WO-T-11', 10), going = mk('WO-T-12', 5);
+    const s1 = F('mainlineOf')(fin).stages.find((s) => s.key === 'IPQC'), s2 = F('mainlineOf')(going).stages.find((s) => s.key === 'IPQC');
+    ok('巡检到点只提醒还在生产的工序：做完的不提醒，磨削还差 5 件的提醒', s1.state === 'done' && s2.state === 'active' && /50 磨削/.test(s2.text), s1.state + ' / ' + s2.state + ' ' + s2.text); }
+  ok('“每班 1 次”按班次时长算（默认两班倒 12 小时）', F('freqHours')('每班 1 次') === 12, String(F('freqHours')('每班 1 次')));
+  { const fai = F('floorItems')().filter((i) => i.kind === 'fai');
+    ok('等首件的项分数封顶，排在巡检超时（400 起）后面', fai.length > 0 && fai.every((i) => i.score < 400), J(fai.map((i) => Math.round(i.score)))); }
+  { const a = mkO('WO-T-17', 'p3', 100); wk(a, '20 组装', 100, 0, { at: ago(14) }); wk(a, '30 终检', 100, 0, { at: ago(14) });
+    const b = mkO('WO-T-18', 'p3', 100); wk(b, '20 组装', 100, 0, { at: ago(14) });
+    const due = F('workDue')();
+    ok('“待报工”不再列终检已经报完的工单，还没报完的照列', due.indexOf(a) < 0 && due.indexOf(b) >= 0, due.map((o) => o.wo).join(',')); }
+  { const o = mkO('WO-T-19', 'p3', 100); wk(o, '20 组装', 40, 0, { machine: '装配线 A', at: ago(2) });
+    o.setups.push({ id: nid('su'), op: '20 组装', opNo: '20', machine: '装配线 A', trigger: '下机', note: '', shift: '白班', by: 'u4', at: ago(1) });
+    const jobs = (F('machineJobs')()['装配线 A'] || []).filter((j) => j.o === o);
+    ok('登记“下机”之后，机台卡片不再显示这张工单', jobs.length === 0, J(jobs.map((j) => j.op))); }
+  { const w = F('workForm')({ orderId: o11.id, op: '20 精车' }), s = F('setupForm')({ orderId: o11.id });
+    ok('报工、登记换刀默认取工单实际在做的机台（WO-2611-011 在 CNC-04，不是路线上的 CNC-02）', F('runningMachine')(o11, '20 精车') === 'CNC-04' && w.machine === 'CNC-04' && s.machine === 'CNC-04', w.machine + ' / ' + s.machine);
+    ok('换工单、换工序时，原来选的机台这道工序也能用就留着，用不了才换', F('keepMachine')(o21, '20 精车', 'CNC-04') === 'CNC-04' && F('keepMachine')(o21, '20 精车', '装配线 A') !== '装配线 A'); }
+  await render('/floor', 'u4', '生产主管的现场看板：本班待报工', ['本班待报工', 'WO-2611-018']);
+
+  /* 追溯、放行、扫码 */
+  { const o = mkO('WO-T-13', 'p3', 10, { inLots: ['LOT-T-13A', 'LOT-T-13B'] });
+    const tr = F('traceOf')('LOT-T-13A'), sc = F('traceHoldScopes')(tr);
+    ok('往后查只把查到的来料批次当可疑：同一工单的另一个来料批次不列、不限制', tr.direction === 'forward' && J(tr.lots) === J(['LOT-T-13A']) && !sc.some((x) => x.scopeVal === 'LOT-T-13B') && sc.some((x) => x.scopeVal === o.wo), J({ lots: tr.lots, sc: sc.map((x) => x.scopeVal) })); }
+  { S.me = 'u2';
+    mkT('p2', 'IQC', { supplier: '华研精密（示例）', batch: 'LOT-T-14' }, 2, 'fail');
+    const tr = F('traceOf')('LOT-T-14'), n = F('traceHold')(tr, F('traceHoldScopes')(tr), '回归测试');
+    ok('只在来料检验里出现过的批次：一键隔离的不合格挂在来料检验的零件上', tr.orders.length === 0 && n.partId === 'p2', n.partId); }
+  { const o = mkO('WO-T-16', 'p3', 10, { inLots: ['LOT-T-16'], releasedAt: ago(1), releasedBy: 'u3', releaseKind: 'normal', releaseBasis: [] });
+    const sc = F('traceHoldScopes')(F('traceOf')('LOT-T-16'));
+    ok('已放行未发货、成品批次没登记的工单：一键限制给出“按工单号禁止发运”', sc.some((x) => x.scopeType === '工单' && x.scopeVal === o.wo && J(x.actions) === J(['ship']) && x.on), J(sc.map((x) => x.label))); }
+  { const o = mkO('WO-T-15', 'p3', 10, { outLot: 'FG-T-15', releasedAt: ago(1), releasedBy: 'u3', releaseKind: 'normal', releaseBasis: [] });
+    const shipN = () => F('roleFlow')('wh').find((x) => x.key === 'ship').n;
+    const before = shipN();
+    mkN({ status: 'scoped', batch: 'FG-T-15', qtySuspect: 10, qtyConfirmed: 1, holds: [{ id: nid('ht'), scopeType: '批次', scopeVal: 'FG-T-15', actions: ['ship'], status: 'active', by: 'u2', at: now() }] });
+    const ml = F('mainlineOf')(o), after = shipN();
+    ok('已放行的成品批次被限制发运：仓库“可发货的工单”不再计入', ml.shipHolds.length === 1 && after === before - 1, before + ' → ' + after);
+    await render('/workbench?f=released', 'u5', '仓库：已放行但禁止发运的工单卡片', ['暂不能发货']); }
+  ok('让步批准文件编号不会预填成工单号、报废单号、NCR 编号', F('guessDocNo')({ reason: '工单 WO-2611-064 报废单 SC-2611-21，客户同意（CC-2611-05）', evidence: '' }) === 'CC-2611-05' && F('guessDocNo')({ reason: '见 NCR-2026-0013', evidence: '报废单 SC-2611-21' }) === '');
+  { S.settings.scanBase = 'http://192.168.1.20:5180/#/workbench';
+    const u = F('scanUrl')('WO-T-X');
+    S.settings.scanBase = '';
+    ok('扫码地址带了 #… 也能拼出正确的二维码网址', u === 'http://192.168.1.20:5180/#/scan/WO-T-X', u); }
+  { const keys = winListeners.keydown || [], cb = { tagName: 'INPUT', type: 'checkbox' };
+    S.me = 'u7'; loc.hash = '#/workbench';
+    'WO-2611-021'.split('').forEach((ch) => keys.forEach((f) => f({ key: ch, target: cb, preventDefault() {} })));
+    keys.forEach((f) => f({ key: 'Enter', target: cb, preventDefault() {} }));
+    ok('复选框获得焦点时，扫码枪照样能用', loc.hash === '#/inspect/t7', loc.hash); }
+}
+
 /* ---------------- 4. 动作之后再渲染一遍 ---------------- */
 console.log('\n[4] 动作之后的页面');
 for (const u of ['u1', 'u2', 'u3', 'u4', 'u5']) for (const r of ['/workbench', '/workbench?f=released', '/floor', '/trace?q=DN-2611-007', '/orders/' + o21.id + '?stage=FIRST', '/orders/' + o64.id + '?stage=release', '/orders/' + o92.id, '/orders/' + o11.id, '/ncr', '/ncr?tab=holds'].concat(S.ncrs.slice(0, 3).map((n) => '/ncr/' + n.id), newFai ? ['/inspect/' + newFai.id] : [])) await render(r, u);

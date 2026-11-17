@@ -187,6 +187,13 @@ COMPONENTS['page-ncr'] = {
     const saveScope = () => {
       const x = n.value, s = parseInt(sc.suspect, 10), c = parseInt(sc.confirmed, 10);
       if (!/^\d+$/.test(sc.suspect.trim()) || !/^\d+$/.test(sc.confirmed.trim())) { toast('数量须为整数', 'error'); return; }
+      /* 报工自动登记的不合格：检验已经登记过同一批不良（重复）或者报错了，确认 0 件直接关闭，工单数量随之更正 */
+      if (c < 1 && x.workId && x.status === 'registered' && !x.disp.length) {
+        Object.assign(x, { qtySuspect: s, qtyConfirmed: 0, status: 'closed', closedAt: nowISO(), closedBy: S.me });
+        ncrLog(x, '确认范围：不合格 0 件（报工重复登记或报错），直接关闭');
+        sc.open = false; toast('已确认没有不合格，不合格单关闭，工单数量随之更正', 'success');
+        return;
+      }
       if (c < 1) { toast('确认不合格数量至少为 1', 'error'); return; }
       if (c > s) { toast('确认不合格数量不能大于可疑数量', 'error'); return; }
       if (c < ncrAllocated(x)) { toast('确认不合格数量不能小于已分配的处置数量 ' + ncrAllocated(x), 'error'); return; }
@@ -410,6 +417,7 @@ COMPONENTS['page-ncr'] = {
       <div><label class="label">可疑数量（件）</label><input v-model.trim="sc.suspect" class="input" inputmode="numeric"></div>
       <div><label class="label">确认不合格数量（件）</label><input v-model.trim="sc.confirmed" class="input" inputmode="numeric"></div>
     </div>
+    <p v-if="n.workId && n.status === 'registered'" class="mt-3 rounded-xl bg-[#f7f7f9] px-3.5 py-2.5 text-[12px] text-ink-3 leading-relaxed">这张不合格是报工时自动登记的。如果这些件检验已经登记过（重复登记），或者是报错了，确认不合格数量填 0：单据直接关闭，工单的不良数随之更正。</p>
     <label class="flex items-center gap-2 mt-5 text-[13px] font-medium cursor-pointer"><input type="checkbox" v-model="sc.hold" class="w-4 h-4 accent-brand-600">同时建立质量限制（NCR 本身不冻结任何实物）</label>
     <div v-if="sc.hold" class="mt-3 rounded-2xl bg-[#f7f7f9] p-4 space-y-3">
       <div class="grid grid-cols-3 gap-3"><div><label class="label">范围类型</label><select v-model="sc.scopeType" class="input"><option v-for="s in HOLD_SCOPES" :key="s">{{ s }}</option></select></div><div class="col-span-2"><label class="label">范围</label><input v-model="sc.scopeVal" class="input" placeholder="如 WO-2611-011"></div></div>

@@ -67,19 +67,28 @@ function machinesForOp(op) {
 function opsOf(part) { return part && part.route ? part.route.ops : []; }
 function opByKey(part, key) { return opsOf(part).find((op) => opKeyOf(op) === key) || null; }
 function firstOpsOf(part) { return opsOf(part).filter((op) => op.insp.some((b) => b.scene === 'FIRST')); }
-/** NCR 发生在哪道工序：报工登记的写在 NCR 上，检验登记的取检验任务上的工序 */
+/** 未撤销的报工（撤销的保留在 o.work 里留痕，不参与计算） */
+function liveWork(o) { return (o.work || []).filter((w) => !w.voided); }
+/**
+ * NCR 发生在哪道工序：报工登记的写在 NCR 上；检验登记的取检验任务上的工序；
+ * 任务没写工序（完工、出货检验常按批次开单）时，算在这类检验在工序路线上第一次出现的工序上（与 orderPoints 一致）
+ */
 function ncrOpKey(n) {
   if (n.op) return n.op;
   const t = n.taskId ? taskOf(n.taskId) : null;
-  return t && t.ctx && t.ctx.op ? t.ctx.op : '';
+  if (!t || !t.ctx) return '';
+  if (t.ctx.op) return t.ctx.op;
+  const op = opsOf(partOf(t.partId)).find((x) => x.insp.some((b) => b.scene === t.scene));
+  return op ? opKeyOf(op) : '';
 }
-/** NCR 算进工单的不良数：范围确认后按确认数；报工登记、还没确认的先按报工数 */
+/** NCR 算进工单的不良数：范围确认后按确认数（确认 0 件关闭的就是 0）；报工登记、还没确认的先按报工数 */
 function ncrDefects(n) { return n.status !== 'registered' ? n.qtyConfirmed || 0 : n.workId ? n.qtySuspect || 0 : 0; }
 function execQty(n, actions) { return sum(ncrLines(n).filter((d) => d.executed && (!actions || actions.indexOf(d.action) >= 0)).map((d) => d.qty)); }
 /**
- * 算进这张工单数量的不合格：登记在本工单号或本工单成品批次上的、由本工单报工登记的、由本工单的检验登记的。
- * 只是通过质量限制或共用的来料批次关联上的不算——追溯隔离单可能同时挂在几张工单上，来料不良也不该拉低本工单的生产直通率；
- * 它们照样挡放行（见 releaseStage）。
+ * 算进这张工单数量的不合格：登记在本工单号或本工单成品批次上的、由本工单报工登记的、
+ * 由写了本工单号的检验登记的、由按成品批次开单的检验登记的、由挂在工序上的检验登记的（例如外协回厂）。
+ * 只是通过质量限制或共用的来料批次关联上的不算——追溯隔离单可能同时挂在几张工单上，
+ * 来料检验的不合格是收货批次的事，不该拉低本工单的生产直通率、也不该进本工单的数量平衡；它们照样挡放行（见 releaseStage）。
  */
 function orderOwnNcrs(o) {
   const wids = (o.work || []).map((w) => w.id);
@@ -87,46 +96,66 @@ function orderOwnNcrs(o) {
     if (n.partId !== o.partId) return false;
     if (n.batch === o.wo || (o.outLot && n.batch === o.outLot) || (n.workId && wids.indexOf(n.workId) >= 0)) return true;
     const t = n.taskId ? taskOf(n.taskId) : null;
-    return !!t && orderOfTask(t) === o;
+    if (!t || !t.ctx) return false;
+    return t.ctx.wo === o.wo || (!!o.outLot && t.ctx.batch === o.outLot) || (!!t.ctx.op && orderOfTask(t) === o);
   });
 }
 
 /**
  * 工单数量台账：每道工序的报工、不良和一次合格率；处置回写（返工 / 挑选 / 报废 / 让步 / 退货）；直通率与数量平衡。
- *   一次合格率 = 工序合格数 ÷ 工序报工数；检验发现的不良从报工合格数里扣除（生产当时按合格报的）
- *   直通率 = 各工序一次合格率相乘
+ *   每张不合格落在它发生的工序（ncrOpKey）；对不上工序的算作终检之后发现的
+ *   能到这道工序的件 = 投产 − 前面各道工序报废、退货的件
+ *   一次合格率 = (第一次加工的件 − 不良) ÷ 第一次加工的件；第一次加工的件不超过能到这道工序的件（返工后补报的不算第一次）
+ *   检验发现的不良从报工合格数里扣除（生产当时按合格报的）；直通率 = 各工序一次合格率相乘
+ *   入库合格 = 终检工序合格 + 终检工序上让步接收的件 − 终检之后发现、已报废 / 退货 / 还没处置的件
  *   在制 = 投产 − 入库合格 − 报废 − 退货 − 待处置
- *   数量平衡（放行条件）= 已报工、终检有入库数、在制为 0、没有待处置的不良
+ *   数量平衡（放行条件）= 已报工、有入库合格、在制为 0、没有待处置的不良
  */
 function orderQty(o) {
-  const part = partOf(o.partId), ops = opsOf(part), work = o.work || [];
+  const part = partOf(o.partId), ops = opsOf(part), work = liveWork(o);
   const ncrs = orderOwnNcrs(o);
-  const rows = ops.map((op) => {
-    const key = opKeyOf(op);
+  const input = o.qtyIn || 0;
+  const keys = ops.map(opKeyOf);
+  const fqcOp = ops.find((op) => op.insp.some((b) => b.scene === 'FQC')) || ops[ops.length - 1] || null;
+  const fqcIdx = fqcOp ? ops.indexOf(fqcOp) : -1;
+  const at = ncrs.map((n) => keys.indexOf(ncrOpKey(n)));
+  const where = (n) => at[ncrs.indexOf(n)];
+  const loss = (n) => execQty(n, ['报废', '退货']);
+  const pendingOf = (n) => Math.max(0, ncrDefects(n) - execQty(n));
+  let lostBefore = 0;
+  const rows = ops.map((op, i) => {
+    const key = keys[i];
     const ws = work.filter((w) => w.op === key);
+    const here = ncrs.filter((n) => where(n) === i);
     const processed = sum(ws.map((w) => (w.good || 0) + (w.bad || 0)));
-    const badWork = sum(ws.map((w) => { const n = w.ncrId ? ncrs.find((x) => x.id === w.ncrId) : null; return n && n.status !== 'registered' ? n.qtyConfirmed || 0 : w.bad || 0; }));
-    const badInsp = sum(ncrs.filter((n) => !n.workId && ncrOpKey(n) === key).map(ncrDefects));
+    const badWork = sum(ws.map((w) => { const n = w.ncrId ? ncrs.find((x) => x.id === w.ncrId) : null; return n ? ncrDefects(n) : w.bad || 0; }));
+    const badInsp = sum(here.filter((n) => !n.workId).map(ncrDefects));
     const bad = badWork + badInsp;
     const good = Math.max(0, processed - bad);
+    const arriving = Math.max(0, input - lostBefore);
+    const firstPass = input ? Math.min(processed, arriving) : processed;
+    const reworkHere = sum(here.map((n) => execQty(n, ['返工', '返修', '挑选'])));
+    lostBefore += sum(here.map(loss));
     const machines = [];
     ws.forEach((w) => { if (w.machine && machines.indexOf(w.machine) < 0) machines.push(w.machine); });
-    return { op, key, processed, good, bad, badWork, badInsp, fpy: processed > 0 ? good / processed : null, machines, last: ws.length ? ws[ws.length - 1] : null, count: ws.length };
+    return { op, key, processed, good, bad, badWork, badInsp, arriving, reworkHere, fpy: firstPass > 0 ? Math.max(0, firstPass - bad) / firstPass : null, machines, last: ws.length ? ws[ws.length - 1] : null, count: ws.length };
   });
-  const orphan = ncrs.filter((n) => !n.workId && !rows.some((r) => r.key === ncrOpKey(n)));
+  const orphan = ncrs.filter((n) => where(n) < 0);
+  const post = ncrs.filter((n) => where(n) < 0 || where(n) > fqcIdx);
+  const fqcRow = fqcIdx >= 0 ? rows[fqcIdx] : null;
+  const all = (fn) => sum(ncrs.map(fn));
   const defects = sum(rows.map((r) => r.bad)) + sum(orphan.map(ncrDefects));
-  const rework = sum(ncrs.map((n) => execQty(n, ['返工', '返修'])));
-  const sorted = sum(ncrs.map((n) => execQty(n, ['挑选'])));
-  const scrap = sum(ncrs.map((n) => execQty(n, ['报废'])));
-  const concession = sum(ncrs.map((n) => execQty(n, ['让步接收'])));
-  const returned = sum(ncrs.map((n) => execQty(n, ['退货'])));
+  const rework = all((n) => execQty(n, ['返工', '返修']));
+  const sorted = all((n) => execQty(n, ['挑选']));
+  const scrap = all((n) => execQty(n, ['报废']));
+  const concession = all((n) => execQty(n, ['让步接收']));
+  const returned = all((n) => execQty(n, ['退货']));
   const pending = Math.max(0, defects - (rework + sorted + scrap + concession + returned));
-  const fqcOp = ops.find((op) => op.insp.some((b) => b.scene === 'FQC')) || ops[ops.length - 1] || null;
-  const fqcRow = fqcOp ? rows.find((r) => r.op === fqcOp) : null;
-  const stocked = fqcRow ? fqcRow.good : 0;
-  const input = o.qtyIn || 0;
+  const fqcConcession = sum(ncrs.filter((n) => where(n) === fqcIdx).map((n) => execQty(n, ['让步接收'])));
+  const postOut = sum(post.map((n) => loss(n) + pendingOf(n)));
+  const stocked = fqcRow ? Math.max(0, fqcRow.good + fqcConcession - postOut) : 0;
   const wip = input - stocked - scrap - returned - pending;
-  const withData = rows.filter((r) => r.processed > 0);
+  const withData = rows.filter((r) => r.fpy != null);
   const rty = withData.length ? withData.reduce((a, r) => a * r.fpy, 1) : null;
   const balanced = input > 0 && stocked > 0 && wip === 0 && pending === 0;
   return { rows, input, plan: o.qty || 0, defects, rework, sorted, scrap, concession, returned, pending, stocked, wip, rty, balanced, reported: work.length > 0, fqcKey: fqcRow ? fqcRow.key : '' };
@@ -135,7 +164,7 @@ function orderQty(o) {
 function qtyGapText(q) {
   if (!q.reported || !q.input) return '还没有报工：每道工序报合格数和不良数后才能核对数量';
   if (q.pending) return '还有 ' + q.pending + ' 件不良没有处置完';
-  if (q.wip < 0) return '数量对不上：入库合格、报废加起来比投产多 ' + -q.wip + ' 件，请核对报工';
+  if (q.wip < 0) return '数量对不上：入库合格、报废加起来比投产多 ' + -q.wip + ' 件，请核对报工（报错的报工可以在“报工记录”里撤销）';
   if (!q.stocked) return '终检工序' + (q.fqcKey ? '（' + q.fqcKey + '）' : '') + '还没有报入库合格数';
   if (q.wip > 0) return '还有 ' + q.wip + ' 件在制：投产 ' + q.input + '，入库合格 ' + q.stocked + '，报废 ' + q.scrap + (q.returned ? '，退货 ' + q.returned : '');
   return '';
@@ -144,15 +173,30 @@ function balanceText(q) { return '数量平衡：投产 ' + q.input + ' = 入库
 function pctText(v) { return v == null ? '—' : (Math.round(v * 1000) / 10).toFixed(1) + '%'; }
 function yieldTone(v) { return v == null ? 'text-ink-4' : v >= 0.95 ? 'text-emerald-700' : v >= 0.85 ? 'text-amber-700' : 'text-rose-600'; }
 
-/** 生产是否还在这道工序上进行：没放行、完工检验还没合格、这道工序还没报满投产数 */
-function opRunning(o, op) {
+/**
+ * 生产是否还在这道工序上进行：没放行、完工检验还没合格、这道工序还没报满“能到这道工序的件”
+ * （前道报废、退货的件不会来了；返工后不补报也不会让工序一直显示在做）。q 可传入已算好的 orderQty(o)
+ */
+function opRunning(o, op, q) {
   if (o.releasedAt) return false;
   if (S.tasks.some((t) => t.scene === 'FQC' && t.status === 'pass' && orderOfTask(t) === o)) return false;
-  const input = o.qtyIn || 0;
-  if (!input) return true;
+  if (!(o.qtyIn || 0)) return true;
+  q = q || orderQty(o);
   const key = opKeyOf(op);
-  const done = sum((o.work || []).filter((w) => w.op === key).map((w) => (w.good || 0) + (w.bad || 0)));
-  return done < input;
+  const row = q.rows.find((r) => r.key === key);
+  return !!row && row.processed < row.arriving;
+}
+/** 这张工单的这道工序现在在哪台机台上做：报工、首件触发登记、首件单里最新的那台（之后登记了下机的不算），没有返回空 */
+function runningMachine(o, opKey) {
+  if (!o || !opKey) return '';
+  const evs = (o.setups || []).filter((e) => e.op === opKey);
+  const off = (m, at) => evs.some((e) => e.machine === m && e.trigger === '下机' && e.at >= at);
+  const cand = liveWork(o).filter((w) => w.op === opKey && w.machine).map((w) => ({ m: w.machine, at: w.at }))
+    .concat(evs.filter((e) => e.trigger !== '下机').map((e) => ({ m: e.machine, at: e.at })))
+    .concat(S.tasks.filter((t) => t.scene === 'FIRST' && t.partId === o.partId && t.ctx && t.ctx.wo === o.wo && t.ctx.op === opKey && t.ctx.machine).map((t) => ({ m: t.ctx.machine, at: t.createdAt })))
+    .sort((a, b) => (a.at < b.at ? 1 : -1));
+  const hit = cand.find((c) => !off(c.m, c.at));
+  return hit ? hit.m : '';
 }
 
 /* ---------------- 首件：按机台、按触发事件 ---------------- */
@@ -169,9 +213,9 @@ function faiTasksOf(o, op, fops) {
  *   · 没登记过事件：默认机台“开工首件”（兼容只做一次首件的老数据）
  *   · 登记了事件（开工 / 换型 / 换刀 / 修机后…）：这台机台在事件之后要有新的首件；“下机”表示这台机台不再做
  *   · 开班首件（设置里可关）：上一班已经合格、这一班还在生产，就要在本班再做一次
- * 每条要求带着满足它的最新首件任务 task（没有为 null）。
+ * 每条要求带着满足它的最新首件任务 task（没有为 null）。q 可传入已算好的 orderQty(o)。
  */
-function faiReqs(o) {
+function faiReqs(o, q) {
   const part = partOf(o.partId);
   if (!part.id) return [];
   const fops = firstOpsOf(part);
@@ -184,14 +228,16 @@ function faiReqs(o) {
     const evs = (o.setups || []).filter((e) => e.op === key).slice().sort((a, b) => (a.at < b.at ? -1 : 1));
     const latest = {};
     evs.forEach((e) => { latest[e.machine] = e; });
-    /* 默认机台：最早那次首件用的机台（就是“开工”的那台），没有首件时取工序路线上的工作中心 */
-    const defM = (tasks.length && tasks[tasks.length - 1].ctx.machine) || op.wc || '';
+    /* 默认机台：最早那次“不是因为登记事件而做”的首件用的机台，没有时取工序路线上的工作中心。
+       为登记事件做的首件（带 setupId）不改变默认机台：别的机台先做了首件，默认机台的开工首件要求照样保留，直到它登记“下机” */
+    const imp = tasks.filter((t) => !t.ctx.setupId);
+    const defM = (imp.length && imp[imp.length - 1].ctx.machine) || op.wc || '';
     const base = [];
     if (!latest[defM]) base.push({ machine: defM, trigger: '开工', at: o.createdAt || '', implicit: true });
     Object.keys(latest).forEach((m) => { const e = latest[m]; if (e.trigger !== '下机') base.push({ machine: m, trigger: e.trigger, at: e.at, ev: e }); });
-    const running = opRunning(o, op);
+    const running = opRunning(o, op, q);
     base.forEach((r) => {
-      const mt = tasks.filter((t) => (r.implicit ? (t.ctx.machine || defM) === defM : (t.ctx.machine || '') === r.machine && t.createdAt >= r.at));
+      const mt = tasks.filter((t) => (r.implicit ? !t.ctx.setupId && (t.ctx.machine || defM) === defM : (t.ctx.machine || '') === r.machine && t.createdAt >= r.at));
       const prevPass = mt.find((t) => t.status === 'pass' && passAt(t) < shIso);
       const req = Object.assign({ op, key, opNo: op.no, line: lineOfMachine(r.machine) }, r);
       if (autoShift && running && prevPass && (r.at || '') < shIso) {
@@ -225,9 +271,15 @@ function reportWork(o, f) {
   const first = !o.qtyIn;
   const input = first ? intOf(f.qtyIn, '投产数量') : o.qtyIn;
   if (!input) throw new Error('第一次报工请先确认投产数量');
+  /* 每道工序最多报：能到这道工序的件（投产减去前道报废、退货的）+ 本工序返工、挑选后补报的件 */
   const q = orderQty(o), row = q.rows.find((r) => r.key === f.op);
-  const limit = input + q.rework + q.sorted;
-  if (row && row.processed + good + bad > limit) throw new Error('工序 ' + f.op + ' 累计报工 ' + (row.processed + good + bad) + ' 件，超过投产 ' + input + ' 件' + (q.rework + q.sorted ? '（含返工、挑选 ' + (q.rework + q.sorted) + ' 件）' : ''));
+  if (row) {
+    const arriving = first ? input : row.arriving, limit = arriving + row.reworkHere, total = row.processed + good + bad;
+    if (total > limit) {
+      throw new Error('工序 ' + f.op + ' 累计报工 ' + total + ' 件，超过' + (arriving < input ? '能到这道工序的 ' + arriving + ' 件（投产 ' + input + ' 件，前道报废、退货 ' + (input - arriving) + ' 件）' : '投产 ' + input + ' 件')
+        + (row.reworkHere ? '；本工序返工、挑选后可补报 ' + row.reworkHere + ' 件，已计入' : ''));
+    }
+  }
   if (first) o.qtyIn = input;
   const sh = shiftAt();
   if (!Array.isArray(o.work)) o.work = [];
@@ -243,6 +295,27 @@ function reportWork(o, f) {
   }
   logAudit('生产工单', o.wo, (first ? '确认投产 ' + input + ' 件；' : '') + '报工：工序 ' + f.op + (saved.machine ? ' · ' + saved.machine : '') + '，合格 ' + good + ' 件' + (bad ? '，不良 ' + bad + ' 件（已登记 ' + n.code + '）' : ''));
   return { w: saved, n };
+}
+/**
+ * 撤销报工：报错了（数量、工序、机台）撤销后重新报。撤销的记录保留并注明原因，不再参与计算。
+ * 报工自动登记的不合格还没开始处置时一起关闭（不合格 0 件）；已经在处置的不能撤销，先在不合格单里处理。
+ */
+function voidWork(o, wid, why) {
+  if (!can('order.work')) throw new Error(denyTip('order.work'));
+  if (o.releasedAt) throw new Error('工单已质量放行，不能撤销报工');
+  const w = (o.work || []).find((x) => x.id === wid && !x.voided);
+  if (!w) throw new Error('这条报工不存在或已经撤销');
+  const reason = String(why || '').trim();
+  if (!reason) throw new Error('请写明撤销原因');
+  const n = w.ncrId ? S.ncrs.find((x) => x.id === w.ncrId) || null : null;
+  if (n && n.status !== 'registered' && n.status !== 'closed') throw new Error(n.code + ' 已经在处置，不能撤销这条报工；请先在不合格单里处理');
+  Object.assign(w, { voided: true, voidedBy: S.me, voidedAt: nowISO(), voidReason: reason });
+  if (n && n.status === 'registered') {
+    Object.assign(n, { status: 'closed', qtyConfirmed: 0, closedAt: nowISO(), closedBy: S.me });
+    ncrLog(n, '报工撤销，不合格单随之关闭（不合格 0 件）：' + reason);
+  }
+  logAudit('生产工单', o.wo, '撤销报工：工序 ' + w.op + (w.machine ? ' · ' + w.machine : '') + '，合格 ' + w.good + ' 件' + (w.bad ? '、不良 ' + w.bad + ' 件' : '') + '（' + reason + '）');
+  return w;
 }
 /** 登记首件触发事件（开工 / 开班 / 换型 / 换刀 / 修机后 …），或“下机”（这台机台不再做这张工单） */
 function addSetup(o, f) {
@@ -266,8 +339,12 @@ function orderConcessions(o) {
   orderNcrs(o).forEach((n) => ncrLines(n).forEach((d) => { if (d.action === '让步接收' && d.executed) out.push({ n, d }); }));
   return out;
 }
-/** 从处置理由、执行凭据里找批准文件编号（如 CC-2611-05） */
-function guessDocNo(d) { const m = /[A-Z]{2,}-\d{4}-\d{2,}/.exec((d.reason || '') + ' ' + (d.evidence || '')); return m ? m[0] : ''; }
+/** 从处置理由、执行凭据里找批准文件编号（如 CC-2611-05）；工单、不合格、报废单、返工单、收发货单、检验单等编号不算 */
+const NOT_APPROVAL_DOC = /^(WO|NCR|SC|RW|IR|DN|RPT|IQC|FAI|IPQC|FQC|OQC|PL|STD|SYNC|TPL)-/;
+function guessDocNo(d) {
+  const all = ((d.reason || '') + ' ' + (d.evidence || '')).match(/[A-Z]{2,}-\d{4}-\d{2,}/g) || [];
+  return all.find((x) => !NOT_APPROVAL_DOC.test(x)) || '';
+}
 /**
  * 质量放行：检查项必须全部通过；有让步接收时每一项都要写明批准方、批准文件编号和批准人。
  * @param {object} f { note, basis: { [处置行 id]: { kind, docNo, approver } } }
@@ -351,19 +428,27 @@ function traceOf(q) {
     if (!o && task.scene === 'IQC' && task.ctx && task.ctx.batch) { direction = 'forward'; lots = [task.ctx.batch]; orders = S.orders.filter((x) => (x.inLots || []).indexOf(task.ctx.batch) >= 0); }
   }
   if (!kind) return { q: k, kind: 'none', direction, orders: [], lots: [], siblings: [] };
-  orders.forEach((o) => (o.inLots || []).forEach((l) => { if (lots.indexOf(l) < 0) lots.push(l); }));
+  /* 往后查：可疑的只是查到的那几个来料批次，工单用到的其它来料批次不算可疑，不放进 lots（也就不会被一键限制） */
+  if (direction !== 'forward') orders.forEach((o) => (o.inLots || []).forEach((l) => { if (lots.indexOf(l) < 0) lots.push(l); }));
   /* 从出货往回查时，同批来料还用在哪些工单：投诉的遏制范围 */
   const siblings = direction === 'forward' ? [] : S.orders.filter((o) => orders.indexOf(o) < 0 && (o.inLots || []).some((l) => lots.indexOf(l) >= 0));
-  return { q: k, kind, direction, orders, lots, siblings };
+  return { q: k, kind, direction, orders, lots, siblings, task: kind === '检验单' ? task : null };
 }
-/** 一键质量限制的候选范围：来料批次禁止使用和继续加工，在制工单禁止继续加工和发运，没发出去的成品批次禁止发运；已经有同样限制的不再重复 */
+/** 工单上有效的、禁止发运的质量限制（工单号或成品批次上的） */
+function orderShipHolds(o) { return orderHolds(o).filter((h) => h.actions.indexOf('ship') >= 0); }
+/**
+ * 一键质量限制的候选范围：来料批次禁止使用和继续加工；在制工单禁止继续加工和发运；
+ * 已放行没发货的：成品批次禁止发运，没登记成品批次的按工单号禁止发运；已发货的只提示另行通知客户。已经有同样限制的不再重复
+ */
 function traceHoldScopes(tr) {
   if (!tr) return [];
   const out = [];
   tr.lots.forEach((l) => out.push({ key: '批次:' + l, scopeType: '批次', scopeVal: l, actions: ['use', 'process'], label: '来料批次 ' + l, on: true }));
   tr.orders.concat(tr.siblings || []).forEach((o) => {
+    const shipped = orderShipped(o);
     if (!o.releasedAt) out.push({ key: '工单:' + o.wo, scopeType: '工单', scopeVal: o.wo, actions: ['process', 'ship'], label: '在制工单 ' + o.wo, on: true });
-    if (o.outLot) out.push({ key: '批次:' + o.outLot, scopeType: '批次', scopeVal: o.outLot, actions: ['ship'], label: '成品批次 ' + o.outLot + (orderShipped(o) ? '（已发货，另需通知客户）' : ''), on: !orderShipped(o) });
+    else if (!shipped && !o.outLot) out.push({ key: '工单:' + o.wo, scopeType: '工单', scopeVal: o.wo, actions: ['ship'], label: '已放行未发货的工单 ' + o.wo + '（成品批次未登记，按工单号限制发运）', on: true });
+    if (o.outLot) out.push({ key: '批次:' + o.outLot, scopeType: '批次', scopeVal: o.outLot, actions: ['ship'], label: '成品批次 ' + o.outLot + (shipped ? '（已发货，限制不了在途和客户处的货，另需通知客户）' : o.releasedAt ? '（已放行未发货）' : ''), on: !shipped });
   });
   const seen = {};
   return out.filter((s) => {
@@ -380,7 +465,9 @@ function traceHold(tr, scopes, why) {
   if (!scopes || !scopes.length) throw new Error('请至少选择一个范围');
   const o0 = tr.orders[0] || (tr.siblings || [])[0] || null;
   const rec = (S.lots || []).find((l) => tr.lots.indexOf(l.lot) >= 0);
-  const partId = (o0 && o0.partId) || (rec && rec.partId) || (S.parts[0] && S.parts[0].id);
+  /* 零件：工单的；其次收货台账的；其次查到的检验单或这个批次的来料检验的；都没有才取第一个零件 */
+  const iqc = tr.task || S.tasks.find((t) => t.scene === 'IQC' && t.ctx && tr.lots.indexOf(t.ctx.batch) >= 0) || null;
+  const partId = (o0 && o0.partId) || (rec && rec.partId) || (iqc && iqc.partId) || (S.parts[0] && S.parts[0].id);
   const reason = String(why || '').trim();
   const n = createNcr({
     title: '追溯隔离：' + tr.kind + ' ' + tr.q + (reason ? ' · ' + reason : ''), partId, batch: tr.lots[0] || (o0 ? o0.wo : tr.q), severity: '严重',
@@ -395,7 +482,8 @@ function traceHold(tr, scopes, why) {
 /* ---------------- 扫码 ---------------- */
 /** 二维码里的地址：设置了扫码地址就用它，否则用当前打开 QMS 的地址；双击打开的本地文件没有地址，只放编号（扫码枪照样能用） */
 function scanBase() {
-  let b = String((S.settings && S.settings.scanBase) || '').trim();
+  /* 地址里自带的 #… 要去掉，否则拼出来的二维码网址打开的是那个页面，不是扫码页 */
+  let b = String((S.settings && S.settings.scanBase) || '').trim().replace(/#.*$/, '');
   if (!b && typeof location !== 'undefined' && /^https?:$/.test(location.protocol || '')) b = location.origin + location.pathname;
   if (b && !/\.html?$/i.test(b) && !/\/$/.test(b)) b += '/';
   return b;

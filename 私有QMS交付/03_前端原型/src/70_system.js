@@ -198,13 +198,17 @@ COMPONENTS['page-settings'] = {
       if (bad) { toast('班次名称不能为空，开始时间写成 08:00 这样的格式', 'error'); return; }
       const starts = pf.shifts.map((x) => hmToMin(x.start));
       if (starts.some((m, i) => starts.indexOf(m) !== i)) { toast('两个班次的开始时间不能相同', 'error'); return; }
-      const base = pf.scanBase.trim();
+      /* 地址里的 #… 去掉：二维码会在后面拼 #/scan/工单号 */
+      const raw = pf.scanBase.trim(), base = raw.replace(/#.*$/, '');
       if (base && !/^https?:\/\/\S+$/i.test(base)) { toast('扫码地址要以 http:// 或 https:// 开头', 'error'); return; }
       S.settings.shifts = pf.shifts.map((x) => ({ key: x.key, name: String(x.name).trim(), start: String(x.start).trim().padStart(5, '0') }));
       S.settings.faiShift = !!pf.faiShift;
       S.settings.scanBase = base;
+      /* 表单换成保存后的值（时间补零、去掉 #…），保存按钮随之变回不可点 */
+      pf.shifts = S.settings.shifts.map((x) => ({ key: x.key, name: x.name, start: x.start }));
+      pf.scanBase = base;
       logAudit('集成', '生产现场', '更新班次（' + S.settings.shifts.map((x) => x.name + ' ' + x.start).join('、') + '）、开班首件' + (S.settings.faiShift ? '开启' : '关闭') + '、扫码地址 ' + (base || '跟随当前地址'));
-      toast('生产现场设置已保存', 'success');
+      toast('生产现场设置已保存' + (base !== raw ? '（扫码地址里的 # 及后面的部分已去掉）' : ''), 'success');
     };
     return { f, dirty, save, simulate, simulateBad, usage, exportState, reset, statusText, API_DOCS, BUBBLE_NEEDS, pf, prodDirty, scanNow, saveProd };
   },

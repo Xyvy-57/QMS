@@ -125,8 +125,11 @@ function seedProductionDemo() {
     work(o92, { op: '20 组装', machine: '装配线 B', good: o92.qtyIn, at: daysAgo(1, 17) });
   }
 
+  /* 两张历史工单的检验单要用到这三份方案：用户改过演示数据、方案不在了，就不造这两张工单（造出来检验对不上，主线会是乱的） */
+  const p3Plans = ['PL-092-IQC', 'PL-092-FAI', 'PL-092-OUT'].every((c) => S.plans.some((p) => p.code === c && p.status === 'effective' && p.partId === 'p3'));
+
   /* 4. 历史工单 WO-2611-052：已放行并发货（发货单 DN-2611-007，出货检验 t3） */
-  if (!ord('WO-2611-052') && t3 && t3.status === 'pass' && t3.partId === 'p3') {
+  if (p3Plans && !ord('WO-2611-052') && t3 && t3.status === 'pass' && t3.partId === 'p3') {
     const D1 = t3.ctx.batch;
     S.orders.push({ id: 'oh52', wo: 'WO-2611-052', partId: 'p3', qty: 500, qtyIn: 500, due: daysAgo(0, 18), inLots: [H1], outLot: D1, createdAt: daysAgo(9, 10), createdBy: 'u4', work: [], setups: [], releasedAt: daysAgo(1, 16, 30), releasedBy: 'u3', releaseNote: '首件、完工、出货检验均合格，报告齐全', releaseKind: 'normal', releaseBasis: [] });
     const o = S.orders[S.orders.length - 1];
@@ -139,7 +142,7 @@ function seedProductionDemo() {
   }
 
   /* 5. 历史工单 WO-2611-064：检验全部合格，让步接收 2 件，等待质量放行 */
-  if (!ord('WO-2611-064') && S.parts.some((p) => p.id === 'p3')) {
+  if (p3Plans && !ord('WO-2611-064') && S.parts.some((p) => p.id === 'p3')) {
     const F1 = day(1) + '-F1';
     S.orders.push({ id: 'oh64', wo: 'WO-2611-064', partId: 'p3', qty: 300, qtyIn: 300, due: hoursFromNow(30), inLots: [H2], outLot: F1, createdAt: daysAgo(4, 10), createdBy: 'u4', work: [], setups: [] });
     const o = S.orders[S.orders.length - 1];

@@ -25,7 +25,8 @@ function floorItems() {
     reqs.forEach((r) => {
       const base = { id: o.id + '|F|' + r.key + '|' + r.machine, o, wo: o.wo, partName: part.name, op: r.key, machine: r.machine, line: r.line || lineOfMachine(r.machine) || '其他' };
       const t = r.task;
-      if (!t) items.push(Object.assign(base, { kind: 'fai', tone: 'amber', urgent: true, title: faiLabel(r) + '待检', note: '首件合格前这台机台不该批量生产', since: r.at, score: 300 + mins(r.at), roles: permRoles('task.create'), act: { label: '开首件', req: r } }));
+      /* 等得越久越靠前，但封顶 90 分：始终排在巡检超时（400 起）后面 */
+      if (!t) items.push(Object.assign(base, { kind: 'fai', tone: 'amber', urgent: true, title: faiLabel(r) + '待检', note: '首件合格前这台机台不该批量生产', since: r.at, score: 300 + Math.min(90, mins(r.at)), roles: permRoles('task.create'), act: { label: '开首件', req: r } }));
       else if (t.status === 'pending' || t.status === 'active') items.push(Object.assign(base, { kind: 'fai-open', tone: 'blue', urgent: true, title: faiLabel(r) + '检验中 ' + t.code, since: t.createdAt, score: 220, uid: t.assignee, act: { label: t.status === 'pending' ? '开始检验' : '继续检验', to: '/inspect/' + t.id } }));
       else if (r.state === 'blocked') items.push(Object.assign(base, { kind: 'fai-fail', tone: 'red', urgent: true, title: faiLabel(r) + (t.status === 'fail' ? '不合格 ' : '证据不足 ') + t.code, note: '停机处理：登记不合格或发起补测', since: lastDoneAt(t), score: 260, roles: permRoles('ncr.create'), act: { label: '打开', to: '/inspect/' + t.id } }));
     });
@@ -34,7 +35,7 @@ function floorItems() {
     if (is && !(fqc && fqc.state === 'done')) {
       is.refs.points.forEach((x) => {
         const op = opByKey(part, x.key);
-        if (!op || !opRunning(o, op)) return;
+        if (!op || !opRunning(o, op, ml.qty)) return;
         const fr = reqs.filter((r) => r.key === x.key);
         if (fr.some((r) => r.state !== 'done')) return; /* 首件还没合格：先做首件，不排巡检 */
         const machine = fr.length ? fr[0].machine : op.wc || '';
@@ -48,7 +49,7 @@ function floorItems() {
         }
         const h = freqHours(x.b.freq);
         if (!h) return;
-        const firstWork = ((o.work || []).find((w) => w.op === x.key) || {}).at || '';
+        const firstWork = (liveWork(o).find((w) => w.op === x.key) || {}).at || '';
         const from = ipqcFrom(x, fr) || firstWork;
         if (!from) return; /* 这道工序还没开始生产 */
         const due = new Date(from).getTime() + h * 3600e3, late = due < now, soon = !late && due - now < 30 * 60e3;
@@ -99,21 +100,28 @@ function machineJobs() {
     if (o.releasedAt) return;
     const part = partOf(o.partId);
     if (!part.id) return;
-    faiReqs(o).forEach((r) => { const op = opByKey(part, r.key); if (op && opRunning(o, op)) add(r.machine, o, r.key, (r.task && r.task.createdAt) || r.at); });
-    (o.work || []).forEach((w) => { const op = opByKey(part, w.op); if (w.machine && op && opRunning(o, op)) add(w.machine, o, w.op, w.at); });
+    const q = orderQty(o);
+    /* 报工之后又登记了“下机”的机台，不再算在做这道工序 */
+    const offAfter = (m, op, at) => (o.setups || []).some((e) => e.machine === m && e.op === op && e.trigger === '下机' && e.at >= at);
+    faiReqs(o, q).forEach((r) => { const op = opByKey(part, r.key); if (op && opRunning(o, op, q)) add(r.machine, o, r.key, (r.task && r.task.createdAt) || r.at); });
+    liveWork(o).forEach((w) => { const op = opByKey(part, w.op); if (w.machine && op && opRunning(o, op, q) && !offAfter(w.machine, w.op, w.at)) add(w.machine, o, w.op, w.at); });
   });
   Object.keys(map).forEach((k) => map[k].sort((a, b) => (a.at < b.at ? 1 : -1)));
   return map;
 }
-/** 生产主管的“报工”待办：已经开始生产、还没完工，这一班还没报过工的工单 */
+/** 生产主管的“报工”待办：已经开始生产、终检工序还没报完，这一班还没报过工的工单（来料、出货这类不报工的工序不算） */
 function workDue() {
   const shIso = shiftAt().start.toISOString();
   return S.orders.filter((o) => {
     if (o.releasedAt) return false;
-    const started = (o.work || []).length > 0 || faiReqs(o).some((r) => r.task && r.task.status === 'pass');
+    if (!partOf(o.partId).id) return false;
+    const q = orderQty(o), work = liveWork(o);
+    const started = work.length > 0 || faiReqs(o, q).some((r) => r.task && r.task.status === 'pass');
     if (!started) return false;
     if (S.tasks.some((t) => t.scene === 'FQC' && t.status === 'pass' && orderOfTask(t) === o)) return false;
-    return !(o.work || []).some((w) => w.at >= shIso);
+    const fin = q.rows.find((r) => r.key === q.fqcKey);
+    if (q.input && fin && fin.processed >= fin.arriving) return false;
+    return !work.some((w) => w.at >= shIso);
   });
 }
 /** 本班做了什么 */
@@ -122,7 +130,7 @@ function shiftStats(sh) {
   const inShift = (iso) => !!iso && iso >= a && iso < b;
   const done = S.tasks.filter((t) => t.status !== 'pending' && t.status !== 'active' && inShift(lastDoneAt(t)));
   const works = [];
-  S.orders.forEach((o) => (o.work || []).forEach((w) => { if (inShift(w.at)) works.push(w); }));
+  S.orders.forEach((o) => liveWork(o).forEach((w) => { if (inShift(w.at)) works.push(w); }));
   return { fai: done.filter((t) => t.scene === 'FIRST').length, ipqc: done.filter((t) => t.scene === 'IPQC').length, ncr: S.ncrs.filter((n) => inShift(n.createdAt)).length, good: sum(works.map((w) => w.good || 0)), bad: sum(works.map((w) => w.bad || 0)) };
 }
 
@@ -154,12 +162,14 @@ COMPONENTS['page-floor'] = {
       return g;
     });
     const stats = computed(() => shiftStats(sh.value));
+    /* 本班还没报工的工单（生产主管流程条“报工”的那几张），直接在这里报 */
+    const due = computed(() => { tick.value; return workDue(); }); // eslint-disable-line no-unused-expressions
     const left = computed(() => { const ms = Math.max(0, sh.value.end.getTime() - Date.now()); const hh = Math.floor(ms / 3600e3), mm = Math.floor((ms % 3600e3) / 60e3); return (hh > 0 ? hh + ' 小时 ' : '') + mm + ' 分'; });
     const act = (i) => floorAct(i);
     const report = (x) => { const j = x.jobs[0]; UI.work = j ? { orderId: j.o.id, op: j.op, machine: x.m.code } : { machine: x.m.code }; };
     const setup = (x) => { const j = x.jobs[0]; UI.setup = j ? { orderId: j.o.id, op: j.op, machine: x.m.code } : { machine: x.m.code }; };
     const when = (i) => (i.due ? '' : i.since ? '已等 ' + waitText(i.since) : '');
-    return { line, onlyMine, sh, items, lineOpts, grouped, stats, left, act, report, setup, when, shiftText, FLOOR_TONE };
+    return { line, onlyMine, sh, items, lineOpts, grouped, stats, due, left, act, report, setup, when, shiftText, FLOOR_TONE };
   },
   template: `
 <div class="space-y-5">
@@ -170,6 +180,7 @@ COMPONENTS['page-floor'] = {
     </div>
     <div class="flex flex-wrap items-center gap-2">
       <span class="chip-blue">{{ shiftText(sh) }} · 还剩 {{ left }}</span>
+      <g-btn v-if="can('order.work')" perm="order.work" cls="btn-secondary" icon="edit" @click="UI.work = {}">报工</g-btn>
       <g-btn perm="order.setup" cls="btn-secondary" icon="plus" @click="UI.setup = {}">登记换型 / 换刀</g-btn>
       <button type="button" class="btn-secondary" @click="UI.scan = true"><ic name="scan" :size="15"/>扫码</button>
     </div>
@@ -192,6 +203,10 @@ COMPONENTS['page-floor'] = {
       <empty v-if="!items.length" icon="check" :title="onlyMine ? '现在没有你要做的检验' : '现场没有待检'" desc="首件、巡检到点后会出现在这里"/>
     </div>
     <div class="xl:col-span-5 space-y-5">
+      <div v-if="due.length && can('order.work')" class="card p-5" data-panel="work-due">
+        <div class="flex items-center justify-between gap-2"><h2 class="section-title">本班待报工</h2><span class="text-[11.5px] text-ink-4">已经开始生产、还有工序没报完、这一班还没报过工</span></div>
+        <div v-for="o in due" :key="o.id" class="flex items-center gap-3 mt-2.5 text-[13px]"><button type="button" class="link font-mono" @click="go('/orders/' + o.id)">{{ o.wo }}</button><span class="text-ink-3 truncate flex-1">{{ partOf(o.partId).name }}</span><g-btn perm="order.work" cls="btn-primary btn-xs" @click="UI.work = { orderId: o.id }">报工</g-btn></div>
+      </div>
       <div class="card p-5">
         <div class="flex items-center justify-between"><h2 class="section-title">本班</h2><span class="text-[11.5px] text-ink-4">{{ shiftText(sh) }}</span></div>
         <div class="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-3">
@@ -238,7 +253,7 @@ COMPONENTS['page-trace'] = {
       return out;
     });
     const lotsInfo = computed(() => (tr.value ? tr.value.lots.map(lotInfo) : []));
-    const rows = computed(() => (tr.value ? tr.value.orders.map((o) => ({ o, ml: mainlineOf(o), ships: orderShipments(o), shipped: orderShipped(o) })) : []));
+    const rows = computed(() => (tr.value ? tr.value.orders.map((o) => ({ o, ml: mainlineOf(o), ships: orderShipments(o), shipped: orderShipped(o), held: orderShipHolds(o).length > 0 })) : []));
     const sibs = computed(() => (tr.value ? (tr.value.siblings || []).map((o) => ({ o, ml: mainlineOf(o), shipped: orderShipped(o) })) : []));
     const usedBy = (lot) => S.orders.filter((o) => (o.inLots || []).indexOf(lot) >= 0).map((o) => o.wo).join('、');
     const summary = computed(() => {
@@ -311,7 +326,7 @@ COMPONENTS['page-trace'] = {
       <div class="card p-4 space-y-3">
         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center"><ic name="truck" :size="13"/></span><span class="section-title !text-[14px]">成品批次 · 出货</span></div>
         <div v-for="r in rows" :key="'out' + r.o.id" class="rounded-xl ring-1 ring-inset ring-black/[0.06] p-3">
-          <div class="flex items-center justify-between gap-2"><span class="font-mono font-semibold text-[13px]">{{ r.o.outLot || '成品批次未登记' }}</span><span :class="r.shipped ? 'chip-violet' : r.o.releasedAt ? 'chip-green' : 'chip-gray'">{{ r.shipped ? '已发货' : r.o.releasedAt ? '已放行未发货' : '未放行' }}</span></div>
+          <div class="flex items-center justify-between gap-2"><span class="font-mono font-semibold text-[13px]">{{ r.o.outLot || '成品批次未登记' }}</span><span class="flex items-center gap-1"><span v-if="r.held" class="chip-red"><ic name="lock" :size="11"/>禁止发运</span><span :class="r.shipped ? 'chip-violet' : r.o.releasedAt ? 'chip-green' : 'chip-gray'">{{ r.shipped ? '已发货' : r.o.releasedAt ? '已放行未发货' : '未放行' }}</span></span></div>
           <div class="text-[11.5px] text-ink-4 mt-0.5">{{ r.o.wo }}</div>
           <div v-for="t in r.ships" :key="t.id" class="text-[12px] text-ink-3 mt-1"><button type="button" class="link font-mono" @click="go('/inspect/' + t.id)">{{ t.code }}</button> · {{ t.ctx.customer || '客户' }}<template v-if="t.ctx.shipment"> · 发货单 <span class="font-mono">{{ t.ctx.shipment }}</span></template> · <st k="task" :v="t.status"/></div>
           <div v-if="!r.ships.length" class="text-[12px] text-ink-4 mt-1">还没有出货检验</div>
@@ -320,7 +335,7 @@ COMPONENTS['page-trace'] = {
     </div>
   </template>
 
-  <modal :open="hd.open" @close="hd.open = false" title="一键加质量限制" sub="质量限制要挂在不合格单上：会先登记一张 NCR，再把勾选的范围逐条建立限制。已经有同样限制的范围不再列出" width="max-w-lg">
+  <modal :open="hd.open" @close="hd.open = false" title="一键加质量限制" sub="质量限制要挂在不合格单上：会先登记一张 NCR，再把勾选的范围逐条建立限制。已经有同样限制的范围不重复列出；已经发出去的货限制不了，要另行通知客户" width="max-w-lg">
     <div class="space-y-2">
       <label v-for="s in hd.list" :key="s.key" class="flex items-start gap-2.5 rounded-xl ring-1 ring-inset ring-black/[0.06] px-3 py-2.5 cursor-pointer" :class="s.on ? 'bg-rose-50/60' : ''">
         <input type="checkbox" v-model="s.on" class="w-4 h-4 mt-0.5 accent-rose-600">
@@ -410,7 +425,7 @@ COMPONENTS['page-scan'] = {
 COMPONENTS['scan-modal'] = {
   setup() {
     const code = ref(''), err = ref('');
-    const cam = reactive({ on: false, msg: '' });
+    const cam = reactive({ on: false, starting: false, msg: '' });
     const video = ref(null);
     const supported = typeof window !== 'undefined' && 'BarcodeDetector' in window && typeof navigator !== 'undefined' && !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     let stream = null, timer = null, det = null;
@@ -432,16 +447,22 @@ COMPONENTS['scan-modal'] = {
       try { const r = await det.detect(video.value); if (r && r.length) { code.value = r[0].rawValue; stopCam(); submit(); return; } } catch (e) { /* 这一帧没识别出来，继续 */ }
       timer = setTimeout(loop, 250);
     };
+    /* 摄像头正在打开时（等授权、等出画面）再点不重复打开；打开到一半弹窗被关了，就把这一路摄像头关掉 */
     const startCam = async () => {
+      if (cam.on || cam.starting) return;
+      cam.starting = true; cam.msg = '';
       try {
         det = new window.BarcodeDetector({ formats: ['qr_code', 'code_128', 'code_39'] });
-        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        if (!open.value) { s.getTracks().forEach((t) => t.stop()); return; }
+        stream = s;
         cam.on = true;
         await nextTick();
         video.value.srcObject = stream;
         await video.value.play();
         loop();
       } catch (e) { stopCam(); cam.msg = '打不开摄像头：' + ((e && e.message) || e) + '（浏览器只在 https 或 localhost 下允许使用摄像头）'; }
+      finally { cam.starting = false; }
     };
     onBeforeUnmount(stopCam);
     return { code, err, cam, video, supported, open, close, submit, startCam, stopCam };
@@ -452,7 +473,7 @@ COMPONENTS['scan-modal'] = {
     <div class="relative"><ic name="scan" :size="16" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-4"/><input id="scan-input" v-model="code" class="input !h-11 !pl-10 font-mono" placeholder="扫码枪对准这里扫，或手动输入编号" autocomplete="off"></div>
     <p v-if="err" class="text-[12.5px] text-rose-600">{{ err }}</p>
     <div v-if="supported">
-      <button v-if="!cam.on" type="button" class="btn-secondary w-full" @click="startCam"><ic name="camera" :size="15"/>用摄像头扫</button>
+      <button v-if="!cam.on" type="button" class="btn-secondary w-full" :disabled="cam.starting" @click="startCam"><ic name="camera" :size="15"/>{{ cam.starting ? '正在打开摄像头…' : '用摄像头扫' }}</button>
       <div v-show="cam.on" class="rounded-2xl overflow-hidden bg-black aspect-video relative"><video ref="video" class="w-full h-full object-cover" muted playsinline></video><button type="button" class="absolute top-2 right-2 btn-secondary btn-xs" @click="stopCam">关闭摄像头</button></div>
     </div>
     <p v-if="cam.msg" class="text-[12px] text-amber-700">{{ cam.msg }}</p>
@@ -466,9 +487,14 @@ COMPONENTS['scan-modal'] = {
 (function listenScanGun() {
   if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') return;
   let buf = '', last = 0;
+  /* 只有能打字的地方才让给输入：复选框、单选框、按钮获得焦点时照样识别扫码 */
+  const typing = (tg) => {
+    const tag = tg && tg.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || (tg && tg.isContentEditable)) return true;
+    return tag === 'INPUT' && !/^(checkbox|radio|button|submit|reset|range|color|file|image)$/i.test(tg.type || '');
+  };
   window.addEventListener('keydown', (e) => {
-    const tg = e.target, tag = tg && tg.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (tg && tg.isContentEditable) || e.metaKey || e.ctrlKey || e.altKey || e.isComposing) { buf = ''; return; }
+    if (typing(e.target) || e.metaKey || e.ctrlKey || e.altKey || e.isComposing) { buf = ''; return; }
     const now = Date.now();
     if (now - last > 80) buf = '';
     last = now;
@@ -510,9 +536,16 @@ function workForm(v) {
   const r = last >= 0 ? (rows[last].processed < target ? rows[last] : rows[last + 1] || rows[last])
     : rows.find((x) => !!machineOf(x.op.wc) || x.op.insp.some((b) => b.scene === 'FIRST')) || rows[0];
   f.op = v.op && opByKey(part, v.op) ? v.op : job && opByKey(part, job.op) ? job.op : r ? r.key : '';
-  f.machine = v.machine || defaultMachine(opByKey(part, f.op));
+  /* 机台：给了就用；否则取这张工单这道工序实际在做的机台；都没有才取工序默认机台 */
+  f.machine = v.machine || runningMachine(o, f.op) || defaultMachine(opByKey(part, f.op));
   if (!o.qtyIn) f.qtyIn = String(o.qty || '');
   return f;
+}
+/** 换了工单或工序时的机台：原来选的机台这道工序也能用就留着（例如从机台卡片打开），否则取实际在做的机台或默认机台 */
+function keepMachine(o, opKey, keep) {
+  const op = o ? opByKey(partOf(o.partId), opKey) : null;
+  if (keep && machinesForOp(op).some((m) => m.code === keep)) return keep;
+  return (o && runningMachine(o, opKey)) || defaultMachine(op);
 }
 /** 登记首件触发弹窗打开时的内容。v = { orderId?, op?, machine?, trigger? }：只列有首件检验点的在制工单和工序 */
 function setupForm(v) {
@@ -526,7 +559,7 @@ function setupForm(v) {
   if (!o) return f;
   const fops = firstOpsOf(partOf(o.partId));
   f.op = v.op && fops.some((x) => opKeyOf(x) === v.op) ? v.op : fops[0] ? opKeyOf(fops[0]) : '';
-  f.machine = v.machine || defaultMachine(fops.find((x) => opKeyOf(x) === f.op) || null);
+  f.machine = v.machine || runningMachine(o, f.op) || defaultMachine(fops.find((x) => opKeyOf(x) === f.op) || null);
   return f;
 }
 
@@ -543,12 +576,12 @@ COMPONENTS['work-modal'] = {
     const machines = computed(() => machinesForOp(op.value));
     const q = computed(() => (o.value ? orderQty(o.value) : null));
     const row = computed(() => (q.value ? q.value.rows.find((r) => r.key === f.op) || null : null));
-    const sh = computed(() => shiftAt());
-    const pickMachine = () => { f.machine = defaultMachine(op.value); };
-    watch(() => UI.work, (v) => { if (v) Object.assign(f, workForm(v)); });
-    /* 事件里直接取选中的值，不依赖 v-model 与 change 事件的先后 */
-    const onOrder = (e) => { if (e && e.target) f.orderId = e.target.value; Object.assign(f, workForm({ orderId: f.orderId })); };
-    const onOp = (e) => { if (e && e.target) f.op = e.target.value; pickMachine(); };
+    /* 班次在每次打开时重新算（弹窗一直挂着，不重新算会停在第一次打开时的班次） */
+    const sh = ref(shiftAt());
+    watch(() => UI.work, (v) => { if (v) { sh.value = shiftAt(); Object.assign(f, workForm(v)); } });
+    /* 事件里直接取选中的值，不依赖 v-model 与 change 事件的先后；换工单、换工序时尽量保留原来选的机台 */
+    const onOrder = (e) => { if (e && e.target) f.orderId = e.target.value; const keep = f.machine; Object.assign(f, workForm({ orderId: f.orderId })); f.machine = keepMachine(o.value, f.op, keep); };
+    const onOp = (e) => { if (e && e.target) f.op = e.target.value; f.machine = keepMachine(o.value, f.op, f.machine); };
     const close = () => { UI.work = null; };
     const hasBad = computed(() => /^\d+$/.test(String(f.bad).trim()) && parseInt(f.bad, 10) > 0);
     const save = () => {
@@ -577,6 +610,7 @@ COMPONENTS['work-modal'] = {
       <div><label class="label">合格数（件）</label><input v-model.trim="f.good" class="input !text-[16px] font-semibold" inputmode="numeric" placeholder="0"></div>
       <div><label class="label">不良数（件）</label><input v-model.trim="f.bad" class="input !text-[16px] font-semibold" inputmode="numeric" placeholder="0"></div>
     </div>
+    <p v-if="row && row.badInsp" class="rounded-xl bg-amber-50 text-amber-800 px-3.5 py-2.5 text-[12px] leading-relaxed">本工序检验已经判了不良 {{ row.badInsp }} 件，已从合格数里扣掉。这些件报工时按加工数报进合格，不要再报成不良，否则会重复登记一张不合格单（重复的可以由质量确认为 0 件关闭）。</p>
     <div v-if="hasBad"><label class="label">不良现象（必填）</label><textarea v-model="f.reason" rows="2" class="textarea" placeholder="例如：外径超上限 0.02；表面划伤"></textarea><p class="text-[11px] text-ink-4 mt-1">提交后自动登记 NCR。不良品先隔离标识，等质量确认范围和处置；返工、报废、让步的数量会回写到工单。</p></div>
   </div>
   <template #footer><button class="btn-secondary" @click="close">取消</button><g-btn perm="order.work" cls="btn-primary" icon="check" @click="save">报工</g-btn></template>
@@ -594,10 +628,10 @@ COMPONENTS['setup-modal'] = {
     const op = computed(() => fops.value.find((x) => opKeyOf(x) === f.op) || null);
     const machines = computed(() => machinesForOp(op.value));
     const reqs = computed(() => (o.value ? faiReqs(o.value).filter((r) => r.key === f.op) : []));
-    const pickMachine = () => { f.machine = defaultMachine(op.value); };
     watch(() => UI.setup, (v) => { if (v) Object.assign(f, setupForm(v)); });
-    const onOrder = (e) => { if (e && e.target) f.orderId = e.target.value; const t = f.trigger; Object.assign(f, setupForm({ orderId: f.orderId, trigger: t })); };
-    const onOp = (e) => { if (e && e.target) f.op = e.target.value; pickMachine(); };
+    /* 换工单、换工序时保留原来选的机台（例如从机台卡片打开、换型到另一张工单），这道工序用不了才换成实际在做的或默认机台 */
+    const onOrder = (e) => { if (e && e.target) f.orderId = e.target.value; const t = f.trigger, note = f.note, keep = f.machine; Object.assign(f, setupForm({ orderId: f.orderId, trigger: t })); f.note = note; f.machine = keepMachine(o.value, f.op, keep); };
+    const onOp = (e) => { if (e && e.target) f.op = e.target.value; f.machine = keepMachine(o.value, f.op, f.machine); };
     const trigHint = computed(() => (f.trigger === '下机' ? '这台机台不再做这张工单，不再要求首件。' : (FAI_TRIGGERS.find((t) => t.key === f.trigger) || {}).hint || ''));
     const close = () => { UI.setup = null; };
     const save = () => {

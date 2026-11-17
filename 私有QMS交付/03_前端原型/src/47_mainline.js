@@ -76,7 +76,7 @@ function prepStage(o, part, pts) {
   return Object.assign(s, { state: 'done', text: '标准 ' + std.code + ' Rev ' + std.rev + ' 已生效（图纸 Rev ' + std.drawingRev + '）', owner: { roles: permRoles('std.edit') }, doneAt: std.approvedAt || std.createdAt });
 }
 
-function inspStage(o, part, scene, pts) {
+function inspStage(o, part, scene, pts, q) {
   const s = { key: scene, scene, label: ML_SCENE[scene] || sceneOf(scene).name, icon: SCENE_META[scene] ? SCENE_META[scene].icon : 'list', refs: {} };
   const ops = Array.from(new Set(pts.map((x) => x.key)));
   s.sub = ops.length === 1 ? ops[0] : ops.length + ' 道工序';
@@ -87,7 +87,7 @@ function inspStage(o, part, scene, pts) {
   tasks.forEach((t) => ncrsOfTask(t.id).forEach((n) => { if (ncrs.indexOf(n) < 0) ncrs.push(n); }));
   Object.assign(s.refs, { tasks, reports, ncrs, points: pts });
   /* 首件按“工序 × 机台 × 触发事件”判断：开班、换型、换刀、修机后都要重新做 */
-  const reqs = scene === 'FIRST' ? faiReqs(o) : null;
+  const reqs = scene === 'FIRST' ? faiReqs(o, q) : null;
   if (reqs) s.refs.reqs = reqs;
   const hasPlan = plansFor(part.id, scene).length > 0;
   const openN = ncrs.filter((n) => n.status !== 'closed');
@@ -153,7 +153,7 @@ function freqHours(freq) {
   if (m) return parseFloat(m[1]);
   m = /每\s*(\d+)\s*分钟/.exec(t);
   if (m) return parseInt(m[1], 10) / 60;
-  if (/每班/.test(t)) return 8;
+  if (/每班/.test(t)) { const sh = shiftAt(); return (sh.end.getTime() - sh.start.getTime()) / 3600e3 || 8; } // 按设置的班次时长（默认两班倒，12 小时）
   if (/每天|每日/.test(t)) return 24;
   return 0;
 }
@@ -164,13 +164,15 @@ function ipqcFrom(x, reqs) {
   const last = x.last ? lastDoneAt(x.last) : '';
   return last > fai ? last : fai;
 }
-/** 生产没结束（完工检验还没完成）时，巡检超过频次就重新变成“该巡检了” */
-function ipqcDue(o, stage, fqcDone, reqs) {
+/** 生产没结束（完工检验还没完成）时，还在生产的工序巡检超过频次，就重新变成“该巡检了”；已经做完的工序不再提醒 */
+function ipqcDue(o, stage, fqcDone, reqs, q) {
   if (!stage || stage.state !== 'done' || o.releasedAt || fqcDone) return;
-  const now = Date.now();
+  const now = Date.now(), part = partOf(o.partId);
   const late = stage.refs.points.map((x) => {
     const h = freqHours(x.b.freq);
     if (!h || !x.last) return null;
+    const op = opByKey(part, x.key);
+    if (!op || !opRunning(o, op, q)) return null;
     const due = new Date(ipqcFrom(x, reqs)).getTime() + h * 3600e3;
     return due < now ? { x, due } : null;
   }).filter(Boolean).sort((a, b) => a.due - b.due);
@@ -208,11 +210,11 @@ function mainlineOf(o) {
   const pts = part.id ? orderPoints(o) : [];
   const scenes = [];
   pts.forEach((x) => { if (scenes.indexOf(x.b.scene) < 0) scenes.push(x.b.scene); });
-  const stages = [prepStage(o, part, pts)].concat(scenes.map((sc) => inspStage(o, part, sc, pts.filter((x) => x.b.scene === sc))));
+  const qty = orderQty(o);
+  const stages = [prepStage(o, part, pts)].concat(scenes.map((sc) => inspStage(o, part, sc, pts.filter((x) => x.b.scene === sc), qty)));
   const fqc = stages.find((s) => s.key === 'FQC');
   const first = stages.find((s) => s.key === 'FIRST');
-  ipqcDue(o, stages.find((s) => s.key === 'IPQC'), !!fqc && fqc.state === 'done', first ? first.refs.reqs : null);
-  const qty = orderQty(o);
+  ipqcDue(o, stages.find((s) => s.key === 'IPQC'), !!fqc && fqc.state === 'done', first ? first.refs.reqs : null, qty);
   stages.push(releaseStage(o, stages.slice(), qty));
   /* 没有自己时间点的节点：从前面节点最后完成的时间算起（都没完成就从工单登记算起） */
   let upto = o.createdAt || '';
@@ -230,7 +232,8 @@ function mainlineOf(o) {
   const doneCount = stages.filter((s) => s.state === 'done').length;
   const state = o.releasedAt ? 'released' : stages.some((s) => s.state === 'blocked') ? 'blocked' : 'active';
   const dueSoon = !o.releasedAt && !!o.due && new Date(o.due).getTime() - Date.now() < 2 * 86400e3;
-  return { o, part, stages, cur, current: stages[cur], mine: mineStages, doneCount, state, dueSoon, holds: orderHolds(o), ncrs: orderNcrs(o), qty };
+  const holds = orderHolds(o);
+  return { o, part, stages, cur, current: stages[cur], mine: mineStages, doneCount, state, dueSoon, holds, shipHolds: holds.filter((h) => h.actions.indexOf('ship') >= 0), ncrs: orderNcrs(o), qty };
 }
 const ORDER_ML_STATE = { released: ['已放行', 'chip-green'], blocked: ['有问题', 'chip-red'], active: ['进行中', 'chip-blue'] };
 
@@ -359,6 +362,7 @@ COMPONENTS['order-card'] = {
     <button v-else-if="other" type="button" class="btn-secondary btn-sm" @click="swap" title="演示用：切换身份后继续这一步"><avatar :uid="other.id" :size="18"/>切换为{{ other.name }}</button>
     <button type="button" class="btn-ghost btn-sm" @click="open">工单详情</button>
   </div>
+  <div v-else-if="ml.state === 'released' && ml.shipHolds.length" class="mt-3 rounded-xl px-3.5 py-2.5 bg-rose-50/80 ring-1 ring-inset ring-rose-600/15 text-[13px] text-rose-800 flex flex-wrap items-center gap-2" data-test="ship-held"><ic name="lock" :size="15"/>{{ ml.stages[ml.stages.length - 1].text }}，但{{ ml.shipHolds.map(h => h.scopeType + ' ' + h.scopeVal).join('、') }}现在禁止发运，暂不能发货<button type="button" class="link text-[12px] ml-auto" @click="go('/ncr/' + ml.shipHolds[0].ncr.id)">查看 {{ ml.shipHolds[0].ncr.code }}</button></div>
   <div v-else-if="ml.state === 'released'" class="mt-3 rounded-xl px-3.5 py-2.5 bg-emerald-50/70 text-[13px] text-emerald-800 flex items-center gap-2"><ic name="check" :size="15"/>{{ ml.stages[ml.stages.length - 1].text }}，可以入库发货</div>
 </div>`,
 };
@@ -551,7 +555,16 @@ COMPONENTS['page-order'] = {
       logAudit('生产工单', o.value.wo, '更新批次：投入 ' + (o.value.inLots.join('、') || '无') + '；产出 ' + (o.value.outLot || '无'));
       lotEdit.open = false; toast('批次已更新', 'success');
     };
-    return { o, ml, sel, stage, pick, other, act, swap, startAt, startReq, REQ_CLS, qtyTiles, plansOf, audit, lotEdit, openLots, saveLots, waitText, pctText, yieldTone, qtyGapText, faiLabel, ML_STATE, ORDER_ML_STATE, ownerText, POINT_TEXT, RESULT_TEXT: { pass: '合格', fail: '不合格', insufficient: '证据不足', pending: '待检', active: '检验中' } };
+    /* 报工记录（新的在前）和撤销 */
+    const showWorks = ref(false);
+    const works = computed(() => (o.value && Array.isArray(o.value.work) ? o.value.work.slice().reverse() : []));
+    const vw = reactive({ open: false, id: '', why: '' });
+    const openVoid = (w) => { Object.assign(vw, { open: true, id: w.id, why: '' }); };
+    const saveVoid = () => {
+      try { voidWork(o.value, vw.id, vw.why); vw.open = false; toast('报工已撤销，可以重新报', 'success'); }
+      catch (e) { toast(e.message, 'error'); }
+    };
+    return { o, ml, sel, stage, pick, other, act, swap, startAt, startReq, REQ_CLS, qtyTiles, plansOf, audit, lotEdit, openLots, saveLots, showWorks, works, vw, openVoid, saveVoid, waitText, pctText, yieldTone, qtyGapText, faiLabel, ML_STATE, ORDER_ML_STATE, ownerText, POINT_TEXT, RESULT_TEXT: { pass: '合格', fail: '不合格', insufficient: '证据不足', pending: '待检', active: '检验中' } };
   },
   template: `
 <div v-if="o && ml" class="space-y-4">
@@ -561,7 +574,7 @@ COMPONENTS['page-order'] = {
       <div class="flex flex-wrap items-center gap-2"><h1 class="page-title font-mono">{{ o.wo }}</h1><span :class="ORDER_ML_STATE[ml.state][1]">{{ ORDER_ML_STATE[ml.state][0] }}</span><span v-if="ml.holds.length" class="chip-red"><ic name="lock" :size="11"/>质量限制</span><span v-if="ml.dueSoon" class="chip-amber">{{ new Date(o.due) < new Date() ? '已逾期' : '交期临近' }}</span><span v-if="o.releasedAt && o.releaseKind === 'concession'" class="chip-amber">让步放行</span></div>
       <p class="text-xs text-ink-3 mt-1">{{ ml.part.name }} · <button class="link" @click="go('/parts?id=' + ml.part.id)">{{ ml.part.partNo }}</button> · 图号 {{ ml.part.drawingNo }} · 计划 {{ o.qty }} 件<template v-if="o.due"> · 交期 {{ fmtDate(o.due) }}</template> · {{ userName(o.createdBy) }} 登记于 {{ fmtDate(o.createdAt) }}</p>
     </div>
-    <div class="flex flex-wrap items-center gap-2"><button class="btn-secondary" @click="go('/orders/' + o.id + '/card')" title="打印随工件流转的卡片，扫上面的二维码直接进到这张工单"><ic name="qr" :size="15"/>流转卡</button><g-btn v-if="!o.releasedAt" perm="order.work" cls="btn-secondary" icon="edit" @click="UI.work = { orderId: o.id }">报工</g-btn><button class="btn-secondary" @click="openLots"><ic name="tag" :size="15"/>物料批次</button><g-btn v-if="!o.releasedAt" perm="order.release" cls="btn-primary" icon="shield" :when="ml.stages[ml.stages.length - 1].state === 'active'" why="主线还没走完，见第 7 步的检查项" @click="UI.release = o.id">质量放行</g-btn></div>
+    <div class="flex flex-wrap items-center gap-2"><button class="btn-secondary" @click="go('/orders/' + o.id + '/card')" title="打印随工件流转的卡片，扫上面的二维码直接进到这张工单"><ic name="qr" :size="15"/>流转卡</button><g-btn v-if="!o.releasedAt" perm="order.work" cls="btn-secondary" icon="edit" @click="UI.work = { orderId: o.id }">报工</g-btn><button class="btn-secondary" @click="openLots"><ic name="tag" :size="15"/>物料批次</button><g-btn v-if="!o.releasedAt" perm="order.release" cls="btn-primary" icon="shield" :when="ml.stages[ml.stages.length - 1].state === 'active'" :why="'主线还没走完，见第 ' + ml.stages.length + ' 步“质量放行”的检查项'" @click="UI.release = o.id">质量放行</g-btn></div>
   </div>
 
   <div class="card p-4 sm:p-5">
@@ -593,6 +606,18 @@ COMPONENTS['page-order'] = {
         </tr>
       </tbody>
     </table></div>
+    <div v-if="works.length" class="mt-3 pt-3 border-t border-black/[0.05]" data-panel="work-log">
+      <button type="button" class="text-[12.5px] text-ink-3 hover:text-ink inline-flex items-center gap-1" @click="showWorks = !showWorks"><ic name="chevron-down" :size="13" class="transition-transform duration-300" :class="showWorks ? 'rotate-180' : ''"/>报工记录（{{ works.length }} 条，报错了可以撤销后重报）</button>
+      <div v-if="showWorks" class="mt-2 space-y-1.5">
+        <div v-for="w in works" :key="w.id" class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12.5px]">
+          <span class="text-ink-4 tabular w-[120px]">{{ fmtTime(w.at) }}</span>
+          <span :class="w.voided ? 'line-through text-ink-4' : ''"><span class="font-mono">{{ w.op }}</span>{{ w.machine ? ' · ' + w.machine : '' }} · 合格 {{ w.good }}<template v-if="w.bad"> · 不良 {{ w.bad }}</template></span>
+          <span class="text-ink-4">{{ userName(w.by) }}{{ w.shift ? ' · ' + w.shift : '' }}</span>
+          <span v-if="w.voided" class="text-ink-4">已撤销（{{ userName(w.voidedBy) }}：{{ w.voidReason }}）</span>
+          <g-btn v-else-if="!o.releasedAt" perm="order.work" cls="btn-ghost btn-xs" @click="openVoid(w)">撤销</g-btn>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div v-if="stage" class="grid grid-cols-1 xl:grid-cols-12 gap-4">
@@ -689,6 +714,11 @@ COMPONENTS['page-order'] = {
       </div>
     </div>
   </div>
+
+  <modal :open="vw.open" @close="vw.open = false" title="撤销报工" sub="报错了（数量、工序、机台）撤销后重新报，撤销留记录。这条报工自动登记的不合格还没开始处置时一起关闭；已经在处置的要先在不合格单里处理" width="max-w-md">
+    <label class="label">撤销原因</label><input v-model="vw.why" class="input" placeholder="例如：终检多报了 10 件">
+    <template #footer><button class="btn-secondary" @click="vw.open = false">取消</button><g-btn perm="order.work" cls="btn-danger" icon="undo" :when="!!vw.why.trim()" why="请写明撤销原因" @click="saveVoid">撤销这条报工</g-btn></template>
+  </modal>
 
   <modal :open="lotEdit.open" @close="lotEdit.open = false" title="物料批次" sub="来料检验、出货检验按批次关联到这张工单，从客户投诉可以一路追到来料批次" width="max-w-md">
     <div class="space-y-4"><div><label class="label">投入的物料批次（多个用逗号分开）</label><input v-model="lotEdit.inLots" class="input font-mono"></div><div><label class="label">产出的成品批次</label><input v-model="lotEdit.outLot" class="input font-mono"></div></div>

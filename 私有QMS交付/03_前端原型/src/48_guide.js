@@ -163,7 +163,10 @@ function startPoint(o, x, extra) {
   if (extra) Object.keys(extra).forEach((k) => { if (extra[k]) ctx[k] = extra[k]; });
   if (!ctx.machine && (x.b.scene === 'FIRST' || x.b.scene === 'IPQC')) {
     const reqs = faiReqs(o).filter((r) => r.key === x.key);
-    const r = reqs.find((y) => !y.task) || reqs[0] || null;
+    /* 首件：先给还没做的机台，其次给首件不合格、要重做的机台；巡检：给首件已经合格的机台 */
+    const r = x.b.scene === 'FIRST'
+      ? reqs.find((y) => !y.task) || reqs.find((y) => y.state === 'blocked') || reqs[0] || null
+      : reqs.find((y) => y.state === 'done') || reqs[0] || null;
     const op = opByKey(partOf(o.partId), x.key);
     if (r && r.machine) ctx.machine = r.machine;
     else if (op && machineOf(op.wc)) ctx.machine = op.wc;
@@ -196,10 +199,10 @@ COMPONENTS['page-orders'] = {
       if (x.last) { go('/inspect/' + x.last.id); return; }
       if (!x.hasPlan) { toast('这个零件还没有适用于“' + sceneOf(x.b.scene).name + '”的生效方案，请先编制检验方案', 'warn'); return; }
       if (!can('task.create')) { toast(denyTip('task.create'), 'warn'); return; }
-      if (!(await gateConfirm(o, x.b.scene))) return;
+      if (!(await gateConfirm(o, x.b.scene, x))) return;
       startPoint(o, x);
     };
-    const again = async (o, x) => { if (!can('task.create')) { toast(denyTip('task.create'), 'warn'); return; } if (!(await gateConfirm(o, x.b.scene))) return; startPoint(o, x); };
+    const again = async (o, x) => { if (!can('task.create')) { toast(denyTip('task.create'), 'warn'); return; } if (!(await gateConfirm(o, x.b.scene, x))) return; startPoint(o, x); };
     const canAgain = (x) => x.b.scene === 'IPQC' && !!x.last && x.last.status !== 'pending' && x.last.status !== 'active';
     return { q, rows, ptsOf, clickPoint, again, canAgain, ORDER_STATE, POINT_TEXT, POINT_CLS };
   },
@@ -479,7 +482,7 @@ function roleFlow(role) {
     return [
       { key: 'holds', name: '看质量限制', hint: '哪些批次、工单现在不能使用或发运', n: holdsActive().length, unit: '条有效', to: '/ncr?tab=holds' },
       { key: 'check', name: '发货前核对', hint: '输入批次或工单号，查这个动作是否受限', n: 0, unit: '', to: '/ncr?tab=holds&check=1' },
-      { key: 'ship', name: '可发货的工单', hint: '已质量放行，可以入库发货', n: S.orders.filter((o) => o.releasedAt).length, unit: '张已放行', to: '/workbench?f=released' },
+      { key: 'ship', name: '可发货的工单', hint: '已质量放行、还没发货、没有禁止发运的限制', n: S.orders.filter((o) => o.releasedAt && !orderShipped(o) && !orderShipHolds(o).length).length, unit: '张可发货', to: '/workbench?f=released' },
       { key: 'report', name: '查报告', hint: '需要随货的检验报告', n: 0, unit: '', to: '/reports' },
     ];
   }

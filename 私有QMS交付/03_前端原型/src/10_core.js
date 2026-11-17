@@ -81,7 +81,12 @@ function fmtRel(iso) {
   return fmtDate(iso);
 }
 function dateCode(d) { d = d || new Date(); return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()); }
-const daysAgo = (n, hh, mm) => { const d = new Date(); d.setDate(d.getDate() - n); d.setHours(hh == null ? 9 : hh, mm || 0, 0, 0); return d.toISOString(); };
+/** 演示数据的时间：n 天前的 hh:mm。当天还没到的时刻（例如凌晨打开演示时的“今天 08:00”）改成刚才，按时刻先后排在最近二十几分钟内，演示数据里不出现未来的记录 */
+const daysAgo = (n, hh, mm) => {
+  const d = new Date(); d.setDate(d.getDate() - n); d.setHours(hh == null ? 9 : hh, mm || 0, 0, 0);
+  if (n === 0 && d.getTime() > Date.now()) return new Date(Date.now() - (24 * 60 - (d.getHours() * 60 + d.getMinutes())) * 1000).toISOString();
+  return d.toISOString();
+};
 const hoursFromNow = (n) => new Date(Date.now() + n * 3600e3).toISOString();
 const nextRev = (r) => String.fromCharCode((r || 'A').charCodeAt(0) + 1);
 const sum = (arr) => arr.reduce((a, b) => a + b, 0);
