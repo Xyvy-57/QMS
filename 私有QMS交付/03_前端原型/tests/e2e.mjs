@@ -3,7 +3,7 @@
  *   node tests/e2e.mjs [--html qms_pro_qms.html]
  * 覆盖：十进制判定与边界、抽样推荐、三层快照、计数判批（接受但有不良）、缺失≠0、拍照要求、
  *       复检新轮次保留原失败、报告复核独立性、签名绑定内容摘要、管理员无审批权、消息来源白名单、数据持久化、
- *       身份流程条（六种身份各自的步数、每一步可点、检验员在一张检验里点步骤不跳走）、
+ *       首页“我的待办”（六种身份各自的流程步数、每一步可点、待办按钮直达要做的事、顶栏精简）、
  *       生产现场（登记换刀 → 现场看板开首件、让步放行要填批准依据、批次追溯、流转卡二维码，支持时浏览器实扫）。
  */
 import { join, resolve } from 'node:path';
@@ -191,17 +191,17 @@ try {
   const r8 = await page.evaluate(() => { const tips = Array.from(document.querySelectorAll('.guard[data-tip]')); return { n: tips.length, sample: tips.length ? tips[0].getAttribute('data-tip') : '', disabled: tips.every((g) => g.querySelector('button').disabled) }; });
   c.ok('置灰按钮带无权限说明', r8.n > 0 && r8.disabled && /无权限/.test(r8.sample), JSON.stringify(r8));
 
-  console.log('\n[9] 身份流程条：每种身份一条自己的流程，从左到右，每一步都能点');
+  console.log('\n[9] 首页“我的待办”：每种身份一排自己的流程步骤（从左到右，点一步筛出这一步的事），待办一行一个按钮');
   const FLOW = { u1: 6, u2: 6, u3: 7, u4: 6, u5: 4, u6: 3 };
   const BAR = '[aria-label="我的工作流程"] button[data-step]';
   const errs0 = log.errors.length, r9 = {};
   for (const uid of Object.keys(FLOW)) {
     await setUser(page, uid);
-    await gotoRoute(page, '/tasks', 500);
+    await gotoRoute(page, '/workbench', 500);
     const keys = await page.evaluate((sel) => Array.from(document.querySelectorAll(sel)).map((b) => b.getAttribute('data-step')), BAR);
     const bad = [];
     for (const k of keys) {
-      await gotoRoute(page, '/tasks', 400);
+      await gotoRoute(page, '/workbench', 400);
       await page.evaluate((sel, key) => { const b = Array.from(document.querySelectorAll(sel)).find((x) => x.getAttribute('data-step') === key); if (b) b.click(); }, BAR, k);
       await sleep(600);
       const st = await page.evaluate(() => { const m = document.querySelector('main'), t = m ? m.innerText : ''; return { hash: location.hash, broken: t.length < 20 || /页面建设中|不存在或已删除/.test(t) }; });
@@ -212,18 +212,20 @@ try {
   c.ok('流程步数：检验员 6、质量工程师 6、质量负责人 7、生产主管 6、仓库执行人 4、系统管理员 3', Object.keys(FLOW).every((u) => r9[u].n === FLOW[u]), JSON.stringify(r9));
   c.ok('每一步点了都能打开正常页面，且没有脚本错误', Object.keys(FLOW).every((u) => !r9[u].bad.length) && log.errors.length === errs0, JSON.stringify(r9) + ' ' + log.errors.slice(errs0).join(' | '));
 
+  /* 检验员：首页第一条待办的按钮直接把人带到要做的检验；顶栏只剩扫码和身份，不再有流程条、铃铛、新建检验 */
   await setUser(page, 'u1');
-  const mine = await page.evaluate(() => { const t = window.__QMS.S.tasks.find((x) => x.assignee === 'u1' && (x.status === 'pending' || x.status === 'active')); return t ? t.id : ''; });
-  await gotoRoute(page, '/inspect/' + mine, 700);
-  const r9b = await page.evaluate((sel) => {
-    const bar = document.querySelector('[aria-label="我的工作流程"]');
-    const sign = Array.from(document.querySelectorAll(sel)).find((x) => x.getAttribute('data-step') === 'sign');
-    if (sign) sign.click();
-    return { label: bar ? bar.innerText.replace(/\s+/g, ' ').slice(0, 60) : '', clicked: !!sign };
-  }, BAR);
-  await sleep(600);
-  const r9c = await page.evaluate(() => ({ hash: location.hash, modal: /签名提交本轮检验/.test(document.body.innerText) }));
-  c.ok('检验员在一张检验里：流程条显示这张检验的进度，点“签名提交”留在本页并打开签名提交', !!mine && /这张检验的进度/.test(r9b.label) && r9b.clicked && r9c.hash === '#/inspect/' + mine && r9c.modal, JSON.stringify([mine, r9b, r9c]));
+  await gotoRoute(page, '/workbench', 600);
+  const r9b = await page.evaluate(() => {
+    const rows = document.querySelectorAll('main [data-todo]');
+    const head = document.querySelector('header');
+    const btn = rows.length ? rows[0].querySelector('button.btn-primary') : null;
+    const label = btn ? btn.innerText.trim() : '';
+    if (btn) btn.click();
+    return { rows: rows.length, label, flowBar: !!document.querySelector('.sticky [aria-label="我的工作流程"]'), bell: !!document.querySelector('[aria-label="待办通知"]'), newBtn: head ? /新建检验/.test(head.innerText) : null };
+  });
+  await sleep(900);
+  const r9c = await page.evaluate(() => location.hash);
+  c.ok('检验员首页：待办一行一个按钮，点第一条直接进到要做的检验；顶栏没有流程条、铃铛、新建检验', r9b.rows > 0 && /^#\/inspect\//.test(r9c) && !r9b.flowBar && !r9b.bell && r9b.newBtn === false, JSON.stringify([r9b, r9c]));
 
   console.log('\n[10] 生产现场：登记换刀 → 现场看板开首件、让步放行、批次追溯、流转卡二维码（真实点击）');
   await setUser(page, 'u4');
@@ -240,7 +242,8 @@ try {
   c.ok('现场看板：检验员看到 CNC-02“换刀后首件待检”', r10b.row && /换刀后首件待检/.test(r10b.text), JSON.stringify(r10b));
   await page.evaluate(() => { const row = Array.from(document.querySelectorAll('main [data-kind="fai"]')).find((r) => /WO-2611-021/.test(r.innerText) && /CNC-02/.test(r.innerText)); const b = row && row.querySelector('button.btn-sm'); if (b) b.click(); });
   await sleep(900);
-  const r10c = await page.evaluate(() => { const t = window.__QMS.S.tasks[0]; return { hash: location.hash, scene: t.scene, ctx: t.ctx }; });
+  /* ctx 是 Vue 的响应式代理，调试协议按值传回时代理会变成 {}，先转成普通对象 */
+  const r10c = await page.evaluate(() => { const t = window.__QMS.S.tasks[0]; return { hash: location.hash, scene: t.scene, ctx: JSON.parse(JSON.stringify(t.ctx)) }; });
   c.ok('点“开首件”：开出带机台和原因的首件单，进入检验页', r10c.scene === 'FIRST' && r10c.ctx.machine === 'CNC-02' && r10c.ctx.trigger === '换刀' && /^#\/inspect\//.test(r10c.hash), JSON.stringify(r10c));
 
   await setUser(page, 'u3');
@@ -277,7 +280,10 @@ try {
     }
     return out;
   });
-  c.ok('工单流转卡：有二维码' + (r10g.decoded == null ? '（这个浏览器没有 BarcodeDetector，跳过实扫）' : '，浏览器实扫得到工单网址'), r10g.svg && r10g.path > 200 && (r10g.decoded == null || /#\/scan\/WO-2611-064$/.test(r10g.decoded)), JSON.stringify(r10g));
+  /* 用 file:// 打开时没有网址可放，二维码里只有工单号（扫码枪、扫码弹窗照样能认）；用 http 打开时是扫码网址 */
+  const isFile = await page.evaluate(() => location.protocol === 'file:');
+  const want = isFile ? /^WO-2611-064$/ : /#\/scan\/WO-2611-064$/;
+  c.ok('工单流转卡：有二维码' + (r10g.decoded == null ? '（这个浏览器没有 BarcodeDetector，跳过实扫）' : '，浏览器实扫得到' + (isFile ? '工单号' : '工单网址')), r10g.svg && r10g.path > 200 && (r10g.decoded == null || want.test(r10g.decoded)), JSON.stringify(r10g));
   pageErrors = log.errors.slice();
 } finally {
   await browser.close();

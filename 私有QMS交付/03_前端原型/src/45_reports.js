@@ -202,16 +202,14 @@ COMPONENTS['page-report'] = {
   <order-trail v-if="orderOfReport(rep)" :order="orderOfReport(rep)" :stage="rep.content.task.scene"/>
   <next-step v-bind="nextOf('report', rep)"/>
 
-  <div class="flex flex-col 2xl:flex-row gap-5">
-    <aside class="2xl:w-[360px] 2xl:order-2 shrink-0 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-1 gap-4 content-start">
-      <div class="card p-4">
-        <h2 class="section-title mb-3">报告状态</h2>
-        <stepper v-if="inFlow" :steps="['已冻结', '待复核', '已批准']" :current="stepIdx"/>
-        <div v-else class="rounded-xl bg-[#f7f7f9] px-3.5 py-2.5 text-[12px] text-ink-2 leading-relaxed"><ic name="lock" :size="13" class="inline -mt-0.5 mr-1"/>已冻结。本场景策略无需复核：普通合格检验完成即可，不额外增加放行审批。</div>
-        <div v-if="rep.content.result.overall !== 'pass' && rep.state !== 'frozen'" class="text-[11.5px] text-ink-4 mt-3 leading-relaxed">复核批准的是“报告内容如实、依据正确”，不改变“{{ RESULT_CHIP[rep.content.result.overall][0] }}”的技术结论。</div>
-        <div v-if="rep.opinions && rep.opinions.length" class="mt-3 space-y-2"><div v-for="(o,i) in rep.opinions" :key="i" class="rounded-xl bg-amber-50 text-amber-900 px-3 py-2 text-[12px]"><div class="font-medium">{{ userName(o.uid) }} 退回 · {{ fmtTime(o.at) }}</div><div class="mt-0.5">{{ o.text }}</div></div></div>
-      </div>
-      <div class="card p-4">
+  <div v-if="rep.opinions && rep.opinions.length && rep.state === 'frozen'" class="space-y-2"><div v-for="(o,i) in rep.opinions" :key="i" class="rounded-xl bg-amber-50 text-amber-900 px-3.5 py-2.5 text-[12.5px]"><span class="font-medium">{{ userName(o.uid) }} 退回 · {{ fmtTime(o.at) }}：</span>{{ o.text }}</div></div>
+
+  <!-- 报告本身放最前面；签名校验、关联对象、照片收进“详情”，要看再展开 -->
+  <div class="overflow-x-auto pb-2"><div class="print-area"><report-sheet :rep="rep"/></div></div>
+  <details class="card px-5 py-3">
+    <summary class="cursor-pointer list-none select-none text-[13px] font-medium text-ink-2 flex items-center gap-1.5"><ic name="info" :size="14"/>详情：签名校验、关联的检验和标准、现场照片</summary>
+    <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
         <h2 class="section-title mb-3">签名校验</h2>
         <div v-for="s in rep.sigs" :key="s.kind + s.at" class="flex items-start gap-3 py-2 border-b border-black/[0.05] last:border-0">
           <avatar :uid="s.uid" :size="28"/>
@@ -219,9 +217,9 @@ COMPONENTS['page-report'] = {
           <span :class="sigValid(rep, s) ? 'chip-green' : 'chip-red'">{{ sigValid(rep, s) ? '有效' : '已失效' }}</span>
         </div>
         <div v-if="!rep.sigs.length" class="text-xs text-ink-4">尚无签名</div>
-        <p class="text-[11px] text-ink-4 mt-2 leading-relaxed">签名绑定签署时的内容摘要；报告内容一旦变化，旧签名自动显示为失效。电子签名的法律效力要求（是否接入第三方 CA）由企业确认。</p>
+        <p class="text-[11px] text-ink-4 mt-2 leading-relaxed">签名绑定签署时的内容摘要；报告内容一旦变化，旧签名自动显示为失效。</p>
       </div>
-      <div class="card p-4">
+      <div>
         <h2 class="section-title mb-3">关联对象</h2>
         <div class="space-y-2 text-[12.5px]">
           <div class="flex items-center justify-between gap-2"><span class="text-ink-3">检验任务</span><button v-if="task" class="link font-mono" @click="go('/inspect/' + task.id)">{{ task.code }} · 第 {{ rep.content.round.no }} 轮</button><span v-else class="text-ink-4">{{ rep.content.task.code }}</span></div>
@@ -231,14 +229,13 @@ COMPONENTS['page-report'] = {
           <div v-for="n in ncrs" :key="n.id" class="flex items-center justify-between gap-2"><span class="text-ink-3">不合格处置</span><span class="inline-flex items-center gap-1.5"><button class="link font-mono" @click="go('/ncr/' + n.id)">{{ n.code }}</button><st k="ncr" :v="n.status"/></span></div>
         </div>
       </div>
-      <div class="card p-4">
+      <div>
         <h2 class="section-title mb-3">现场照片<span class="ml-1.5 text-xs font-normal text-ink-4">{{ photos.length }} 张</span></h2>
         <photo-strip v-if="photos.length" :photos="photos" readonly size="w-16 h-16"/>
         <div v-else class="text-xs text-ink-4">本轮没有照片</div>
       </div>
-    </aside>
-    <div class="flex-1 min-w-0 overflow-x-auto pb-2"><div class="print-area"><report-sheet :rep="rep"/></div></div>
-  </div>
+    </div>
+  </details>
 
   <modal :open="sign.open" @close="sign.open = false" title="复核签批" :sub="rep.code + ' · 结论：' + RESULT_CHIP[rep.content.result.overall][0]" width="max-w-lg">
     <p class="text-[12.5px] text-ink-2 leading-relaxed mb-3">请确认报告内容如实、检验依据正确。签名将绑定当前内容摘要 <span class="font-mono text-ink-4">{{ rep.hash }}</span>。</p>

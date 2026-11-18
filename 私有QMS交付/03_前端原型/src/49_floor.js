@@ -406,7 +406,7 @@ COMPONENTS['page-traveler'] = {
     <div class="mt-6 flex items-center justify-between gap-4 text-[10.5px] text-zinc-400"><span class="truncate">二维码内容：{{ url }}</span><span class="shrink-0">打印于 {{ printedAt }} · Worlder QMS</span></div>
   </div></div></div>
 </div>
-<empty v-else icon="factory" title="工单不存在"><button class="btn-secondary" @click="go('/workbench')">回到生产主线</button></empty>`,
+<empty v-else icon="factory" title="工单不存在"><button class="btn-secondary" @click="go('/orders')">回到工单</button></empty>`,
 };
 
 /* ---------------- 扫码 ---------------- */

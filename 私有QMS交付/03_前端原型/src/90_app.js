@@ -12,7 +12,7 @@ function switchUser(id) {
 function activeNavPath() {
   const r = UI.route;
   if (r.name === 'inspect' || r.name === 'tasks') return '/tasks';
-  const map = { standard: '/standards', plan: '/plans', report: '/reports', ncr: '/ncr', order: '/workbench', orders: '/workbench', traveler: '/workbench', scan: '/floor' };
+  const map = { standard: '/standards', plan: '/plans', report: '/reports', ncr: '/ncr', order: '/orders', orders: '/orders', traveler: '/orders', scan: '/workbench' };
   return map[r.name] || r.path;
 }
 
@@ -28,7 +28,6 @@ function crumbsOf() {
   if (r.name === 'inspect') { const t = taskOf(id); if (t) out.push({ label: t.code }); }
   if (r.name === 'order' || r.name === 'traveler') { const o = S.orders.find((x) => x.id === id || x.wo === id); if (o) out.push(r.name === 'traveler' ? { label: o.wo, to: '/orders/' + o.id } : { label: o.wo }); if (o && r.name === 'traveler') out.push({ label: '流转卡' }); }
   if (r.name === 'scan') out.push({ label: '扫码 ' + (r.params.code || '') });
-  if (r.name === 'orders') out.push({ label: '工序视图' });
   if (r.name === 'report') { const x = S.reports.find((y) => y.id === id); if (x) out.push({ label: x.code }); }
   if (r.name === 'ncr') { const n = S.ncrs.find((y) => y.id === id); if (n) out.push({ label: n.code }); }
   return out.length ? out : [{ label: 'Worlder QMS' }];
@@ -87,9 +86,8 @@ const App = {
     const crumbs = computed(() => crumbsOf());
     const todos = computed(() => buildTodos());
     const badges = computed(() => ({
-      todo: todos.value.length,
-      mainline: S.orders.map(mainlineOf).filter((m) => m.mine.length && m.state !== 'released').length,
-      floor: floorItems().filter((i) => i.urgent && floorMine(i)).length,
+      /* 首页角标 = 首页待办条数（与首页列表同一口径） */
+      mine: myTodos().length,
       inbox: S.syncInbox.filter((x) => x.status === 'pending').length,
       stdReview: S.standards.filter((s) => s.status === 'review').length,
       planReview: S.plans.filter((p) => p.status === 'review').length,
@@ -215,7 +213,7 @@ const App = {
     </div>
   </aside>
 
-  <div class="transition-[padding] duration-500 ease-apple" :class="UI.sidebar ? 'lg:pl-[248px]' : 'lg:pl-[72px]'" :style="{ '--flow-h': '46px' }">
+  <div class="transition-[padding] duration-500 ease-apple" :class="UI.sidebar ? 'lg:pl-[248px]' : 'lg:pl-[72px]'" :style="{ '--flow-h': '0px' }">
     <!-- 顶栏 -->
     <header class="sticky top-0 z-30 h-14 glass border-b border-black/[0.06] flex items-center gap-2 px-3 sm:px-6">
       <button class="btn-icon lg:hidden" @click="UI.mobileNav = true" aria-label="打开导航"><ic name="menu" :size="18"/></button>
@@ -227,28 +225,8 @@ const App = {
         </template>
       </nav>
       <div class="flex-1"></div>
-      <button v-if="can('task.create')" class="btn-primary hidden sm:inline-flex" @click="UI.newTask = {}"><ic name="plus" :size="15"/>新建检验</button>
-      <button class="hidden md:flex items-center gap-2 h-9 w-48 px-3 rounded-xl bg-black/[0.045] hover:bg-black/[0.07] text-ink-4 text-[13px] transition-colors" @click="UI.palette = true"><ic name="search" :size="15"/>搜索或跳转…<span class="ml-auto flex items-center gap-0.5"><span class="kbd">{{ isMac ? '⌘' : 'Ctrl' }}</span><span class="kbd">K</span></span></button>
-      <button class="btn-icon md:hidden" @click="UI.palette = true" aria-label="搜索"><ic name="search" :size="18"/></button>
-      <button class="btn-icon" @click="UI.scan = true" aria-label="扫码" title="扫码：流转卡二维码、扫码枪"><ic name="scan" :size="18"/></button>
-      <button class="hidden sm:inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11.5px] font-medium ring-1 ring-inset transition-colors" :class="UI.bubble.status === 'handshake' ? 'bg-emerald-50 text-emerald-700 ring-emerald-600/15' : 'bg-white text-ink-3 ring-black/10 hover:bg-black/[0.03]'" @click="go('/bubble')" title="气泡识别服务">
-        <span class="w-1.5 h-1.5 rounded-full" :class="UI.bubble.status === 'handshake' ? 'bg-emerald-500' : 'bg-ink-5'"></span>气泡服务<span v-if="badges.inbox" class="min-w-[16px] h-4 px-1 rounded-full bg-brand-600 text-white text-[10px] font-semibold flex items-center justify-center">{{ badges.inbox }}</span>
-      </button>
-
-      <div class="relative">
-        <button class="btn-icon relative" @click="UI.notif = !UI.notif; UI.roleMenu = false" aria-label="待办通知"><ic name="bell" :size="18"/><span v-if="todos.length" class="absolute top-0.5 right-0.5 min-w-[15px] h-[15px] px-1 rounded-full bg-rose-500 text-white text-[9.5px] font-semibold flex items-center justify-center">{{ todos.length > 9 ? '9+' : todos.length }}</span></button>
-        <transition name="pop"><div v-if="UI.notif" class="absolute right-0 mt-2 w-[340px] max-w-[calc(100vw-24px)] card shadow-pop z-50 overflow-hidden">
-          <div class="px-4 pt-3 pb-2 flex items-center justify-between"><span class="font-semibold">我的待办</span><span class="chip-gray">{{ todos.length }}</span></div>
-          <div class="max-h-[360px] overflow-y-auto px-1.5 pb-1.5">
-            <button v-for="t in todos.slice(0, 8)" :key="t.title + t.to" class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-black/[0.04] text-left" @click="go(t.to)">
-              <span class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" :class="TONE[t.tone]"><ic :name="t.icon" :size="14"/></span>
-              <span class="min-w-0 flex-1"><span class="block text-[12.5px] font-medium truncate">{{ t.title }}</span><span class="block text-[11px] text-ink-4 truncate">{{ t.sub }}</span></span>
-            </button>
-            <div v-if="!todos.length" class="py-8 text-center text-xs text-ink-4">当前身份没有待办</div>
-          </div>
-          <button class="w-full h-10 border-t border-black/[0.06] text-[12.5px] text-brand-600 hover:bg-brand-50/60" @click="go('/workbench')">前往工作台</button>
-        </div></transition>
-      </div>
+      <!-- 顶栏只留两样：扫码（现场最常用）和身份。待办都在首页，搜索在首页和各列表页，⌘K 仍可用 -->
+      <button class="btn-secondary !h-9" @click="UI.scan = true" aria-label="扫码" title="扫流转卡上的二维码，或用扫码枪"><ic name="scan" :size="16"/><span class="hidden sm:inline">扫码</span></button>
 
       <div class="relative">
         <button class="flex items-center gap-2 h-9 pl-1 pr-2 rounded-full hover:bg-black/[0.05] transition-colors" @click="UI.roleMenu = !UI.roleMenu; UI.notif = false" aria-label="切换演示身份">
@@ -269,7 +247,6 @@ const App = {
       </div>
     </header>
     <div v-if="UI.notif || UI.roleMenu" class="fixed inset-0 z-20" @click="UI.notif = false; UI.roleMenu = false"></div>
-    <div v-if="has('role-flow')" class="sticky top-14 z-[25] glass border-b border-black/[0.06]"><role-flow mode="bar"/></div>
 
     <main class="px-4 sm:px-6 lg:px-8 py-6 mx-auto max-w-[1680px]">
       <transition name="page" mode="out-in">

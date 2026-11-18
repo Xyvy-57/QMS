@@ -606,7 +606,6 @@ COMPONENTS['page-standard'] = {
       <template v-if="s.status === 'effective'"><g-btn perm="std.approve" cls="btn-ghost" @click="retire">停用</g-btn><g-btn perm="std.edit" cls="btn-primary" icon="copy" @click="newRev">新建修订</g-btn></template>
     </div>
   </div>
-  <div class="card px-5 py-4"><stepper :steps="['草稿', '待审', '生效', '已停用']" :current="stepIdx"/></div>
   <next-step v-bind="nextOf('std', s)"/>
   <div v-if="s.returnNote && s.status === 'draft'" class="rounded-2xl bg-amber-50 text-amber-800 px-4 py-3 text-[12.5px] flex items-center gap-2"><ic name="info" :size="15"/>审核退回意见：{{ s.returnNote }}</div>
   <div v-if="s.status === 'draft' && s.source === 'bubble'" class="rounded-2xl bg-brand-50 text-brand-800 px-4 py-3 text-[12.5px] flex items-start gap-2 leading-relaxed"><ic name="lock" :size="15" class="mt-0.5"/><span>名义值、公差、单位和气泡号来自气泡软件，在这里只读；需要修改时回到气泡软件修订并重新冻结同步，避免两边各有一套公差。这里维护质量属性：特殊特性等级、检具与方法、是否不可让步。</span></div>
@@ -854,7 +853,6 @@ COMPONENTS['page-plan'] = {
       <template v-if="p.status === 'effective'"><g-btn perm="plan.approve" cls="btn-ghost" @click="retire">停用</g-btn><g-btn perm="plan.edit" cls="btn-secondary" icon="copy" @click="newRev(false)">新建修订</g-btn></template>
     </div>
   </div>
-  <div class="card px-5 py-4"><stepper :steps="['草稿', '待审', '生效', '已停用']" :current="stepIdx"/></div>
   <next-step v-bind="nextOf('plan', p)"/>
   <div v-if="stale" class="rounded-2xl bg-amber-50 text-amber-800 px-4 py-3 text-[12.5px] flex flex-wrap items-center gap-3">
     <ic name="info" :size="15"/><span class="flex-1 min-w-[240px]">零件已有新的生效标准 {{ latest.code }} Rev {{ latest.rev }}，本方案仍引用 Rev {{ std.rev }}。新标准不会自动更换方案引用，由你决定是否采用。</span>

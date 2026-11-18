@@ -458,10 +458,12 @@ const EXT = {
  * 按“要做的事”分组，默认只显示日常用得到的几项，其余收进“更多功能”：
  *   more  —— 默认收起的分组；promote 里的身份例外（例如系统管理员默认看到“系统”）
  *   roles —— 只有这些身份默认显示该组，其它身份的该组也收进“更多功能”
- * 五类检验不再各占一个菜单，在“检验任务”页里用页签切换。 */
+ * 五类检验不再各占一个菜单，在“检验任务”页里用页签切换。
+ * 参照黑湖小工单：日常只有“首页（我的待办）/ 工单 / 检验 / 不合格 / 报告”五个入口，角标只留首页一个（要做的事都在首页）。 */
 const NAV = [
-  { group: '生产主线', items: [{ to: '/workbench', label: '生产主线', icon: 'factory', badge: 'mainline' }, { to: '/floor', label: '现场看板', icon: 'monitor', badge: 'floor' }, { to: '/tasks', label: '检验任务', icon: 'list' }, { to: '/reports', label: '检验报告', icon: 'file', badge: 'review' }, { to: '/ncr', label: '不合格处置', icon: 'alert', badge: 'ncr' }, { to: '/trace', label: '批次追溯', icon: 'trace' }] },
-  { group: '定标准', roles: ['qe', 'ql'], items: [{ to: '/bubble', label: '气泡识别', icon: 'target', badge: 'inbox' }, { to: '/standards', label: '检验标准', icon: 'ruler', badge: 'stdReview' }, { to: '/plans', label: '检验方案', icon: 'clipboard', badge: 'planReview' }] },
+  { group: '', items: [{ to: '/workbench', label: '首页', icon: 'home', badge: 'mine' }, { to: '/orders', label: '工单', icon: 'factory' }, { to: '/tasks', label: '检验', icon: 'list' }, { to: '/ncr', label: '不合格', icon: 'alert' }, { to: '/reports', label: '报告', icon: 'file' }] },
+  { group: '图纸与标准', roles: ['qe', 'ql'], items: [{ to: '/bubble', label: '气泡识别', icon: 'target' }, { to: '/standards', label: '检验标准', icon: 'ruler' }, { to: '/plans', label: '检验方案', icon: 'clipboard' }] },
+  { group: '现场', more: true, items: [{ to: '/floor', label: '现场看板', icon: 'monitor' }, { to: '/trace', label: '批次追溯', icon: 'trace' }] },
   { group: '看数据', roles: ['qe', 'ql', 'pm'], items: [{ to: '/dashboard', label: '数据看板', icon: 'chart' }] },
   { group: '基础资料', more: true, items: [{ to: '/parts', label: '零部件', icon: 'box' }, { to: '/routes', label: '工序路线与模板', icon: 'route' }, { to: '/scenes', label: '检验场景与流程', icon: 'layers' }, { to: '/gauges', label: '检具与检验方法', icon: 'gauge' }, { to: '/report-templates', label: '报告模板', icon: 'layout' }] },
   { group: '系统', more: true, promote: ['admin'], items: [{ to: '/users', label: '用户与角色', icon: 'users' }, { to: '/audit', label: '操作日志', icon: 'history' }, { to: '/settings', label: '集成设置', icon: 'settings' }] },

@@ -425,6 +425,9 @@ COMPONENTS['page-inspect'] = {
 
     /* —— 下一步引导：永远只告诉使用者一件该做的事，点按钮就跳到对应位置 —— */
     const showInfo = ref(false);
+    /* 右上角“更多”：预览报告、设备导入、有缺项时提前提交，收起来不占地方；主按钮只有底部的“下一步” */
+    const moreEl = ref(null);
+    const menu = (fn) => { if (moreEl.value) moreEl.value.open = false; fn(); };
     const nextAct = computed(() => {
       const e = ev.value, r = round.value;
       if (!e || !r || r.status !== 'active') return { kind: 'none', text: '', btn: '', perm: 'task.measure', icon: 'check' };
@@ -490,7 +493,7 @@ COMPONENTS['page-inspect'] = {
     onMounted(() => {
       if (UI.route.query.retest === '1' && t.value && lastRound.value && lastRound.value.status === 'submitted' && can('task.retest')) openRetest();
     });
-    return { t, ridx, round, ev, scene, part, mItems, cItems, cg, isLast, active, editable, tab, tabOpts, mode, cardIdx, cardItem, sel, selItem, statusMap, pv, pvSet, rep, ncrs, ngCids, roundOpts, touch, pick, cardGo, cellCls, cntCls, badgeCls, rowStat, onCellKey, onPaste, photoFor, photoItem, photosOf, addPhotos, removePhoto, photoRows, imp, genDemoImport, parseImport, applyImport, sub, needSign, blockers, missingText, overallKey, cText, cTone, submitLabel, canSubmit, openSubmit, doSubmit, resultLabel, bannerCls, bannerIcon, resultDesc, openNcr, rt, lastRound, nMeasure, openRetest, togglePick, doRetest, pvw, openPreview, pipe, showInfo, nextAct, doNext };
+    return { t, ridx, round, ev, scene, part, mItems, cItems, cg, isLast, active, editable, tab, tabOpts, mode, cardIdx, cardItem, sel, selItem, statusMap, pv, pvSet, rep, ncrs, ngCids, roundOpts, touch, pick, cardGo, cellCls, cntCls, badgeCls, rowStat, onCellKey, onPaste, photoFor, photoItem, photosOf, addPhotos, removePhoto, photoRows, imp, genDemoImport, parseImport, applyImport, sub, needSign, blockers, missingText, overallKey, cText, cTone, submitLabel, canSubmit, openSubmit, doSubmit, resultLabel, bannerCls, bannerIcon, resultDesc, openNcr, rt, lastRound, nMeasure, openRetest, togglePick, doRetest, pvw, openPreview, pipe, showInfo, nextAct, doNext, moreEl, menu };
   },
   template: `
 <div v-if="t && round && ev" class="space-y-4 pb-6">
@@ -501,11 +504,14 @@ COMPONENTS['page-inspect'] = {
       <p class="text-xs text-ink-3 mt-1">{{ part.partNo }} {{ part.name }} · {{ ctxText(t) || '无外部单据（独立运行）' }}<button class="link ml-2 inline-flex items-center gap-0.5" @click="showInfo = !showInfo">{{ showInfo ? '收起' : '检验依据与流程' }}<ic name="chevron-down" :size="12" class="transition-transform duration-300" :class="showInfo ? 'rotate-180' : ''"/></button></p>
     </div>
     <div class="flex flex-wrap gap-2">
-      <template v-if="active && isLast">
-        <button class="btn-ghost" @click="openPreview"><ic name="eye" :size="15"/>预览报告</button>
-        <g-btn v-if="scene.steps.includes('import') && mItems.length" perm="task.measure" cls="btn-secondary" icon="cpu" @click="imp.open = true">设备导入</g-btn>
-        <g-btn perm="task.submit" cls="btn-primary" icon="pen" @click="openSubmit">签名提交</g-btn>
-      </template>
+      <details v-if="active && isLast" ref="moreEl" class="relative">
+        <summary class="btn-ghost list-none cursor-pointer select-none">更多<ic name="chevron-down" :size="13"/></summary>
+        <div class="absolute right-0 mt-1 w-56 card shadow-pop z-30 p-1.5 text-[13px]">
+          <button type="button" class="w-full text-left px-3 py-2 rounded-lg hover:bg-black/[0.04] flex items-center gap-2" @click="menu(openPreview)"><ic name="eye" :size="14"/>预览报告</button>
+          <button v-if="scene.steps.includes('import') && mItems.length && can('task.measure')" type="button" class="w-full text-left px-3 py-2 rounded-lg hover:bg-black/[0.04] flex items-center gap-2" @click="menu(() => { imp.open = true; })"><ic name="cpu" :size="14"/>设备导入</button>
+          <button v-if="can('task.submit') && nextAct.kind !== 'submit'" type="button" class="w-full text-left px-3 py-2 rounded-lg hover:bg-black/[0.04] flex items-center gap-2" @click="menu(openSubmit)"><ic name="pen" :size="14"/>有缺项，现在就提交</button>
+        </div>
+      </details>
       <template v-else>
         <button v-if="rep" class="btn-secondary" @click="go('/reports/' + rep.id)"><ic name="file" :size="15"/>查看报告</button>
         <g-btn v-if="isLast && ngCids.length" perm="ncr.create" cls="btn-secondary" icon="alert" @click="openNcr">登记不合格</g-btn>

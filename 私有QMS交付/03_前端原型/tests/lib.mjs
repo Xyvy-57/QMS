@@ -33,10 +33,15 @@ export async function launch() {
   return puppeteer.launch({ executablePath, headless: true, args: ['--allow-file-access-from-files', '--no-first-run', '--disable-extensions'] });
 }
 
-/** 收集页面错误：console.error、界面错误处理器的输出、未捕获异常。内嵌气泡服务的网络与证书错误属于预期，忽略。 */
+/**
+ * 收集页面错误：console.error、界面错误处理器的输出、未捕获异常。
+ * 内嵌气泡服务的网络与证书错误属于预期，忽略：测试用 file:// 打开页面，也不启动气泡服务（localhost:3080），
+ * 浏览器会报跨域、内嵌被拒（frame-ancestors）、连接失败；产品里这些情况已经有“请用 localhost:5180 打开”的提示。
+ */
 export function collect(page) {
   const errors = [], warnings = [];
-  const ignore = (t) => /223\.106\.198\.62|ERR_CERT|ERR_CONNECTION|ERR_NAME_NOT_RESOLVED|ERR_INTERNET_DISCONNECTED|ERR_BLOCKED_BY_RESPONSE|cdn\.tailwindcss\.com should not be used/.test(t);
+  const ignore = (t) => /223\.106\.198\.62|localhost:3080|127\.0\.0\.1:3080|ERR_CERT|ERR_CONNECTION|ERR_NAME_NOT_RESOLVED|ERR_INTERNET_DISCONNECTED|ERR_BLOCKED_BY_RESPONSE|cdn\.tailwindcss\.com should not be used/.test(t)
+    || /^Failed to load resource: net::ERR_FAILED$/.test(t);
   page.on('console', (m) => {
     const t = m.text();
     if (ignore(t)) return;

@@ -311,7 +311,6 @@ COMPONENTS['page-ncr'] = {
       <g-btn v-if="n.status === 'closed'" perm="ncr.approve" cls="btn-secondary" icon="rotate-ccw" @click="reopen">重开</g-btn>
     </div>
   </div>
-  <div class="card px-5 py-4"><stepper :steps="NCR_FLOW.map(x => x[1])" :current="stepIdx"/></div>
   <order-trail v-if="orderOfNcr(n)" :order="orderOfNcr(n)" :stage="n.taskId && taskOf(n.taskId) ? taskOf(n.taskId).scene : ''"/>
   <next-step v-bind="nextOf('ncr', n)"/>
 

@@ -150,7 +150,7 @@ ok('身份流程步数：检验员 6、质量工程师 6、质量负责人 7、�
 console.log('\n[2] 页面渲染（' + (QUICK ? '快速' : '全部身份') + '）');
 const H2 = (S.lots.find((l) => /-H2$/.test(l.lot)) || {}).lot || '';
 const baseRoutes = [
-  '/workbench', '/workbench?f=active', '/workbench?f=blocked', '/workbench?f=released', '/floor', '/floor?line=车削线', '/trace', '/trace?q=DN-2611-007', '/trace?q=' + encodeURIComponent(H2),
+  '/workbench', '/workbench?step=take', '/orders?f=mine', '/orders?f=blocked', '/orders?f=released', '/floor', '/floor?line=车削线', '/trace', '/trace?q=DN-2611-007', '/trace?q=' + encodeURIComponent(H2),
   '/trace?q=' + encodeURIComponent('恒科五金（示例）'), '/trace?q=WO-2611-064', '/trace?q=NOPE-404', '/scan/WO-2611-021', '/scan/NOPE-404', '/dashboard', '/orders', '/bubble', '/standards', '/plans', '/plans?tab=tpl',
   '/tasks', '/tasks/IQC', '/tasks/FIRST', '/tasks/IPQC', '/tasks/FQC', '/tasks/OQC', '/reports', '/report-templates', '/ncr', '/ncr?tab=holds', '/parts', '/parts?id=p2', '/routes', '/scenes', '/gauges', '/users', '/audit', '/settings', '/rd', '/ext/capa',
 ];
@@ -158,10 +158,10 @@ const objRoutes = () => S.orders.map((o) => '/orders/' + o.id).concat(S.orders.m
   S.tasks.map((t) => '/inspect/' + t.id), S.reports.slice(0, 10).map((r) => '/reports/' + r.id), S.ncrs.map((n) => '/ncr/' + n.id), S.standards.map((s) => '/standards/' + s.id), S.plans.map((p) => '/plans/' + p.id));
 /* 关键页面要渲染出该有的内容，不只是“没报错” */
 const EXPECT = {
-  '/workbench': ['生产主线', '直通率'], '/workbench?f=active': ['WO-2611-064', '交期临近', '等待质量放行'], '/workbench?f=released': ['WO-2611-052'], '/floor': ['现场看板', '待检队列', 'CNC-04', '开班首件待检'], '/trace?q=DN-2611-007': ['往回查', 'WO-2611-052', '恒科五金（示例）'],
+  '/workbench': ['我的工作流程', '件事要做', 'data-todo'], '/orders': ['WO-2611-064', '交期临近', '等待质量放行'], '/orders?f=released': ['WO-2611-052'], '/floor': ['现场看板', '待检队列', 'CNC-04', '开班首件待检'], '/trace?q=DN-2611-007': ['往回查', 'WO-2611-052', '恒科五金（示例）'],
   ['/trace?q=' + encodeURIComponent(H2)]: ['往后查', 'WO-2611-064'], '/trace?q=NOPE-404': ['没有找到'], '/trace': ['发货单 DN-2611-007', '-R1'], '/settings': ['生产现场', '开班首件', 'CNC-04'],
-  '/orders/oh64': ['数量与良率', '98.7%', '数量对得上'], '/orders/oh64/card': ['生产工单流转卡', 'WO-2611-064', 'shape-rendering="crispEdges"', '扫码进入当前检验'], '/orders/oh64?stage=release': ['让步接收 2 件'],
-  ['/orders/' + o11.id + '?stage=FIRST']: ['按机台的首件要求', 'CNC-04', '开班首件'], '/scan/NOPE-404': ['没有找到'],
+  '/orders/oh64': ['直通率', '98.7%', '数量对得上', '切换为'], '/orders/oh64/card': ['生产工单流转卡', 'WO-2611-064', 'shape-rendering="crispEdges"', '扫码进入当前检验'], '/orders/oh64?stage=release': ['让步接收 2 件'],
+  ['/orders/' + o11.id + '?stage=FIRST']: ['CNC-04', '开班首件'], '/scan/NOPE-404': ['没有找到'],
 };
 for (const r of baseRoutes.concat(objRoutes())) await render(r, 'u2', '', EXPECT[r]);
 const others = QUICK ? ['u1', 'u3'] : users.filter((u) => u !== 'u2');
@@ -456,7 +456,7 @@ console.log('\n[5] 审查发现的问题（回归）');
     mkN({ status: 'scoped', batch: 'FG-T-15', qtySuspect: 10, qtyConfirmed: 1, holds: [{ id: nid('ht'), scopeType: '批次', scopeVal: 'FG-T-15', actions: ['ship'], status: 'active', by: 'u2', at: now() }] });
     const ml = F('mainlineOf')(o), after = shipN();
     ok('已放行的成品批次被限制发运：仓库“可发货的工单”不再计入', ml.shipHolds.length === 1 && after === before - 1, before + ' → ' + after);
-    await render('/workbench?f=released', 'u5', '仓库：已放行但禁止发运的工单卡片', ['暂不能发货']); }
+    await render('/orders?f=released', 'u5', '仓库：已放行但禁止发运的工单', ['暂不能发货']); }
   ok('让步批准文件编号不会预填成工单号、报废单号、NCR 编号', F('guessDocNo')({ reason: '工单 WO-2611-064 报废单 SC-2611-21，客户同意（CC-2611-05）', evidence: '' }) === 'CC-2611-05' && F('guessDocNo')({ reason: '见 NCR-2026-0013', evidence: '报废单 SC-2611-21' }) === '');
   { S.settings.scanBase = 'http://192.168.1.20:5180/#/workbench';
     const u = F('scanUrl')('WO-T-X');
@@ -471,7 +471,7 @@ console.log('\n[5] 审查发现的问题（回归）');
 
 /* ---------------- 4. 动作之后再渲染一遍 ---------------- */
 console.log('\n[4] 动作之后的页面');
-for (const u of ['u1', 'u2', 'u3', 'u4', 'u5']) for (const r of ['/workbench', '/workbench?f=released', '/floor', '/trace?q=DN-2611-007', '/orders/' + o21.id + '?stage=FIRST', '/orders/' + o64.id + '?stage=release', '/orders/' + o92.id, '/orders/' + o11.id, '/ncr', '/ncr?tab=holds'].concat(S.ncrs.slice(0, 3).map((n) => '/ncr/' + n.id), newFai ? ['/inspect/' + newFai.id] : [])) await render(r, u);
+for (const u of ['u1', 'u2', 'u3', 'u4', 'u5']) for (const r of ['/workbench', '/orders', '/orders?f=released', '/floor', '/trace?q=DN-2611-007', '/orders/' + o21.id + '?stage=FIRST', '/orders/' + o64.id + '?stage=release', '/orders/' + o92.id, '/orders/' + o11.id, '/ncr', '/ncr?tab=holds'].concat(S.ncrs.slice(0, 3).map((n) => '/ncr/' + n.id), newFai ? ['/inspect/' + newFai.id] : [])) await render(r, u);
 
 await flush();
 console.error = _err;
