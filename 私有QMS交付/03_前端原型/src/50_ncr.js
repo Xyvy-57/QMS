@@ -26,6 +26,24 @@ function ncrRetests(n) {
 }
 function lineState(d) { return d.rejected ? ['已退回', 'chip-gray'] : d.executed ? ['已执行', 'chip-green'] : d.approved ? ['已批准，待执行', 'chip-blue'] : ['建议，待批准', 'chip-amber']; }
 
+function approveDisposition(n, d) {
+  if (!can('ncr.approve') || n.status !== 'disposing' || !ncrLines(n).includes(d) || d.approved) throw new Error('此行当前不可批准');
+  if (d.action === '让步接收' && ncrItems(n).some(it => it.noConcession)) throw new Error('涉及不可让步特性，不能批准让步接收');
+  Object.assign(d, { approved:true, approvedBy:S.me, approvedAt:nowISO() });
+  ncrLog(n, '批准处置：' + d.action + ' ' + d.qty + ' 件');
+}
+function executeDisposition(n, d, evidence) {
+  if (!can('ncr.execute') || n.status !== 'disposing' || !ncrLines(n).includes(d) || !d.approved || d.executed) throw new Error('此行当前不可登记执行');
+  const text = String(evidence || '').trim();
+  if (!text) throw new Error('请填写执行结果与凭据');
+  Object.assign(d, { executed:true, executedBy:S.me, executedAt:nowISO(), evidence:text });
+  ncrLog(n, '登记执行：' + d.action + ' ' + d.qty + ' 件（' + text + '）');
+  if (!ncrRemaining(n) && ncrLines(n).every(line => line.executed)) {
+    n.status = 'verifying';
+    ncrLog(n, '全部处置已执行，进入待验证');
+  }
+}
+
 /* ---------------- 登记不合格（全局弹窗，由 UI.newNcr 打开） ---------------- */
 COMPONENTS['new-ncr-modal'] = {
   setup() {
@@ -244,11 +262,8 @@ COMPONENTS['page-ncr'] = {
     const removeLine = (d) => { const x = n.value; x.disp.splice(x.disp.indexOf(d), 1); ncrLog(x, '撤回处置建议：' + d.action + ' ' + d.qty + ' 件'); };
     const submitMrb = () => { const x = n.value; x.status = 'disposing'; ncrLog(x, '提交 MRB 评审：' + ncrLines(x).map((d) => d.action + ' ' + d.qty).join('，')); toast('已提交 MRB 评审，等待质量负责人逐行批准', 'success'); };
     const approveLine = (d) => {
-      const x = n.value;
-      if (d.action === '让步接收' && noConcession.value.length) { toast('涉及不可让步特性，不能批准让步接收', 'error'); return; }
-      Object.assign(d, { approved: true, approvedBy: S.me, approvedAt: nowISO() });
-      ncrLog(x, '批准处置：' + d.action + ' ' + d.qty + ' 件');
-      if (ncrLines(x).every((l) => l.approved)) toast('全部处置行已批准，等待登记执行结果', 'success');
+      try { approveDisposition(n.value, d); } catch (e) { toast(e.message, 'error'); return; }
+      toast('已批准' + d.action + ' ' + d.qty + ' 件，等待登记执行结果', 'success');
     };
     const rj = reactive({ open: false, id: '', note: '' });
     const openReject = (d) => { Object.assign(rj, { open: true, id: d.id, note: '' }); };
@@ -264,12 +279,9 @@ COMPONENTS['page-ncr'] = {
     const openExec = (d) => { Object.assign(ex, { open: true, id: d.id, evidence: '' }); };
     const saveExec = () => {
       const x = n.value, d = x.disp.find((l) => l.id === ex.id);
-      if (!d || !ex.evidence.trim()) { toast('请填写执行结果与凭据', 'error'); return; }
-      Object.assign(d, { executed: true, executedBy: S.me, executedAt: nowISO(), evidence: ex.evidence.trim() });
-      ncrLog(x, '登记执行：' + d.action + ' ' + d.qty + ' 件（' + ex.evidence.trim() + '）');
+      try { executeDisposition(x, d, ex.evidence); } catch (e) { toast(e.message, 'error'); return; }
       ex.open = false;
-      const ls = ncrLines(x);
-      if (ls.length && ls.every((l) => l.executed) && ncrRemaining(x) === 0) { x.status = 'verifying'; ncrLog(x, '全部处置已执行，进入待验证'); toast('全部处置已执行，等待验证关闭', 'success'); }
+      if (x.status === 'verifying') toast('全部处置已执行，等待验证关闭', 'success');
     };
     const goRetest = () => go('/inspect/' + n.value.taskId + '?retest=1&ncr=' + n.value.id);
 
@@ -293,7 +305,16 @@ COMPONENTS['page-ncr'] = {
     const addPhotos = (urls) => { urls.forEach((u) => n.value.photos.push({ id: 'ph' + nextSeq(), url: u })); };
     const removePhoto = (id) => { const i = n.value.photos.findIndex((p) => p.id === id); if (i >= 0) n.value.photos.splice(i, 1); };
     const retestText = (r) => (r.status === 'active' ? '进行中' : { pass: '符合', fail: '不符合', incomplete: '证据不足' }[r.result.overall]);
-    return { n, task, items, stepIdx, lines, allocated, remaining, retests, hasRework, retestPassed, activeHolds, noConcession, open, sc, openScope, saveScope, hd, openHold, saveHold, rl, openRelease, saveRelease, toggleIn, dp, actionChoices, openDisp, saveDisp, removeLine, submitMrb, approveLine, rj, openReject, saveReject, ex, openExec, saveExec, goRetest, vf, needRetest, closeBlock, openVerify, saveVerify, reopen, addPhotos, removePhoto, retestText, lineState, SEV_CHIP, HOLD_SCOPES, NCR_REWORK };
+    const guide = computed(() => nextOf('ncr', n.value));
+    const actionCue = (target) => guide.value.target === target && can(guide.value.perm);
+    const guideLine = computed(() => n.value ? ncrLines(n.value).find((d) => guide.value.target === 'approve-disposition' ? !d.approved : guide.value.target === 'execute-disposition' && !d.executed) : null);
+    const lineLabel = (id) => { const d = lines.value.find((line) => line.id === id); return d ? d.action + ' ' + d.qty + ' 件' : '处置'; };
+    const guideSteps = ['确认范围', '分配处置', '批准与执行', '验证关闭'];
+    const holdPanel = ref(null);
+    onMounted(() => { if (UI.route.query.show !== 'holds') return;
+      const target = [...(holdPanel.value?.querySelectorAll('[data-hold-id]') || [])].find((el) => el.dataset.holdId === UI.route.query.hold);
+      revealWorkTarget(target || holdPanel.value); });
+    return { n, task, items, stepIdx, lines, allocated, remaining, retests, hasRework, retestPassed, activeHolds, noConcession, open, sc, openScope, saveScope, hd, openHold, saveHold, rl, openRelease, saveRelease, toggleIn, dp, actionChoices, openDisp, saveDisp, removeLine, submitMrb, approveLine, rj, openReject, saveReject, ex, openExec, saveExec, goRetest, vf, needRetest, closeBlock, openVerify, saveVerify, reopen, addPhotos, removePhoto, retestText, lineState, SEV_CHIP, HOLD_SCOPES, NCR_REWORK, guide, actionCue, guideLine, guideSteps, holdPanel, lineLabel };
   },
   template: `
 <div v-if="n" class="space-y-5">
@@ -304,15 +325,18 @@ COMPONENTS['page-ncr'] = {
       <p class="text-[13px] text-ink-2 mt-1">{{ n.title }}</p>
     </div>
     <div class="flex flex-wrap gap-2">
-      <g-btn v-if="n.status === 'registered'" perm="ncr.scope" cls="btn-primary" icon="target" @click="openScope">确认范围</g-btn>
+      <g-btn v-if="n.status === 'registered'" data-work-action="scope-ncr" :data-action-highlight="actionCue('scope-ncr')" perm="ncr.scope" cls="btn-primary" icon="target" @click="openScope">确认范围</g-btn>
       <g-btn v-if="n.status === 'scoped'" perm="ncr.scope" cls="btn-ghost" @click="openScope">调整范围</g-btn>
-      <g-btn v-if="n.status === 'scoped'" perm="ncr.suggest" cls="btn-primary" icon="arrow-right" :when="remaining === 0 && allocated > 0" :why="'处置数量合计须等于确认不合格数量（还差 ' + remaining + ' 件未分配）'" @click="submitMrb">提交 MRB 评审</g-btn>
-      <g-btn v-if="n.status === 'verifying'" perm="ncr.approve" cls="btn-success" icon="shield" :when="!closeBlock" :why="closeBlock" @click="openVerify">验证并关闭</g-btn>
+      <g-btn v-if="n.status === 'scoped'" data-work-action="submit-mrb" :data-action-highlight="actionCue('submit-mrb')" perm="ncr.suggest" cls="btn-primary" icon="arrow-right" :when="remaining === 0 && allocated > 0" :why="'处置数量合计须等于确认不合格数量（还差 ' + remaining + ' 件未分配）'" @click="submitMrb">提交 MRB 评审</g-btn>
+      <g-btn v-if="n.status === 'verifying'" data-work-action="verify-ncr" :data-action-highlight="actionCue('verify-ncr') && !closeBlock" perm="ncr.approve" cls="btn-success" icon="shield" :when="!closeBlock" :why="closeBlock" @click="openVerify">验证并关闭</g-btn>
       <g-btn v-if="n.status === 'closed'" perm="ncr.approve" cls="btn-secondary" icon="rotate-ccw" @click="reopen">重开</g-btn>
     </div>
   </div>
   <order-trail v-if="orderOfNcr(n)" :order="orderOfNcr(n)" :stage="n.taskId && taskOf(n.taskId) ? taskOf(n.taskId).scene : ''"/>
-  <next-step v-bind="nextOf('ncr', n)"/>
+  <ol class="inspect-steps" aria-label="不合格处置进度">
+    <li v-for="(label,i) in guideSteps" :key="label" :data-cue="i < stepIdx ? 'done' : i === stepIdx ? 'action' : 'pending'" :aria-current="i === stepIdx ? 'step' : null"><span class="work-symbol"><ic v-if="i < stepIdx" name="check" :size="15" stroke="2.2"/><span v-else>{{ i + 1 }}</span></span><span><strong>{{ label }}</strong><small>{{ i < stepIdx ? '已完成' : i === stepIdx ? '当前环节' : '未开始' }}</small></span></li>
+  </ol>
+  <next-step v-bind="guide"/>
 
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
     <div class="xl:col-span-2 space-y-5">
@@ -332,30 +356,31 @@ COMPONENTS['page-ncr'] = {
       <div class="card overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 pb-3">
           <div><h2 class="section-title">范围与处置（MRB）</h2><p class="text-xs text-ink-3 mt-0.5">一批可以有多个去向：各处置行数量合计须等于确认不合格数量。处置建议不等于批准。</p></div>
-          <g-btn v-if="n.status === 'scoped'" perm="ncr.suggest" cls="btn-soft btn-sm" icon="plus" :when="remaining > 0" why="确认不合格数量已全部分配" @click="openDisp">添加处置行</g-btn>
+          <g-btn v-if="n.status === 'scoped'" data-work-action="add-disposition" :data-action-highlight="actionCue('add-disposition')" perm="ncr.suggest" cls="btn-soft btn-sm" icon="plus" :when="remaining > 0" why="确认不合格数量已全部分配" @click="openDisp">添加处置行</g-btn>
         </div>
         <div class="grid grid-cols-3 gap-3 px-5 pb-4">
           <div class="rounded-xl bg-[#f7f7f9] px-4 py-3"><div class="text-[11px] text-ink-4">可疑数量</div><div class="text-xl font-semibold tabular mt-0.5">{{ n.qtySuspect || '—' }}</div></div>
           <div class="rounded-xl bg-rose-50 px-4 py-3"><div class="text-[11px] text-rose-700/80">确认不合格</div><div class="text-xl font-semibold tabular mt-0.5 text-rose-700">{{ n.qtyConfirmed || '—' }}</div></div>
           <div class="rounded-xl px-4 py-3" :class="n.qtyConfirmed && remaining === 0 ? 'bg-emerald-50' : 'bg-amber-50'"><div class="text-[11px] text-ink-4">已分配处置 / 待分配</div><div class="text-xl font-semibold tabular mt-0.5">{{ allocated }} <span class="text-[13px] font-normal text-ink-3">/ {{ remaining }}</span></div></div>
         </div>
-        <div class="overflow-x-auto border-t border-black/[0.05]"><table class="tbl">
-          <thead><tr><th>处置方式</th><th>数量</th><th>理由 / 依据</th><th>建议人</th><th>状态</th><th>执行结果</th><th class="text-right">操作</th></tr></thead>
+        <div v-if="lines.length" class="disposition-register"><table class="tbl disp-table" aria-label="逐项处置建议">
+          <thead><tr><th>处置方式</th><th>数量</th><th>理由 / 依据</th><th>建议人</th><th>状态</th><th>执行结果</th><th>操作</th></tr></thead>
           <tbody>
-            <tr v-for="d in lines" :key="d.id" :class="d.rejected ? 'opacity-55' : ''">
-              <td><span class="font-medium">{{ d.action }}</span><span v-if="NCR_REWORK.includes(d.action)" class="chip-gray ml-1.5">需复检</span></td>
-              <td class="tabular font-semibold">{{ d.qty }}</td>
-              <td class="text-[12px] text-ink-2 whitespace-normal min-w-[180px] max-w-[260px]">{{ d.reason }}<div v-if="d.rejected" class="text-rose-600 mt-0.5">退回原因：{{ d.rejectNote }}</div></td>
-              <td class="text-[12px] whitespace-nowrap"><span class="inline-flex items-center gap-1.5"><avatar :uid="d.by" :size="18"/>{{ userName(d.by) }}</span></td>
-              <td class="whitespace-nowrap"><span :class="lineState(d)[1]">{{ lineState(d)[0] }}</span><div v-if="d.approved" class="text-[11px] text-ink-4 mt-0.5">批准：{{ userName(d.approvedBy) }}</div></td>
-              <td class="text-[12px] text-ink-2 whitespace-normal min-w-[140px] max-w-[240px]">{{ d.evidence || '—' }}<div v-if="d.executed" class="text-[11px] text-ink-4">{{ userName(d.executedBy) }}</div></td>
-              <td class="text-right whitespace-nowrap">
-                <template v-if="!d.rejected && open">
-                  <g-btn v-if="n.status === 'scoped' && !d.approved" perm="ncr.suggest" cls="btn-ghost btn-xs" @click="removeLine(d)">撤回</g-btn>
-                  <template v-if="n.status === 'disposing' && !d.approved"><g-btn perm="ncr.approve" cls="btn-ghost btn-xs" @click="openReject(d)">退回</g-btn><g-btn perm="ncr.approve" cls="btn-success btn-xs" icon="check" @click="approveLine(d)">批准</g-btn></template>
-                  <g-btn v-if="n.status === 'disposing' && d.approved && !d.executed" perm="ncr.execute" cls="btn-soft btn-xs" @click="openExec(d)">登记执行</g-btn>
+            <tr v-for="d in lines" :key="d.id" :data-disposition="d.action" :data-approved="d.approved && !d.rejected">
+              <td class="disp-kind"><strong>{{ d.action }}</strong><span v-if="NCR_REWORK.includes(d.action)" class="chip-gray">需复检</span></td>
+              <td class="disp-qty"><b>{{ d.qty }}</b> 件</td>
+              <td class="disp-reason"><span class="disp-label">依据</span>{{ d.reason }}<div v-if="d.rejected" class="text-rose-700 mt-1">退回原因：{{ d.rejectNote }}</div></td>
+              <td class="disp-by"><span class="disp-label">建议人</span><span>{{ userName(d.by) }}</span></td>
+              <td class="disp-status" aria-live="polite"><span :class="lineState(d)[1]"><ic :name="d.rejected ? 'undo' : d.executed || d.approved ? 'check' : 'clock'" :size="13"/>{{ lineState(d)[0] }}</span><small v-if="d.approved">{{ userName(d.approvedBy) }} 批准<template v-if="!d.executed"> · 质量工程师登记执行</template></small></td>
+              <td class="disp-evidence" :data-empty="!d.evidence"><span class="disp-label">执行结果</span>{{ d.evidence || '—' }}<small v-if="d.executed">{{ userName(d.executedBy) }} 登记</small></td>
+              <td class="disp-buttons"><div v-if="!d.rejected && open">
+                <g-btn v-if="n.status === 'scoped' && !d.approved" perm="ncr.suggest" cls="btn-ghost btn-sm" @click="removeLine(d)">撤回建议</g-btn>
+                <template v-if="n.status === 'disposing' && !d.approved">
+                  <g-btn perm="ncr.approve" cls="btn-secondary btn-sm" @click="openReject(d)">退回建议</g-btn>
+                  <g-btn data-work-action="approve-disposition" :data-action-highlight="guideLine?.id === d.id && actionCue('approve-disposition')" perm="ncr.approve" cls="btn-success btn-sm" icon="check" @click="approveLine(d)">批准{{ d.action }} {{ d.qty }} 件</g-btn>
                 </template>
-              </td>
+                <g-btn v-if="n.status === 'disposing' && d.approved && !d.executed && can('ncr.execute')" data-work-action="execute-disposition" :data-action-highlight="guideLine?.id === d.id && actionCue('execute-disposition')" perm="ncr.execute" cls="btn-soft btn-sm" @click="openExec(d)">登记{{ d.action }} {{ d.qty }} 件的执行结果</g-btn>
+              </div></td>
             </tr>
           </tbody>
         </table></div>
@@ -365,7 +390,7 @@ COMPONENTS['page-ncr'] = {
       <div v-if="hasRework || retests.length" class="card p-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div><h2 class="section-title">处置后复检</h2><p class="text-xs text-ink-3 mt-0.5">返工、返修、挑选后的复检进入原检验任务的新轮次；原不符合记录永久保留。</p></div>
-          <g-btn v-if="task && open" perm="task.retest" cls="btn-secondary btn-sm" icon="rotate-ccw" :when="task.rounds[task.rounds.length - 1].status === 'submitted'" why="该任务已有进行中的轮次" @click="goRetest">发起复检</g-btn>
+          <g-btn v-if="task && open" data-work-action="retest-ncr" :data-action-highlight="actionCue('retest-ncr')" perm="task.retest" cls="btn-secondary btn-sm" icon="rotate-ccw" :when="task.rounds[task.rounds.length - 1].status === 'submitted'" why="该任务已有进行中的轮次" @click="goRetest">发起复检</g-btn>
         </div>
         <div v-if="!task" class="mt-3 rounded-xl bg-[#f7f7f9] px-3.5 py-2.5 text-[12px] text-ink-3">本 NCR 为现场发现，没有关联的检验任务；验证时请在验证结论中写明复检或确认方式。</div>
         <div v-for="r in retests" :key="r.id" class="mt-3 flex flex-wrap items-center gap-3 rounded-xl ring-1 ring-black/[0.06] px-3.5 py-2.5 text-[12.5px]">
@@ -377,16 +402,16 @@ COMPONENTS['page-ncr'] = {
     </div>
 
     <div class="space-y-5">
-      <div class="card p-5">
+      <div ref="holdPanel" class="card p-5 quality-holds" data-panel="quality-holds" :data-cue="activeHolds.length ? 'blocked' : null" tabindex="-1">
         <div class="flex items-center justify-between gap-3"><h2 class="section-title">质量限制</h2><g-btn v-if="open" perm="hold.create" cls="btn-soft btn-sm" icon="lock" @click="openHold">建立</g-btn></div>
         <p class="text-xs text-ink-3 mt-1">限制必须写明范围和受限动作；解除一项只影响这一项。NCR 关闭不会自动解除限制。</p>
         <div class="mt-3 space-y-2.5">
-          <div v-for="h in n.holds" :key="h.id" class="rounded-xl ring-1 ring-inset px-3.5 py-3" :class="h.status === 'active' ? 'bg-rose-50/60 ring-rose-600/15' : 'bg-[#f7f7f9] ring-black/[0.05]'">
+          <div v-for="h in n.holds" :key="h.id" :data-hold-id="h.id" tabindex="-1" class="rounded-xl ring-1 ring-inset px-3.5 py-3" :class="h.status === 'active' ? 'bg-rose-50/60 ring-rose-600/15' : 'bg-[#f7f7f9] ring-black/[0.05]'">
             <div class="flex items-center justify-between gap-2"><span class="text-[12.5px]"><span class="chip-gray mr-1.5">{{ h.scopeType }}</span><span class="font-mono font-medium">{{ h.scopeVal }}</span></span><st k="hold" :v="h.status"/></div>
             <div class="flex flex-wrap gap-1 mt-2"><span v-for="a in h.actions" :key="a" :class="h.status === 'active' ? 'chip-red' : 'chip-gray'">禁止{{ HOLD_ACTIONS[a] }}</span></div>
             <div class="text-[11px] text-ink-4 mt-2">{{ userName(h.by) }} 建立于 {{ fmtTime(h.at) }}</div>
             <div v-if="h.status === 'released'" class="text-[11px] text-ink-3 mt-1">{{ userName(h.releasedBy) }} 解除于 {{ fmtTime(h.releasedAt) }}：{{ h.releaseNote }}</div>
-            <div v-if="h.status === 'active'" class="mt-2.5"><g-btn perm="hold.release" cls="btn-secondary btn-xs" @click="openRelease(h)">解除这一项</g-btn></div>
+            <div v-if="h.status === 'active'" class="mt-2.5"><g-btn data-work-action="release-hold" :data-action-highlight="activeHolds[0]?.id === h.id && actionCue('release-hold')" perm="hold.release" cls="btn-secondary btn-xs" icon="lock" @click="openRelease(h)">解除这一项</g-btn></div>
           </div>
           <div v-if="!n.holds.length" class="text-xs text-ink-4 py-2">没有质量限制。同批其它实物不会因为这张 NCR 被自动冻结。</div>
         </div>
@@ -449,12 +474,12 @@ COMPONENTS['page-ncr'] = {
     <template #footer><button class="btn-secondary" @click="dp.open = false">取消</button><button class="btn-primary" @click="saveDisp">添加</button></template>
   </modal>
 
-  <modal :open="rj.open" @close="rj.open = false" title="退回处置建议" sub="该行标记为已退回，NCR 回到“范围确认”，由建议人重新提出" width="max-w-lg">
+  <modal :open="rj.open" @close="rj.open = false" :title="'退回' + lineLabel(rj.id) + '的建议'" sub="该行标记为已退回，NCR 回到“范围确认”，由建议人重新提出" width="max-w-lg">
     <textarea v-model="rj.note" rows="3" class="textarea" placeholder="退回原因"></textarea>
     <template #footer><button class="btn-secondary" @click="rj.open = false">取消</button><button class="btn-primary" :disabled="!rj.note.trim()" @click="saveReject">确认退回</button></template>
   </modal>
 
-  <modal :open="ex.open" @close="ex.open = false" title="登记处置执行结果" sub="批准不等于已执行：这里记录实际执行的结果与凭据" width="max-w-lg">
+  <modal :open="ex.open" @close="ex.open = false" :title="'登记' + lineLabel(ex.id) + '的执行结果'" sub="批准不等于已执行：这里记录实际执行的结果与凭据" width="max-w-lg">
     <textarea v-model="ex.evidence" rows="3" class="textarea" placeholder="例如：30 件已返工，返工记录 RW-2611-03；或 6 件已报废，报废单 SC-2611-12"></textarea>
     <template #footer><button class="btn-secondary" @click="ex.open = false">取消</button><button class="btn-primary" :disabled="!ex.evidence.trim()" @click="saveExec">登记</button></template>
   </modal>

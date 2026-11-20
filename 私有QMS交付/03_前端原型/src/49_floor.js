@@ -577,8 +577,10 @@ COMPONENTS['work-modal'] = {
     const q = computed(() => (o.value ? orderQty(o.value) : null));
     const row = computed(() => (q.value ? q.value.rows.find((r) => r.key === f.op) || null : null));
     /* 班次在每次打开时重新算（弹窗一直挂着，不重新算会停在第一次打开时的班次） */
-    const sh = ref(shiftAt());
-    watch(() => UI.work, (v) => { if (v) { sh.value = shiftAt(); Object.assign(f, workForm(v)); } });
+    const sh = ref(shiftAt()), err = ref('');
+    const boundOrder = computed(() => !!UI.work && !!UI.work.orderId && UI.work.orderId === f.orderId);
+    const boundOp = computed(() => boundOrder.value && !!UI.work.op && UI.work.op === f.op);
+    watch(() => UI.work, (v) => { if (v) { sh.value = shiftAt(); err.value = ''; Object.assign(f, workForm(v)); } });
     /* 事件里直接取选中的值，不依赖 v-model 与 change 事件的先后；换工单、换工序时尽量保留原来选的机台 */
     const onOrder = (e) => { if (e && e.target) f.orderId = e.target.value; const keep = f.machine; Object.assign(f, workForm({ orderId: f.orderId })); f.machine = keepMachine(o.value, f.op, keep); };
     const onOp = (e) => { if (e && e.target) f.op = e.target.value; f.machine = keepMachine(o.value, f.op, f.machine); };
@@ -586,20 +588,22 @@ COMPONENTS['work-modal'] = {
     const hasBad = computed(() => /^\d+$/.test(String(f.bad).trim()) && parseInt(f.bad, 10) > 0);
     const save = () => {
       try {
+        if (!open.value) return;
         if (!o.value) throw new Error('请选择工单');
-        const r = reportWork(o.value, f);
+        const order = o.value, r = reportWork(order, f);
         close();
-        toast('已报工：工序 ' + r.w.op + ' 合格 ' + r.w.good + ' 件' + (r.n ? '；不良 ' + r.w.bad + ' 件已登记 ' + r.n.code + '，等质量确认范围和处置' : ''), 'success');
-      } catch (e) { toast(e.message, 'error'); }
+        showReceipt(order, 'work', r.w);
+      } catch (e) { err.value = e.message; }
     };
-    return { f, open, orders, o, ops, machines, q, row, sh, hasBad, onOrder, onOp, close, save, shiftText };
+    return { f, open, orders, o, ops, machines, q, row, sh, hasBad, onOrder, onOp, close, save, shiftText, boundOrder, boundOp, err };
   },
   template: `
 <modal :open="open" @close="close" title="报工" :sub="shiftText(sh) + '。合格数和不良数分开报；有不良时系统自动登记 NCR，范围和处置由质量确认'" width="max-w-lg">
-  <div class="space-y-4">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div><label class="label">工单</label><select v-model="f.orderId" class="input" @change="onOrder"><option v-for="x in orders" :key="x.id" :value="x.id">{{ x.wo }} · {{ partOf(x.partId).name }}</option></select></div>
-      <div><label class="label">工序</label><select v-model="f.op" class="input" @change="onOp"><option v-for="p in ops" :key="p.no" :value="p.no + ' ' + p.name">{{ p.no }} {{ p.name }}</option></select></div>
+  <div class="space-y-4" data-work-form @input="err = ''">
+    <div v-if="boundOrder && o" class="bound-context" data-work-context><ic name="factory" :size="18"/><div><b>{{ o.wo }}</b> · {{ partOf(o.partId).name }}<span v-if="boundOp">工序 {{ f.op }}</span></div></div>
+    <div v-if="!boundOrder || !boundOp" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div v-if="!boundOrder"><label for="work-order" class="label">工单</label><select id="work-order" v-model="f.orderId" class="input" @change="onOrder"><option v-for="x in orders" :key="x.id" :value="x.id">{{ x.wo }} · {{ partOf(x.partId).name }}</option></select></div>
+      <div v-if="!boundOp"><label for="work-op" class="label">工序</label><select id="work-op" v-model="f.op" class="input" @change="onOp"><option v-for="p in ops" :key="p.no" :value="p.no + ' ' + p.name">{{ p.no }} {{ p.name }}</option></select></div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <div><label class="label">机台</label><select v-if="machines.length" v-model="f.machine" class="input"><option v-for="m in machines" :key="m.code" :value="m.code">{{ m.code }} · {{ m.name }}</option></select><input v-else v-model="f.machine" class="input" placeholder="工作中心（可空）"></div>
@@ -607,13 +611,14 @@ COMPONENTS['work-modal'] = {
       <div v-else-if="q"><label class="label">投产</label><div class="h-10 flex items-center text-[13px] text-ink-2">{{ q.input }} 件<span v-if="row" class="text-ink-4 ml-2">本工序已报 {{ row.processed }} 件</span></div></div>
     </div>
     <div class="grid grid-cols-2 gap-3">
-      <div><label class="label">合格数（件）</label><input v-model.trim="f.good" class="input !text-[16px] font-semibold" inputmode="numeric" placeholder="0"></div>
-      <div><label class="label">不良数（件）</label><input v-model.trim="f.bad" class="input !text-[16px] font-semibold" inputmode="numeric" placeholder="0"></div>
+      <div><label for="work-good" class="label">合格数（件）</label><input id="work-good" data-work-good v-model.trim="f.good" class="input !text-[16px] font-semibold" inputmode="numeric" placeholder="0"></div>
+      <div><label for="work-bad" class="label">不良数（件）</label><input id="work-bad" data-work-bad v-model.trim="f.bad" class="input !text-[16px] font-semibold" inputmode="numeric" placeholder="0"></div>
     </div>
     <p v-if="row && row.badInsp" class="rounded-xl bg-amber-50 text-amber-800 px-3.5 py-2.5 text-[12px] leading-relaxed">本工序检验已经判了不良 {{ row.badInsp }} 件，已从合格数里扣掉。这些件报工时按加工数报进合格，不要再报成不良，否则会重复登记一张不合格单（重复的可以由质量确认为 0 件关闭）。</p>
-    <div v-if="hasBad"><label class="label">不良现象（必填）</label><textarea v-model="f.reason" rows="2" class="textarea" placeholder="例如：外径超上限 0.02；表面划伤"></textarea><p class="text-[11px] text-ink-4 mt-1">提交后自动登记 NCR。不良品先隔离标识，等质量确认范围和处置；返工、报废、让步的数量会回写到工单。</p></div>
+    <div v-if="hasBad"><label for="work-reason" class="label">不良现象（必填）</label><textarea id="work-reason" data-work-reason v-model="f.reason" rows="2" class="textarea" placeholder="例如：外径超上限、表面划伤"></textarea><p class="text-xs text-ink-3 mt-1">提交后自动登记不合格单，交质量人员确认。</p></div>
+    <p v-if="err" class="form-error" role="alert">{{ err }}</p>
   </div>
-  <template #footer><button class="btn-secondary" @click="close">取消</button><g-btn perm="order.work" cls="btn-primary" icon="check" @click="save">报工</g-btn></template>
+  <template #footer><button class="btn-secondary" @click="close">取消</button><g-btn data-work-submit perm="order.work" cls="btn-primary" icon="check" @click="save">确认报工</g-btn></template>
 </modal>`,
 };
 
@@ -628,7 +633,9 @@ COMPONENTS['setup-modal'] = {
     const op = computed(() => fops.value.find((x) => opKeyOf(x) === f.op) || null);
     const machines = computed(() => machinesForOp(op.value));
     const reqs = computed(() => (o.value ? faiReqs(o.value).filter((r) => r.key === f.op) : []));
-    watch(() => UI.setup, (v) => { if (v) Object.assign(f, setupForm(v)); });
+    const err = ref('');
+    const boundOrder = computed(() => !!UI.setup && !!UI.setup.orderId && UI.setup.orderId === f.orderId);
+    watch(() => UI.setup, (v) => { if (v) { err.value = ''; Object.assign(f, setupForm(v)); } });
     /* 换工单、换工序时保留原来选的机台（例如从机台卡片打开、换型到另一张工单），这道工序用不了才换成实际在做的或默认机台 */
     const onOrder = (e) => { if (e && e.target) f.orderId = e.target.value; const t = f.trigger, note = f.note, keep = f.machine; Object.assign(f, setupForm({ orderId: f.orderId, trigger: t })); f.note = note; f.machine = keepMachine(o.value, f.op, keep); };
     const onOp = (e) => { if (e && e.target) f.op = e.target.value; f.machine = keepMachine(o.value, f.op, f.machine); };
@@ -637,18 +644,20 @@ COMPONENTS['setup-modal'] = {
     const save = () => {
       try {
         if (!o.value) throw new Error('请选择工单');
-        const e = addSetup(o.value, f);
+        if (!open.value) return;
+        const order = o.value, e = addSetup(order, f);
         close();
-        toast(e.trigger === '下机' ? e.machine + ' 已下机' : '已登记 ' + e.machine + ' ' + e.trigger + '：检验员在现场看板上会看到“' + (FAI_LABEL[e.trigger] || '首件') + '待检”', 'success');
-      } catch (err) { toast(err.message, 'error'); }
+        showReceipt(order, 'setup', e);
+      } catch (e) { err.value = e.message; }
     };
-    return { f, open, orders, o, fops, machines, reqs, trigHint, onOrder, onOp, close, save, FAI_TRIGGERS, faiLabel };
+    return { f, open, orders, o, fops, machines, reqs, trigHint, onOrder, onOp, close, save, FAI_TRIGGERS, faiLabel, boundOrder, err };
   },
   template: `
-<modal :open="open" @close="close" title="登记首件触发" sub="开班、换型、换刀、修机后都要重新做首件。登记后这台机台的首件要求重新打开，检验员在现场看板上马上能看到" width="max-w-lg">
-  <div class="space-y-4">
+<modal :open="open" @close="close" title="登记换型 / 换刀" width="max-w-lg">
+  <div class="space-y-4" @input="err = ''">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div><label class="label">工单</label><select v-model="f.orderId" class="input" @change="onOrder"><option v-for="x in orders" :key="x.id" :value="x.id">{{ x.wo }} · {{ partOf(x.partId).name }}</option></select></div>
+      <div v-if="boundOrder && o" class="bound-context"><ic name="factory" :size="16"/><div><b>{{ o.wo }}</b><span>{{ partOf(o.partId).name }}</span></div></div>
+      <div v-else><label for="setup-order" class="label">工单</label><select id="setup-order" v-model="f.orderId" class="input" @change="onOrder"><option v-for="x in orders" :key="x.id" :value="x.id">{{ x.wo }} · {{ partOf(x.partId).name }}</option></select></div>
       <div><label class="label">工序（有首件检验点的）</label><select v-model="f.op" class="input" @change="onOp"><option v-for="p in fops" :key="p.no" :value="p.no + ' ' + p.name">{{ p.no }} {{ p.name }}</option></select></div>
     </div>
     <div><label class="label">机台</label><select v-if="machines.length" v-model="f.machine" class="input"><option v-for="m in machines" :key="m.code" :value="m.code">{{ m.code }} · {{ m.name }}</option></select><input v-else v-model="f.machine" class="input" placeholder="机台编号"></div>
@@ -661,7 +670,8 @@ COMPONENTS['setup-modal'] = {
     </div>
     <div><label class="label">备注（可空）</label><input v-model="f.note" class="input" placeholder="例如：T03 外圆刀片磨损更换"></div>
     <div v-if="reqs.length" class="rounded-xl bg-[#f7f7f9] px-3.5 py-2.5 text-[12px] text-ink-3 space-y-0.5"><div class="font-medium text-ink-2">这道工序现在的首件要求</div><div v-for="r in reqs" :key="r.machine">{{ r.machine || '默认机台' }} · {{ faiLabel(r) }} · {{ r.task ? r.task.code + ' ' + STATUS.task[r.task.status][0] : '还没做' }}</div></div>
+    <p v-if="err" class="form-error" role="alert">{{ err }}</p>
   </div>
-  <template #footer><button class="btn-secondary" @click="close">取消</button><g-btn perm="order.setup" cls="btn-primary" icon="check" @click="save">登记</g-btn></template>
+  <template #footer><button class="btn-secondary" @click="close">取消</button><g-btn data-setup-submit perm="order.setup" cls="btn-primary" icon="check" @click="save">确认登记</g-btn></template>
 </modal>`,
 };

@@ -32,6 +32,7 @@ const MACHINES_DEMO = [
 const CONCESSION_BASIS = ['客户书面批准', '技术评审批准'];
 
 /* ---------------- 班次 ---------------- */
+const shopMinute = ref(Date.now());
 function shiftList() { return S.settings && Array.isArray(S.settings.shifts) && S.settings.shifts.length ? S.settings.shifts : SHIFTS_DEFAULT; }
 function hmToMin(s) { const m = /^(\d{1,2}):(\d{2})$/.exec(String(s || '').trim()); return m ? Math.min(23, +m[1]) * 60 + Math.min(59, +m[2]) : 0; }
 function fmtHM(d) { const x = d instanceof Date ? d : new Date(d); return pad2(x.getHours()) + ':' + pad2(x.getMinutes()); }
@@ -159,6 +160,51 @@ function orderQty(o) {
   const rty = withData.length ? withData.reduce((a, r) => a * r.fpy, 1) : null;
   const balanced = input > 0 && stocked > 0 && wip === 0 && pending === 0;
   return { rows, input, plan: o.qty || 0, defects, rework, sorted, scrap, concession, returned, pending, stocked, wip, rty, balanced, reported: work.length > 0, fqcKey: fqcRow ? fqcRow.key : '' };
+}
+/** 已交检按任务计，复检轮次不重复占件。工单号优先，无工单号的历史任务只按唯一批次归属。 */
+function orderLotFacts(order, scene, op, ledger = orderQty(order)) {
+  const tasks = S.tasks.filter(t => t.scene === scene && t.partId === order.partId && orderOfTask(t)?.id === order.id
+    && (scene === 'OQC' || !op || !t.ctx.op || t.ctx.op === op));
+  const assigned = sum(tasks.map(t => t.lot || 0));
+  if (scene === 'OQC') return { tasks, assigned, total: ledger.stocked, remaining: Math.max(0, ledger.stocked - assigned), sources: [] };
+
+  const works = liveWork(order).filter(w => w.op === (op || ledger.fqcKey)).sort((a,b) => a.at.localeCompare(b.at));
+  const linked = new Map(works.map(w => [w.id, 0]));
+  let unlinked = 0;
+  for (const task of tasks) {
+    const id = task.ctx.workId;
+    if (linked.has(id)) linked.set(id, linked.get(id) + task.lot);
+    else unlinked += task.lot || 0;
+  }
+  // 老单或先检后报的单没有报工编号，按时间从最早的报工余额抵扣。
+  const sources = works.map(work => {
+    const available = Math.max(0, work.good - linked.get(work.id));
+    const used = Math.min(available, unlinked);
+    unlinked -= used;
+    return { work, remaining: available - used };
+  }).reverse();
+  const total = sum(works.map(w => w.good));
+  return { tasks, assigned, total, remaining: Math.max(0, total - assigned), sources };
+}
+function outputBatch(order) {
+  if (order.outLot) return order.outLot;
+  const batches = new Set(S.tasks.filter(t => t.scene === 'FQC' && t.partId === order.partId && t.ctx.wo === order.wo && t.ctx.batch).map(t => t.ctx.batch));
+  return batches.size === 1 ? [...batches][0] : '';
+}
+function orderLotIssue(order, scene, facts, ctx, rawQty) {
+  if (order.releasedAt) return { field: 'order', message: '这张工单已放行。' };
+  if (scene === 'OQC' && !facts.remaining) return { field: 'order', message: facts.total ? '入库合格件数已全部安排出货交检。' : '本工单还没有入库合格数，请先核对终检报工。' };
+  const source = ctx.workId ? facts.sources.find(s => s.work.id === ctx.workId) : null;
+  if (ctx.workId && !source) return { field: 'source', message: '这笔报工已变动，请重新选择。' };
+  const max = source ? Math.min(source.remaining, facts.remaining) : facts.remaining;
+  if (scene === 'FQC' && facts.sources.length && !max) return { field: 'source', message: '这笔报工已无待送检件数。' };
+  if (!/^[1-9]\d*$/.test(String(rawQty).trim()) || !Number.isSafeInteger(Number(rawQty))) return { field: 'qty', message: '请填写本次交检的实际件数（正整数）。' };
+  if ((scene === 'OQC' || facts.sources.length) && Number(rawQty) > max) return { field: 'qty', message: '本次最多可交检 ' + max + ' 件，请核对数量。' };
+  const batch = String(ctx.batch || '').trim();
+  if (!batch) return { field: 'batch', message: '请填写实物标签上的成品批次。' };
+  const expected = outputBatch(order);
+  if (expected && batch !== expected) return { field: 'batch', message: '请核对成品批次，工单当前批次为 ' + expected + '。' };
+  return null;
 }
 /** 数量平衡不满足时，说清差在哪 */
 function qtyGapText(q) {

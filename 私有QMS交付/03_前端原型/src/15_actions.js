@@ -29,6 +29,14 @@ function createTask(o) {
   const lot = String(o.lot == null ? '' : o.lot).trim();
   if (cg && !/^[1-9]\d*$/.test(lot)) throw new Error('方案含计数抽样组，需填写整数件制的批量');
   if (lot && !/^\d+$/.test(lot)) throw new Error('批量须为整数');
+  if (o.scene === 'FQC' || o.scene === 'OQC') {
+    const ctx = o.ctx || {}, order = orderOfTask({ ctx, partId: plan.partId });
+    if (order) {
+      const facts = orderLotFacts(order, o.scene, ctx.op);
+      const issue = orderLotIssue(order, o.scene, facts, ctx, lot);
+      if (issue) throw new Error(issue.message);
+    }
+  }
   const t = {
     id: 't' + nextSeq(), code: taskCodeFor(o.scene), scene: o.scene, partId: plan.partId, planId: plan.id, lot: lot ? parseInt(lot, 10) : 0,
     ctx: clone(o.ctx || {}), assignee: o.assignee || S.me, due: o.due || hoursFromNow(8), status: 'pending', rounds: [], reportIds: [], createdAt: nowISO(), createdBy: S.me,

@@ -118,7 +118,7 @@ try {
 } catch (e) { fail('Tailwind 编译出错：\n' + (e.stderr ? e.stderr.toString() : e.message)); }
 const twCss = readFileSync(cssOut, 'utf8');
 if (twCss.length < 20000 || !twCss.includes('.btn-primary')) fail('Tailwind 输出异常（只有 ' + twCss.length + ' 字节，没有扫描到源码里的 class）。请检查 tailwind.config.cjs 的 content 设置。');
-const appCss = readFileSync(join(root, 'styles/app.css'), 'utf8');
+const appCss = ['app.css','handoff.css'].map(name => readFileSync(join(root,'styles',name),'utf8')).join('\n');
 
 /* 3. 内联脚本转义：避免 HTML 解析器把脚本里的 </script 或 <!-- 当作标记 */
 const esc = (js) => js.replace(/<\/script/gi, '<\\/script').replace(/<!--/g, '<\\!--');
@@ -131,11 +131,30 @@ for (const ph of ['/*__TAILWIND__*/', '/*__APP_CSS__*/']) if (!head.includes(ph)
 head = head.replace('/*__TAILWIND__*/', () => twCss).replace('/*__APP_CSS__*/', () => appCss);
 const hash = createHash('sha256').update(appJs).digest('hex').slice(0, 12);
 const stamp = new Date().toISOString();
+// 单文件版内置导览实拍；开发入口从 demo/frames 按当前步骤加载。
+const tourMedia = {};
+if (jsFiles.some(f => basename(f) === '82_order_tour.js')) {
+  for (const device of ['web', 'mobile']) {
+    const dir = join(root, 'demo', 'frames', device);
+    for (const frame of readdirSync(dir).filter(f => f.endsWith('.webp')).sort()) {
+      tourMedia[device + '/' + frame] = readFileSync(join(dir, frame)).toString('base64');
+    }
+  }
+}
 const html = head +
+  '\n<script type="application/json" id="order-tour-media">' + JSON.stringify(tourMedia) + '</script>' +
   '\n<script>/* Vue 3.4.38 · MIT */\n' + esc(vue) + '\n</script>' +
   '\n<script>/* Chart.js 4.4.1 · MIT */\n' + esc(chart) + '\n</script>' +
   '\n<script>\n/* Worlder QMS 原型 · build ' + stamp + ' · src ' + hash + ' */\n(function () {\n\'use strict\';\n' + esc(appJs) + '\n})();\n</script>\n</body>\n</html>\n';
 writeFileSync(out, html);
+const tourOut = arg('tour-out', '');
+if (tourOut) {
+  const file = resolve(tourOut);
+  mkdirSync(dirname(file), { recursive:true });
+  const autostart = "<script>if (!location.hash && !new URLSearchParams(location.search).has('exercise')) location.replace('#/demo');</script>";
+  writeFileSync(file, html.replace('</head>', autostart + '</head>'));
+  console.log('已生成可单独携带的双端演示 ' + file);
+}
 console.log('已生成 ' + out + '（' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KB，' + jsFiles.length + ' 个源码文件，src ' + hash + '）');
 
 /* 5. 运行时检查（不开浏览器）：二维码单元测试；在 Node 里把每个页面、每种身份渲染一遍，并走一遍生产现场动作。

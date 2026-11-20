@@ -18,6 +18,7 @@ function activeNavPath() {
 
 function crumbsOf() {
   const r = UI.route, a = activeNavPath(), out = [];
+  if (r.name === 'order-tour') return [{ label: '工单操作演示' }];
   let grp = '', item = null;
   NAV.forEach((g) => g.items.forEach((i) => { if (i.to === a) { grp = g.group || ''; item = i; } }));
   if (grp) out.push({ label: grp });
@@ -77,8 +78,9 @@ function onBubbleMessage(e) {
   }
 }
 
-const App = {
+const QmsShell = {
   setup() {
+    let shiftClockTimer;
     const navEl = ref(null);
     const ind = reactive({ top: 0, h: 0, show: false });
     const showLabels = computed(() => UI.sidebar || UI.mobileNav);
@@ -87,7 +89,7 @@ const App = {
     const todos = computed(() => buildTodos());
     const badges = computed(() => ({
       /* 首页角标 = 首页待办条数（与首页列表同一口径） */
-      mine: myTodos().length,
+      mine: deskTodos.value.length,
       inbox: S.syncInbox.filter((x) => x.status === 'pending').length,
       stdReview: S.standards.filter((s) => s.status === 'review').length,
       planReview: S.plans.filter((p) => p.status === 'review').length,
@@ -147,11 +149,13 @@ const App = {
     watch(() => UI.confirm, (v) => { if (v) cf.value = v; });
     const confirmDone = (v) => { const c = UI.confirm; UI.confirm = null; if (c) c.resolve(v); };
     const doReset = async () => {
+      if (practiceCase) { resetDemo(); return; }
       UI.roleMenu = false;
       if (await confirmBox({ title: '重置演示数据？', message: '将清空浏览器中保存的全部演示数据（任务、报告、NCR、照片与签名），恢复为初始示例。', ok: '重置', danger: true })) resetDemo();
     };
 
     onMounted(() => {
+      shiftClockTimer = setInterval(() => { shopMinute.value = Date.now(); }, 60000);
       window.addEventListener('hashchange', applyRoute);
       window.addEventListener('keydown', onKey);
       window.addEventListener('message', onBubbleMessage);
@@ -161,6 +165,7 @@ const App = {
       const boot = document.getElementById('boot');
       if (boot) { boot.style.opacity = '0'; setTimeout(() => boot.remove(), 420); }
     });
+    onBeforeUnmount(() => clearInterval(shiftClockTimer));
     watch([active, () => UI.sidebar, () => UI.extOpen, () => UI.moreOpen, () => UI.mobileNav, () => S.me], () => nextTick(measure), { flush: 'post' });
     watch(crumbs, (c) => { document.title = c[c.length - 1].label + ' · Worlder QMS'; }, { immediate: true });
 
@@ -174,15 +179,16 @@ const App = {
     return { navEl, ind, showLabels, active, crumbs, todos, badges, badgeOf, navGroups, pq, pIdx, pInput, pItems, runItem, onPaletteKey, cf, confirmDone, doReset, pageComp, pageOk, pageKey, has, isMac, toastIcon, toastTone, switchUser, NAV, TONE };
   },
   template: `
-<div class="min-h-screen">
+<page-order-tour v-if="UI.route.name === 'order-tour'"/>
+<div v-else class="min-h-screen">
   <transition name="fade"><div v-if="UI.mobileNav" class="fixed inset-0 z-40 bg-black/30 lg:hidden" @click="UI.mobileNav = false"></div></transition>
 
   <!-- 侧栏 -->
   <aside class="fixed inset-y-0 left-0 z-50 flex flex-col glass border-r border-black/[0.06] transition-[width,transform] duration-500 ease-apple" :class="[showLabels ? 'w-[248px]' : 'w-[72px]', UI.mobileNav ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
-    <div class="h-14 flex items-center gap-2.5 px-5 shrink-0 cursor-pointer" @click="go('/workbench')">
-      <span class="w-8 h-8 rounded-[10px] flex items-center justify-center text-white font-bold text-[15px] shrink-0 shadow-[0_2px_8px_rgba(31,99,224,.35)]" style="background:linear-gradient(135deg,#3478f6,#1a4fb8)">W</span>
-      <div v-if="showLabels" class="min-w-0 leading-tight"><div class="font-semibold tracking-tight text-[15px]">Worlder QMS</div><div class="text-[10.5px] text-ink-4 truncate">私有化质量管理 · 首期原型</div></div>
-    </div>
+    <a class="h-14 flex items-center gap-2.5 px-5 shrink-0" href="#/workbench" aria-label="Worlder QMS 首页">
+      <span class="shop-logo">W</span>
+      <div v-if="showLabels" class="min-w-0 leading-tight"><div class="font-semibold text-[15px]">Worlder QMS</div><div class="text-[11px] text-ink-3 truncate">生产质量管理</div></div>
+    </a>
     <nav ref="navEl" class="relative flex-1 overflow-y-auto overflow-x-hidden px-3 pb-4">
       <span class="absolute left-3 right-3 rounded-xl bg-white shadow-soft ring-1 ring-black/[0.05] transition-all duration-500 ease-apple pointer-events-none" :style="{ top: ind.top + 'px', height: ind.h + 'px', opacity: ind.show ? 1 : 0 }"></span>
       <template v-for="g in navGroups" :key="g.key">
@@ -197,11 +203,11 @@ const App = {
           <span v-else class="w-full h-px bg-black/[0.07]"></span>
         </div>
         <template v-if="!g.toggle && (!g.ext || UI.extOpen)">
-          <button v-for="i in g.items" :key="i.to" :data-nav="i.to" :title="showLabels ? '' : i.label" @click="go(i.to)" class="relative z-[1] w-full flex items-center gap-2.5 h-9 rounded-xl px-2.5 text-[13px] transition-colors duration-200" :class="[active === i.to ? 'text-brand-700 font-semibold' : 'text-ink-2 hover:bg-black/[0.04]', g.ext ? 'opacity-80' : '']">
+          <button v-for="i in g.items" :key="i.to" :data-nav="i.to" :aria-current="active === i.to ? 'page' : null" :aria-label="i.label" :title="showLabels ? '' : i.label" @click="go(i.to); UI.mobileNav = false" class="relative z-[1] w-full flex items-center gap-2.5 h-9 rounded-xl px-2.5 text-[13px] transition-colors duration-200" :class="[active === i.to ? 'shop-nav-active font-semibold' : 'text-ink-2 hover:bg-black/[0.04]', g.ext ? 'opacity-80' : '']">
             <ic :name="i.icon" :size="17"/>
             <span v-if="showLabels" class="flex-1 text-left truncate">{{ i.label }}</span>
             <span v-if="showLabels && i.tag" class="text-[10px] text-ink-4 font-mono">{{ i.tag }}</span>
-            <span v-if="badgeOf(i) && showLabels" class="min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-white text-[10px] font-semibold flex items-center justify-center tabular">{{ badgeOf(i) }}</span>
+            <span v-if="badgeOf(i) && showLabels" class="shop-nav-count">{{ badgeOf(i) }}</span>
             <span v-if="badgeOf(i) && !showLabels" class="absolute top-1.5 right-2.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
           </button>
         </template>
@@ -242,13 +248,14 @@ const App = {
             <ic v-if="u.id === S.me" name="check" :size="15" class="text-brand-600"/>
           </button>
           <div class="h-px bg-black/[0.06] my-1.5"></div>
-          <button class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-left text-[12.5px] text-ink-3 hover:bg-black/[0.04]" @click="doReset"><ic name="rotate-ccw" :size="14"/>重置演示数据</button>
+          <button class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-left text-[12.5px] text-ink-3 hover:bg-black/[0.04]" @click="doReset"><ic name="rotate-ccw" :size="14"/>{{ practiceCase ? '重做本项练习' : '重置演示数据' }}</button>
         </div></transition>
       </div>
     </header>
     <div v-if="UI.notif || UI.roleMenu" class="fixed inset-0 z-20" @click="UI.notif = false; UI.roleMenu = false"></div>
 
     <main class="px-4 sm:px-6 lg:px-8 py-6 mx-auto max-w-[1680px]">
+      <tour-practice-bar v-if="practiceCase"/>
       <transition name="page" mode="out-in">
         <component v-if="pageOk" :is="pageComp" :key="pageKey"/>
         <empty v-else :key="'missing' + pageKey" icon="wrench" title="页面建设中" :desc="'路由 ' + UI.route.path + ' 对应的页面尚未注册'"/>
@@ -257,6 +264,7 @@ const App = {
   </div>
 
   <!-- 全局：新建检验任务 / 登记不合格 -->
+  <order-lot-modal v-if="UI.orderLot"/>
   <component v-if="has('new-inspect-wizard')" :is="'new-inspect-wizard'"/>
   <component v-if="has('new-task-drawer')" :is="'new-task-drawer'"/>
   <component v-if="has('new-ncr-modal')" :is="'new-ncr-modal'"/>
@@ -298,9 +306,9 @@ const App = {
   </div></transition></teleport>
 
   <!-- 轻提示 -->
-  <teleport to="body"><div class="fixed z-[90] bottom-5 right-5 left-5 sm:left-auto flex flex-col items-end gap-2 pointer-events-none">
+  <teleport to="body"><div aria-live="polite" aria-atomic="false" class="shop-toasts fixed z-[90] bottom-5 right-5 left-5 sm:left-auto flex flex-col items-end gap-2 pointer-events-none">
     <transition-group name="toast">
-      <div v-for="t in UI.toasts" :key="t.id" class="pointer-events-auto max-w-sm flex items-start gap-2.5 pl-3 pr-4 py-2.5 rounded-2xl glass-dark text-white shadow-pop text-[13px] leading-snug">
+      <div v-for="t in UI.toasts" :key="t.id" class="max-w-sm flex items-start gap-2.5 pl-3 pr-4 py-2.5 rounded-lg glass-dark text-white shadow-pop text-[13px] leading-snug">
         <span class="mt-px w-5 h-5 rounded-full flex items-center justify-center shrink-0" :class="toastTone[t.type]"><ic :name="toastIcon[t.type]" :size="12" stroke="2.6"/></span><span>{{ t.msg }}</span>
       </div>
     </transition-group>
@@ -309,11 +317,12 @@ const App = {
 };
 
 /* ---------------- 启动 ---------------- */
+const App = liveHandoff ? COMPONENTS['handoff-workshop'] : mobilePracticeHost ? COMPONENTS['tour-phone-practice'] : QmsShell;
 const app = createApp(App);
 Object.keys(COMPONENTS).forEach((n) => app.component(n, COMPONENTS[n]));
 /* 模板中可直接使用的全局对象与函数（运行时编译的模板只能访问这里登记的名称与 setup 返回值） */
 Object.assign(app.config.globalProperties, {
-  S, UI, go, can, denyTip, toast, who: () => me.value,
+  S, UI, practiceCase, go, can, denyTip, toast, who: () => me.value,
   ROLES, PERMS, STATUS, SCENE_META, STEP_LIB, STEP_ORDER, PHOTO_POLICY, REVIEW_POLICY, CTX_FIELDS, HOLD_ACTIONS, DISPOSITIONS, NCR_FLOW, EXT, AQL_OPTIONS,
   fmtTime, fmtDate, fmtRel, specText, hashOf, userName, partOf, stdOf, planOf, taskOf, sceneOf, gaugeOf, tplOf, gaugeLabel, effectiveStd, holdsActive,
   ctxText, currentRound, taskProgress, plansFor, ncrsOfTask, sigValid, nextOf, svgOf, stdSvg, orderOfTask, orderOfNcr, orderOfReport,

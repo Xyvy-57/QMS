@@ -579,20 +579,33 @@ function seed() {
 }
 
 /* ---------------- 全局状态（localStorage 持久化） ---------------- */
-const LS_KEY = 'worlder-qms-proto-v1';
+const requestedCase = new URLSearchParams(location.search).get('exercise');
+const liveHandoff = document.querySelector('meta[name="qms-handoff"]') !== null || new URLSearchParams(location.search).get('live') === '1';
+const practiceCase = !liveHandoff && ['measure', 'approve', 'ship'].includes(requestedCase) ? requestedCase : null;
+const practiceParams = new URLSearchParams(location.search);
+const mobilePracticeHost = practiceCase && practiceParams.get('returnView') === 'mobile' && !practiceParams.has('practicePane') && window.matchMedia('(min-width: 721px) and (pointer: fine)').matches;
+const LS_KEY = liveHandoff ? 'worlder-workorder-handoff-v1' : practiceCase ? 'worlder-tour-practice-v1-' + practiceCase : 'worlder-qms-proto-v1';
+function demoStorage() { return liveHandoff || practiceCase ? sessionStorage : localStorage; }
 function loadState() {
-  try { const raw = localStorage.getItem(LS_KEY); if (!raw) return null; const s = JSON.parse(raw); return s && s.v === 1 && Array.isArray(s.tasks) ? s : null; }
+  try { const raw = demoStorage().getItem(LS_KEY); if (!raw) return null; const s = JSON.parse(raw); return s && s.v === 1 && Array.isArray(s.tasks) ? s : null; }
   catch (e) { return null; }
 }
 const S = reactive(loadState() || seed());
 let saveTimer = null, quotaWarned = false;
+function persistDemo() {
+  clearTimeout(saveTimer); saveTimer = null;
+  if (mobilePracticeHost) return true; // 只由内层实际操作页面保存练习进度。
+  try { demoStorage().setItem(LS_KEY, JSON.stringify(S)); return true; }
+  catch (e) { if (!quotaWarned) { quotaWarned = true; toast('本机存储不可用，本次改动仅保留在当前页面。', 'warn'); } return false; }
+}
 watch(() => S, () => {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    try { localStorage.setItem(LS_KEY, JSON.stringify(S)); }
-    catch (e) { if (!quotaWarned) { quotaWarned = true; toast('浏览器存储已满：新增照片只保留在本次会话中（正式系统存入私有对象存储）', 'warn'); } }
-  }, 400);
+  saveTimer = setTimeout(persistDemo, 400);
 }, { deep: true });
+// 离开页面时把刚输入的读数和建单结果一起落盘。
+function flushPendingDemo() { if (saveTimer !== null) persistDemo(); }
+window.addEventListener('pagehide', flushPendingDemo);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushPendingDemo(); });
 /* 升级旧的演示数据：自研气泡识别软件（04_气泡识别软件，node server.mjs）成为默认对接对象；原来的外部地址保留在白名单里，可在“集成设置”切回 */
 if (!S.settings.bubbleV2) {
   if (S.settings.bubbleBase === 'https://223.106.198.62:3080') S.settings.bubbleBase = 'http://localhost:3080';
@@ -603,7 +616,8 @@ if (!S.settings.bubbleV2) {
 }
 if (!S.dwgImages || typeof S.dwgImages !== 'object') S.dwgImages = {};
 if (typeof S.syncSeq !== 'number') S.syncSeq = 0;
-function resetDemo() { clearTimeout(saveTimer); try { localStorage.removeItem(LS_KEY); } catch (e) { /* 忽略 */ } location.hash = '#/workbench'; location.reload(); }
+const INSPECT_POSITION_KEY = 'wqms-inspect-positions-v1' + (practiceCase ? '-' + practiceCase : '');
+function resetDemo() { clearTimeout(saveTimer); saveTimer = null; try { demoStorage().removeItem(INSPECT_POSITION_KEY); demoStorage().removeItem(LS_KEY); } catch (e) { /* 忽略 */ } location.hash = practiceCase ? '#' + TOUR_CASES[practiceCase].path : '#/workbench'; location.reload(); }
 
 /* ---------------- 界面状态 ---------------- */
 const UI = reactive({
@@ -611,13 +625,13 @@ const UI = reactive({
   sidebar: true, mobileNav: false, extOpen: false, moreOpen: false,
   newTaskMode: 'wizard',
   palette: false, toasts: [], confirm: null, lightbox: null, roleMenu: false, notif: false,
-  newTask: null, newNcr: null, newOrder: false, release: null,
+  newTask: null, orderLot: null, newNcr: null, newOrder: false, release: null,
   work: null, setup: null, scan: false, // 报工 / 登记首件触发 / 扫码 弹窗
   flowAct: null, // 顶部流程条在检验页内点了哪一步：{ key, at }，由检验执行页接住并定位
   bubble: { route: 'drawings', status: 'idle', lastMsg: null, reloadKey: 0 },
 });
-try { UI.sidebar = localStorage.getItem('wqms-sidebar') !== 'mini'; } catch (e) { /* 忽略 */ }
-watch(() => UI.sidebar, (v) => { try { localStorage.setItem('wqms-sidebar', v ? 'full' : 'mini'); } catch (e) { /* 忽略 */ } });
+try { UI.sidebar = demoStorage().getItem('wqms-sidebar') !== 'mini'; } catch (e) { /* 忽略 */ }
+watch(() => UI.sidebar, (v) => { try { demoStorage().setItem('wqms-sidebar', v ? 'full' : 'mini'); } catch (e) { /* 忽略 */ } });
 
 let toastSeq = 0;
 function toast(msg, type) {
@@ -653,6 +667,7 @@ function holdsActive() { const out = []; S.ncrs.forEach((n) => n.holds.forEach((
 
 /* ---------------- 路由（hash） ---------------- */
 const ROUTES = [
+  ['/demo', 'order-tour'], ['/demo/:device', 'order-tour'],
   ['/workbench', 'workbench'], ['/dashboard', 'dashboard'], ['/orders', 'orders'], ['/orders/:id', 'order'], ['/orders/:id/card', 'traveler'],
   ['/floor', 'floor'], ['/trace', 'trace'], ['/scan/:code', 'scan'], ['/bubble', 'bubble'], ['/standards', 'standards'], ['/standards/:id', 'standard'], ['/plans', 'plans'], ['/plans/:id', 'plan'],
   ['/tasks', 'tasks'], ['/tasks/:scene', 'tasks'], ['/inspect/:id', 'inspect'], ['/reports', 'reports'], ['/reports/:id', 'report'], ['/report-templates', 'rtpl'],

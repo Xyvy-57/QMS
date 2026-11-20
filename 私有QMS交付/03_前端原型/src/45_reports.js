@@ -193,9 +193,9 @@ COMPONENTS['page-report'] = {
       <button class="btn-secondary" @click="print"><ic name="printer" :size="15"/>打印 / 导出 PDF</button>
       <template v-if="rep.state === 'review'">
         <g-btn perm="report.review" cls="btn-secondary" @click="ret.open = true">退回</g-btn>
-        <g-btn perm="report.review" cls="btn-success" icon="stamp" :when="!selfReview" why="复核人不得为本轮签名人（独立复核）" @click="openSign">复核签批</g-btn>
+        <g-btn data-work-action="approve-report" :data-action-highlight="can('report.review') && !selfReview" perm="report.review" cls="btn-success" icon="stamp" :when="!selfReview" why="复核人不得为本轮签名人（独立复核）" @click="openSign">复核签批</g-btn>
       </template>
-      <g-btn v-if="returned" perm="task.submit" cls="btn-primary" icon="arrow-right" @click="doResubmit">重新提请复核</g-btn>
+      <g-btn v-if="returned" data-work-action="resubmit-report" :data-action-highlight="can('task.submit')" perm="task.submit" cls="btn-primary" icon="arrow-right" @click="doResubmit">重新提请复核</g-btn>
     </div>
   </div>
 

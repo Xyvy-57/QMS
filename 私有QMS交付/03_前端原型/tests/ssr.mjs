@@ -357,6 +357,19 @@ console.log('\n[5] 审查发现的问题（回归）');
   const Q = (o) => F('orderQty')(o);
   const brief = (q) => J({ input: q.input, stocked: q.stocked, scrap: q.scrap, returned: q.returned, concession: q.concession, pending: q.pending, wip: q.wip, defects: q.defects });
 
+  { const shared = 'LOT-SHARED-DISPATCH';
+    const first = mkO('WO-SHARED-A', 'p3', 10, { inLots: [shared] });
+    const second = mkO('WO-SHARED-B', 'p3', 10, { inLots: [shared] });
+    const t = mkT('p3', 'IQC', { wo: second.wo, batch: shared }, 2);
+    const n = mkN({ taskId: t.id, batch: shared });
+    ok('明确的工单号优先于共用物料批次，待办与检验节点不串到第一张工单', F('orderOfTask')(t) === second && F('orderOfNcr')(n) === second && !F('stageTasks')(first, 'IQC', []).includes(t));
+    t.ctx.wo = '';
+    ok('仅有共享批次的事项不猜所属工单；按批次追溯仍能看到两张工单', !F('orderOfTask')(t) && !F('orderOfNcr')(n) && F('traceOf')(shared).orders.length === 2);
+    // 共享批次夹具只验证此契约，不进入后面的生产场景。
+    S.orders.splice(S.orders.indexOf(first), 1); S.orders.splice(S.orders.indexOf(second), 1);
+    S.tasks.splice(S.tasks.indexOf(t), 1); S.ncrs.splice(S.ncrs.indexOf(n), 1);
+  }
+
   /* 数量台账（p3 路线：10 刃具来料 → 20 组装（首件）→ 30 终检（完工）→ 40 出货（出货）） */
   { const o = mkO('WO-T-01', 'p3', 100); wk(o, '20 组装', 100); const w = wk(o, '30 终检', 97, 3);
     const n = mkN({ batch: o.wo, workId: w.id, op: '30 终检', qtySuspect: 3, qtyConfirmed: 3, disp: [ln('让步接收', 3)] }); w.ncrId = n.id;

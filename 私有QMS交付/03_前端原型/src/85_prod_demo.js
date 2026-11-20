@@ -23,10 +23,11 @@ let demoTaskN = 0;
 function demoTask(o) {
   const plan = S.plans.find((p) => p.code === o.plan && p.status === 'effective');
   if (!plan || !plan.scenes.includes(o.scene)) return null;
-  demoTaskN += 1;
   const at = o.at, done = o.done || o.at;
-  const code = TASK_PREFIX[o.scene] + '-' + dateCode(new Date(at)) + '-' + String(900 + demoTaskN);
-  if (S.tasks.some((t) => t.code === code || t.id === 'th' + demoTaskN)) return null;
+  const prefix = TASK_PREFIX[o.scene] + '-' + dateCode(new Date(at)) + '-';
+  let code;
+  do { code = prefix + String(900 + ++demoTaskN); }
+  while (S.tasks.some(t => t.code === code || t.id === 'th' + demoTaskN));
   const t = { id: 'th' + demoTaskN, code, scene: o.scene, partId: plan.partId, planId: plan.id, lot: o.lot || 0, ctx: Object.assign({}, o.ctx), assignee: o.by, due: done, status: 'pending', rounds: [], reportIds: [], createdAt: at, createdBy: o.createdBy || 'u2' };
   t.snap = buildSnapshot(S, plan, o.scene);
   t.snap.frozenAt = at;
@@ -170,9 +171,30 @@ function seedProductionDemo() {
       ],
     });
     work(o, { op: '30 终检', good: 298, at: daysAgo(1, 12) });
-    demoTask({ scene: 'FQC', plan: 'PL-092-OUT', ctx: { wo: o.wo, batch: F1 }, lot: 300, at: daysAgo(1, 11), done: daysAgo(1, 12), by: 'u7' });
-    demoTask({ scene: 'OQC', plan: 'PL-092-OUT', ctx: { customer: '锐驰装备（示例）', shipment: 'DN-2611-010', batch: F1 }, lot: 300, at: daysAgo(0, 8, 30), done: daysAgo(0, 9, 20), by: 'u7' });
+    demoTask({ scene: 'FQC', plan: 'PL-092-OUT', ctx: { wo: o.wo, batch: F1 }, lot: orderQty(o).stocked, at: daysAgo(1, 11), done: daysAgo(1, 12), by: 'u7' });
+    demoTask({ scene: 'OQC', plan: 'PL-092-OUT', ctx: { customer: '锐驰装备（示例）', shipment: 'DN-2611-010', batch: F1 }, lot: orderQty(o).stocked, at: daysAgo(0, 8, 30), done: daysAgo(0, 9, 20), by: 'u7' });
   }
   S.prodV1 = true;
 }
 seedProductionDemo();
+
+// 一进入就能试分批交检的独立样单。已有浏览器只追加这张示例，不重签历史报告。
+function seedSplitLotDemo() {
+  if (S.splitLotDemo || S.orders.some(o => o.id === 'odemo72' || o.wo === 'WO-DEMO-072')) return;
+  if (!['PL-092-IQC', 'PL-092-FAI', 'PL-092-OUT'].every(code => S.plans.some(p => p.code === code && p.status === 'effective'))) return;
+  const wo = 'WO-DEMO-072', batch = 'FG-DEMO-072', material = 'MAT-DEMO-072';
+  const customer = partOf('p3').customer, supplier = '新锐工具（演示）';
+  if (!S.suppliers.includes(supplier)) S.suppliers.push(supplier);
+  const assembly = '20 组装', final = '30 终检';
+  const work = (id, op, hour) => ({ id, op, opNo: op.split(' ')[0], machine: op === assembly ? '装配线 B' : '', at: daysAgo(1, hour), good: 298, bad: 0, by: 'u4', shift: '白班' });
+  S.orders.push({ id: 'odemo72', wo, partId: 'p3', qty: 300, qtyIn: 298, inLots: [material], outLot: batch,
+    due: hoursFromNow(48), createdAt: daysAgo(2, 8), createdBy: 'u4', setups: [], work: [work('wd72a', assembly, 11), work('wd72b', final, 12)] });
+  S.lots.push({ lot: material, item: '刃具坯料（演示）', partId: 'p3', supplier, receipt: 'IR-DEMO-072', qty: 298, receivedAt: daysAgo(2, 8) });
+  const done = (scene, plan, ctx, lot, at) => demoTask({ scene, plan, ctx: { wo, ...ctx }, lot, at, by: 'u7' });
+  done('IQC', 'PL-092-IQC', { supplier, receipt: 'IR-DEMO-072', batch: material }, 298, daysAgo(2, 9));
+  done('FIRST', 'PL-092-FAI', { op: assembly, machine: '装配线 B', trigger: '开工' }, 0, daysAgo(1, 8));
+  done('FQC', 'PL-092-OUT', { op: final, batch, workId: 'wd72b' }, 298, daysAgo(1, 13));
+  done('OQC', 'PL-092-OUT', { op: '40 出货', batch, customer, shipment: 'DN-DEMO-072-A' }, 100, daysAgo(1, 15));
+  S.splitLotDemo = true;
+}
+seedSplitLotDemo();

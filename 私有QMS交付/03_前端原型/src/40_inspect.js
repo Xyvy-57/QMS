@@ -94,7 +94,7 @@ COMPONENTS['new-task-drawer'] = {
         <scene-pipeline :steps="scene.steps" small/>
       </div>
 
-      <div v-if="cg"><label class="label">批量（件，整数）</label><input v-model.trim="f.lot" class="input w-40" inputmode="numeric" placeholder="如 1241">
+      <div v-if="cg || f.scene === 'FQC' || f.scene === 'OQC'"><label class="label">批量（件，整数）</label><input v-model.trim="f.lot" class="input w-40" inputmode="numeric" placeholder="如 1241">
         <p v-if="lotHint" class="text-[11.5px] mt-1.5 leading-relaxed" :class="lotHint.tone">{{ lotHint.text }}</p></div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -203,7 +203,6 @@ COMPONENTS['page-inspect'] = {
     const active = computed(() => !!round.value && round.value.status === 'active');
     const editable = computed(() => active.value && can('task.measure'));
     const tab = ref('M');
-    watch(t, (v) => { if (v) tab.value = v.snap.items.some((i) => i.group === 'M') ? 'M' : 'C'; }, { immediate: true });
     const tabOpts = computed(() => {
       const o = [];
       if (mItems.value.length) o.push({ value: 'M', label: '计量组', count: mItems.value.length });
@@ -212,10 +211,89 @@ COMPONENTS['page-inspect'] = {
       return o;
     });
     const mode = ref(window.innerWidth < 900 ? 'card' : 'grid');
+    const showDrawing = ref(false);
     const cardIdx = ref(0);
     const cardItem = computed(() => mItems.value[Math.min(cardIdx.value, mItems.value.length - 1)] || null);
     const sel = ref(null);
     const selItem = computed(() => (t.value && sel.value ? t.value.snap.items.find((i) => i.cid === sel.value) || null : null));
+    // 只保存界面位置。读数、提交状态和签名仍走检验本身的流程。
+    const resumed = ref('');
+    let lastField = '', lastSample = '';
+    const cursorKey = () => JSON.stringify([S.me, t.value.id]);
+    const cursors = () => {
+      try {
+        const saved = JSON.parse(demoStorage().getItem(INSPECT_POSITION_KEY));
+        return saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+      } catch { return {}; }
+    };
+    function remember(field = '', sample = '') {
+      if (!editable.value || !isLast.value) return;
+      lastField = field;
+      lastSample = sample;
+      const all = cursors();
+      all[cursorKey()] = { roundId: round.value.id, tab: tab.value, mode: mode.value, cid: sel.value, field, sample };
+      try { demoStorage().setItem(INSPECT_POSITION_KEY, JSON.stringify(all)); } catch { /* 本机存储不可用时仍可录数 */ }
+    }
+    function markField(cid, field, sample = '') {
+      if (sel.value !== cid || field !== lastField || sample !== lastSample) resumed.value = '';
+      sel.value = cid;
+      if (field === 'sample') cardIdx.value = mItems.value.findIndex(it => it.cid === cid);
+      remember(field, sample);
+    }
+    function switchGroup(group) {
+      tab.value = group;
+      sel.value = group === 'M' ? cardItem.value?.cid : null;
+      resumed.value = '';
+      remember();
+    }
+    function switchMode(value) {
+      mode.value = value;
+      remember(lastField, lastSample);
+    }
+    function rememberRow(cid) {
+      if (sel.value !== cid) markField(cid, '');
+    }
+    const restorePosition = () => {
+      resumed.value = '';
+      lastField = ''; lastSample = '';
+      sel.value = null; cardIdx.value = 0;
+      tab.value = mItems.value.length ? 'M' : 'C';
+      mode.value = window.innerWidth < 900 ? 'card' : 'grid';
+      if (!editable.value || !isLast.value || UI.route.query.retest === '1') return;
+      const pos = cursors()[cursorKey()];
+      if (!pos || pos.roundId !== round.value.id || !tabOpts.value.some(tab => tab.value === pos.tab)) return;
+      const item = t.value.snap.items.find(it => it.cid === pos.cid);
+      tab.value = pos.tab;
+      if (pos.mode === 'grid' || pos.mode === 'card') mode.value = pos.mode;
+      sel.value = item?.cid || null;
+      if (item?.group === 'M') cardIdx.value = mItems.value.indexOf(item);
+      const sampleIdx = round.value.samples.indexOf(pos.sample);
+      const isMeasure = item?.group === 'M' && tab.value === 'M' && pos.field === 'sample' && sampleIdx >= 0;
+      lastField = pos.field; lastSample = pos.sample;
+      resumed.value = tab.value === 'P' ? '照片' : (item ? '#' + item.no + ' ' + item.name : '计数组') + (isMeasure ? ' · 样本 ' + pos.sample : '');
+      const key = cursorKey(), roundId = round.value.id;
+      nextTick(() => {
+        if (!t.value || cursorKey() !== key || round.value?.id !== roundId || !editable.value) return;
+        let target;
+        if (isMeasure) target = document.querySelector(mode.value === 'card' ? 'input[data-card-cell="' + sampleIdx + '"]' : 'input[data-r="' + cardIdx.value + '"][data-c="' + sampleIdx + '"]');
+        else if (pos.field === 'total') target = document.querySelector('[data-d-units]');
+        else if (item && pos.tab === 'C') {
+          const row = document.getElementById('irow-' + item.cid);
+          target = row?.querySelector(pos.field === 'note' ? '[data-count-note]' : '[data-cnt]');
+        }
+        if (target) revealWorkTarget(target);
+        else if (pos.tab === 'M' && mode.value === 'grid' && item) document.getElementById('irow-' + item.cid)?.scrollIntoView({ block: 'center' });
+      });
+    };
+    watch([() => S.me, () => round.value?.id, editable], restorePosition, { immediate: true });
+    const lotSummary = computed(() => {
+      const task = t.value;
+      if (!task || !['FQC', 'OQC'].includes(task.scene)) return null;
+      const order = orderOfTask(task);
+      if (!order) return null;
+      const ledger = orderQty(order);
+      return { stocked: ledger.stocked, checkQty: task.scene === 'OQC' && ledger.reported && task.lot > ledger.stocked };
+    });
     const statusMap = computed(() => { const m = {}; if (ev.value) Object.keys(ev.value.byCid).forEach((cid) => { m[cid] = ev.value.byCid[cid].status; }); return m; });
     const pv = computed(() => (ev.value && active.value ? photoViolations(t.value, round.value, ev.value) : []));
     const pvSet = computed(() => new Set(pv.value.map((i) => i.cid)));
@@ -230,9 +308,10 @@ COMPONENTS['page-inspect'] = {
       const it = t.value.snap.items.find((i) => i.cid === cid); if (!it) return;
       if (tab.value !== 'P') tab.value = it.group;
       if (it.group === 'M') cardIdx.value = Math.max(0, mItems.value.indexOf(it));
+      resumed.value = ''; remember();
       nextTick(() => { const el = document.getElementById('irow-' + cid); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); });
     };
-    const cardGo = (d) => { cardIdx.value = Math.min(mItems.value.length - 1, Math.max(0, cardIdx.value + d)); if (cardItem.value) sel.value = cardItem.value.cid; };
+    const cardGo = (d) => { const item = mItems.value[cardIdx.value + d]; if (item) pick(item.cid); };
 
     /* —— 录入格：判定着色、键盘导航、Excel 多格粘贴 —— */
     const cellCls = (it, i) => {
@@ -434,22 +513,40 @@ COMPONENTS['page-inspect'] = {
       const m = e.missingCells[0];
       if (m && m.i >= 0) return { kind: 'cell', text: '录入 #' + m.it.no + ' ' + m.it.name + ' 的样本 ' + m.s, btn: '去录入', perm: 'task.measure', icon: 'edit', cid: m.it.cid, i: m.i };
       if (m) return { kind: 'count', text: '登记 #' + m.it.no + ' ' + m.it.name + ' 的不良数（没有不良填 0）', btn: '去登记', perm: 'task.measure', icon: 'edit', cid: m.it.cid };
+      if (e.c?.dInvalid) return { kind: 'count-total', text: e.c.dInvalid, btn: '修正不良数', perm: 'task.measure', icon: 'alert' };
       if (pv.value.length) return { kind: 'photo', text: '给 #' + pv.value[0].no + ' ' + pv.value[0].name + ' 拍照', btn: '去拍照', perm: 'task.measure', icon: 'camera', cid: pv.value[0].cid };
       return { kind: 'submit', text: '数据已录完，检查后签名提交', btn: '签名提交', perm: 'task.submit', icon: 'pen' };
     });
+    const workPhase = computed(() => ['photo', 'submit'].includes(nextAct.value.kind) ? nextAct.value.kind : 'measure');
+    const workSteps = computed(() => {
+      const phase = workPhase.value, e = ev.value;
+      const needsFix = e && (e.c?.dInvalid || e.missingCells.some((c) => c.st === 'invalid'));
+      const list = [{ key:'measure', label:'录入读数', icon:'edit', cue: phase !== 'measure' ? 'done' : needsFix ? 'blocked' : 'action', detail: needsFix ? '有读数需修正' : (e?.filled || 0) + ' / ' + (e?.total || 0) }];
+      if (scene.value.steps.includes('photo')) list.push({ key:'photo', label:'拍照取证', icon:'camera', cue: pv.value.length ? 'wait' : phase === 'submit' && round.value.photos.length ? 'done' : 'pending', detail: pv.value.length ? '待拍 ' + pv.value.length + ' 项' : round.value.photos.length ? '已附 ' + round.value.photos.length + ' 张' : phase === 'submit' ? '无需补拍' : '随检验要求' });
+      list.push({ key:'submit', label:'签名提交', icon:'pen', cue: phase === 'submit' ? 'action' : 'pending', detail: phase === 'submit' ? '可以签名' : '待补齐' });
+      return list;
+    });
+    const isNextField = (cid, i) => {
+      const a = nextAct.value;
+      return editable.value && a.cid === cid && (i == null ? a.kind === 'count' : a.kind === 'cell' && a.i === i);
+    };
     const doNext = () => {
       const a = nextAct.value;
+      if (!can(a.perm)) return;
       if (a.kind === 'cell') {
         const r = mItems.value.findIndex((x) => x.cid === a.cid);
         tab.value = 'M'; sel.value = a.cid; cardIdx.value = Math.max(0, r);
         nextTick(() => {
-          if (mode.value === 'grid') { focusCell(r, a.i); return; }
-          const el = document.querySelector('[data-card-cell="' + a.i + '"]'); if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+          const selector = mode.value === 'grid' ? 'input[data-r="' + r + '"][data-c="' + a.i + '"]' : '[data-card-cell="' + a.i + '"]';
+          revealWorkTarget(document.querySelector(selector), true);
         });
       } else if (a.kind === 'count') {
         tab.value = 'C'; sel.value = a.cid;
-        nextTick(() => { const el = document.querySelector('[data-cnt="' + a.cid + '"]'); if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } });
-      } else if (a.kind === 'photo') { photoFor.value = a.cid; }
+        nextTick(() => revealWorkTarget(document.querySelector('input[data-cnt][data-next-field="true"]'), true));
+      } else if (a.kind === 'count-total') {
+        tab.value = 'C';
+        nextTick(() => revealWorkTarget(document.querySelector('[data-d-units]'), true));
+      } else if (a.kind === 'photo') { sel.value = a.cid; photoFor.value = a.cid; }
       else if (a.kind === 'submit') openSubmit();
     };
     /* 顶部“这张检验的进度”流程条：点某一步时留在本页，定位到对应的操作 */
@@ -493,7 +590,7 @@ COMPONENTS['page-inspect'] = {
     onMounted(() => {
       if (UI.route.query.retest === '1' && t.value && lastRound.value && lastRound.value.status === 'submitted' && can('task.retest')) openRetest();
     });
-    return { t, ridx, round, ev, scene, part, mItems, cItems, cg, isLast, active, editable, tab, tabOpts, mode, cardIdx, cardItem, sel, selItem, statusMap, pv, pvSet, rep, ncrs, ngCids, roundOpts, touch, pick, cardGo, cellCls, cntCls, badgeCls, rowStat, onCellKey, onPaste, photoFor, photoItem, photosOf, addPhotos, removePhoto, photoRows, imp, genDemoImport, parseImport, applyImport, sub, needSign, blockers, missingText, overallKey, cText, cTone, submitLabel, canSubmit, openSubmit, doSubmit, resultLabel, bannerCls, bannerIcon, resultDesc, openNcr, rt, lastRound, nMeasure, openRetest, togglePick, doRetest, pvw, openPreview, pipe, showInfo, nextAct, doNext, moreEl, menu };
+    return { lotSummary, resumed, markField, switchGroup, switchMode, rememberRow, t, ridx, round, ev, scene, part, mItems, cItems, cg, isLast, active, editable, tab, tabOpts, mode, showDrawing, cardIdx, cardItem, sel, selItem, statusMap, pv, pvSet, rep, ncrs, ngCids, roundOpts, touch, pick, cardGo, cellCls, cntCls, badgeCls, rowStat, onCellKey, onPaste, photoFor, photoItem, photosOf, addPhotos, removePhoto, photoRows, imp, genDemoImport, parseImport, applyImport, sub, needSign, blockers, missingText, overallKey, cText, cTone, submitLabel, canSubmit, openSubmit, doSubmit, resultLabel, bannerCls, bannerIcon, resultDesc, openNcr, rt, lastRound, nMeasure, openRetest, togglePick, doRetest, pvw, openPreview, pipe, showInfo, nextAct, workPhase, workSteps, isNextField, doNext, moreEl, menu };
   },
   template: `
 <div v-if="t && round && ev" class="space-y-4 pb-6">
@@ -521,6 +618,13 @@ COMPONENTS['page-inspect'] = {
   </div>
 
   <order-trail v-if="orderOfTask(t)" :order="orderOfTask(t)" :stage="t.scene"/>
+  <div v-if="lotSummary && t.lot" class="inspect-lot-summary" :class="{ 'needs-check': lotSummary.checkQty }"><ic :name="lotSummary.checkQty ? 'alert' : 'clipboard-check'" :size="16"/><b>本批交检 {{ t.lot }} 件</b><span v-if="lotSummary.checkQty">当前工单入库合格 {{ lotSummary.stocked }} 件，请核对批量。</span><span v-else>{{ t.ctx.batch || '成品批次未登记' }}</span></div>
+
+  <ol v-if="active && isLast" class="inspect-steps" aria-label="检验进度">
+    <li v-for="s in workSteps" :key="s.key" :data-inspect-step="s.key" :data-cue="s.cue" :aria-current="workPhase === s.key ? 'step' : null">
+      <span class="work-symbol"><ic :name="s.cue === 'done' ? 'check' : s.cue === 'blocked' ? 'alert' : s.icon" :size="16" stroke="2.2"/></span><span><strong>{{ s.label }}</strong><small>{{ s.detail }}</small></span>
+    </li>
+  </ol>
 
   <div v-show="showInfo" class="card p-5 space-y-4">
     <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-6 gap-y-3">
@@ -564,7 +668,8 @@ COMPONENTS['page-inspect'] = {
   </div>
 
   <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
-    <div class="xl:col-span-5 space-y-3 xl:sticky xl:top-[calc(72px+var(--flow-h))] self-start">
+    <button type="button" class="drawing-toggle" aria-controls="inspection-drawing" :aria-expanded="showDrawing" @click="showDrawing = !showDrawing"><ic name="layers" :size="16"/>{{ showDrawing ? '收起图纸' : '查看图纸' }}<span>{{ t.snap.std.drawingRev ? 'Rev ' + t.snap.std.drawingRev : '' }}</span><ic :name="showDrawing ? 'chevron-up' : 'chevron-down'" :size="14"/></button>
+    <div id="inspection-drawing" class="inspect-drawing xl:col-span-5 space-y-3 xl:sticky xl:top-[calc(72px+var(--flow-h))] self-start" :class="{ 'is-expanded': showDrawing }">
       <div class="card p-3 h-[320px] xl:h-[460px]"><drawing-viewer :svg="stdSvg(t.snap.std.id) || part.svg" :items="t.snap.items" :status="statusMap" :selected="sel" focus-on-select @select="pick"/></div>
       <div class="flex flex-wrap items-center gap-x-4 gap-y-1 px-1 text-[11px] text-ink-4">
         <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>符合</span><span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>不符合</span><span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-white ring-1 ring-zinc-400"></span>待测</span><span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>当前选中</span><span>滚轮缩放 · 拖拽平移 · 点击气泡定位</span>
@@ -582,21 +687,22 @@ COMPONENTS['page-inspect'] = {
 
     <div class="xl:col-span-7 card overflow-hidden">
       <div class="flex flex-wrap items-center justify-between gap-2 px-4 pt-3.5 pb-3 border-b border-black/[0.05]">
-        <seg v-model="tab" :options="tabOpts" size="sm"/>
+        <seg :model-value="tab" @update:model-value="switchGroup" :options="tabOpts" size="sm"/>
         <div class="flex items-center gap-2">
           <span v-if="tab === 'M' && mode === 'grid' && editable" class="text-[11px] text-ink-4 hidden md:inline">Enter / 方向键切换单元格 · 支持从 Excel 多格粘贴</span>
-          <seg v-if="tab === 'M'" v-model="mode" :options="[{ value: 'grid', label: '网格' }, { value: 'card', label: '逐项' }]" size="sm"/>
+          <seg v-if="tab === 'M'" :model-value="mode" @update:model-value="switchMode" :options="[{ value: 'grid', label: '网格' }, { value: 'card', label: '逐项' }]" size="sm"/>
         </div>
       </div>
 
+      <div v-if="resumed" class="resume-place" data-resumed-position role="status"><ic name="history" :size="15"/>已回到上次位置 · {{ resumed }}</div>
       <div v-if="tab === 'M' && mode === 'grid'" class="overflow-auto max-h-[600px]">
         <table class="tbl">
           <thead><tr><th class="left-0 !z-20">气泡</th><th>特性 / 规格</th><th v-for="s in round.samples" :key="s" class="text-center">{{ s }}</th><th>均值 / 极差</th><th>判定</th><th></th></tr></thead>
           <tbody>
-            <tr v-for="(it,r) in mItems" :key="it.cid" :id="'irow-' + it.cid" :class="sel === it.cid ? 'bg-amber-50/60' : ''" @click="sel = it.cid">
+            <tr v-for="(it,r) in mItems" :key="it.cid" :id="'irow-' + it.cid" :class="sel === it.cid ? 'bg-amber-50/60' : ''" @click="rememberRow(it.cid)">
               <td class="sticky left-0 z-[1]" :class="sel === it.cid ? 'bg-amber-50' : 'bg-white'"><span class="balloon-badge" :class="badgeCls(it)">{{ it.no }}</span></td>
               <td class="min-w-[176px]"><div class="font-medium flex items-center gap-1.5">{{ it.name }}<span v-if="it.cls !== '一般'" :class="it.cls === 'CTQ' ? 'chip-red' : 'chip-amber'">{{ it.cls }}</span></div><div class="text-[11px] text-ink-3 font-mono mt-0.5">{{ specText(it) }} {{ it.unit }}</div><div class="text-[10.5px] text-ink-4">{{ gaugeLabel(it.gauge) }}</div></td>
-              <td v-for="(s,i) in round.samples" :key="s" class="!px-1 text-center"><input class="cell" :class="cellCls(it, i)" v-model.trim="round.vals[it.cid][i]" @input="touch" :disabled="!editable" inputmode="decimal" autocomplete="off" :data-r="r" :data-c="i" @keydown="onCellKey($event, r, i)" @paste="onPaste($event, r, i)" @focus="sel = it.cid" :aria-label="'#' + it.no + ' ' + it.name + ' ' + s"></td>
+              <td v-for="(s,i) in round.samples" :key="s" class="!px-1 text-center"><input class="cell" :class="cellCls(it, i)" v-model.trim="round.vals[it.cid][i]" @input="touch" :disabled="!editable" inputmode="decimal" autocomplete="off" :data-r="r" :data-c="i" :data-next-field="isNextField(it.cid,i)" :aria-invalid="ev.byCid[it.cid].cells[i] === 'invalid'" @keydown="onCellKey($event, r, i)" @paste="onPaste($event, r, i)" @focus="markField(it.cid, 'sample', s)" :aria-label="'#' + it.no + ' ' + it.name + ' ' + s"></td>
               <td class="font-mono text-[12px] whitespace-nowrap"><template v-if="rowStat(it)">{{ rowStat(it).mean }}<span class="text-ink-4"> / {{ rowStat(it).range }}</span></template><span v-else class="text-ink-5">—</span></td>
               <td class="whitespace-nowrap"><span v-if="ev.byCid[it.cid].status === 'ok'" class="chip-green"><ic name="check" :size="11" stroke="2.6"/>符合</span><span v-else-if="ev.byCid[it.cid].status === 'ng'" class="chip-red">不符合 {{ ev.byCid[it.cid].ng }}</span><span v-else class="chip-gray">待测 {{ ev.byCid[it.cid].miss }}</span></td>
               <td><button class="btn-icon relative" :class="pvSet.has(it.cid) ? '!text-amber-600 !bg-amber-50' : ''" @click.stop="photoFor = it.cid" :title="pvSet.has(it.cid) ? '该特性需要拍照' : '现场照片'"><ic name="camera" :size="15"/><span v-if="photosOf(it.cid).length" class="absolute -top-0.5 -right-0.5 min-w-[14px] h-[14px] px-0.5 rounded-full bg-brand-600 text-white text-[9px] font-semibold flex items-center justify-center">{{ photosOf(it.cid).length }}</span></button></td>
@@ -612,14 +718,14 @@ COMPONENTS['page-inspect'] = {
           <button class="btn-icon" :disabled="cardIdx >= mItems.length - 1" @click="cardGo(1)" aria-label="下一项"><ic name="chevron-right" :size="18"/></button>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
-          <label v-for="(s,i) in round.samples" :key="s" class="block"><span class="text-[11px] text-ink-4">样本 {{ s }}</span><input class="cell !w-full !h-12 !text-[17px] mt-1" :data-card-cell="i" :class="cellCls(cardItem, i)" v-model.trim="round.vals[cardItem.cid][i]" @input="touch" @focus="sel = cardItem.cid" :disabled="!editable" inputmode="decimal" autocomplete="off"></label>
+          <label v-for="(s,i) in round.samples" :key="s" class="block"><span class="text-[11px] text-ink-4">样本 {{ s }}</span><input class="cell !w-full !h-12 !text-[17px] mt-1" :data-card-cell="i" :data-next-field="isNextField(cardItem.cid,i)" :aria-invalid="ev.byCid[cardItem.cid].cells[i] === 'invalid'" :class="cellCls(cardItem, i)" v-model.trim="round.vals[cardItem.cid][i]" @input="touch" @focus="markField(cardItem.cid, 'sample', s)" :disabled="!editable" inputmode="decimal" autocomplete="off"></label>
         </div>
         <div class="mt-4 flex items-center justify-between">
           <span v-if="ev.byCid[cardItem.cid].status === 'ok'" class="chip-green">符合</span><span v-else-if="ev.byCid[cardItem.cid].status === 'ng'" class="chip-red">不符合 {{ ev.byCid[cardItem.cid].ng }}</span><span v-else class="chip-gray">待测 {{ ev.byCid[cardItem.cid].miss }}</span>
           <span v-if="rowStat(cardItem)" class="font-mono text-[12px] text-ink-3">均值 {{ rowStat(cardItem).mean }} · 极差 {{ rowStat(cardItem).range }}</span>
         </div>
         <div class="mt-5"><div class="label flex items-center gap-2">现场照片<span v-if="pvSet.has(cardItem.cid)" class="chip-amber">需要拍照</span></div><photo-strip :photos="photosOf(cardItem.cid)" :readonly="!editable" @add="addPhotos(cardItem.cid, $event)" @remove="removePhoto"/></div>
-        <div class="flex justify-center gap-1.5 mt-5"><button v-for="(it,i) in mItems" :key="it.cid" class="h-1.5 rounded-full transition-all duration-300" :class="[i === cardIdx ? 'w-5 bg-brand-600' : 'w-1.5', i !== cardIdx ? (statusMap[it.cid] === 'ng' ? 'bg-rose-400' : statusMap[it.cid] === 'ok' ? 'bg-emerald-400' : 'bg-black/15') : '']" @click="cardIdx = i; sel = it.cid" :aria-label="'第 ' + (i + 1) + ' 项'"></button></div>
+        <div class="flex justify-center gap-1.5 mt-5"><button v-for="(it,i) in mItems" :key="it.cid" class="h-1.5 rounded-full transition-all duration-300" :class="[i === cardIdx ? 'w-5 bg-brand-600' : 'w-1.5', i !== cardIdx ? (statusMap[it.cid] === 'ng' ? 'bg-rose-400' : statusMap[it.cid] === 'ok' ? 'bg-emerald-400' : 'bg-black/15') : '']" @click="pick(it.cid)" :aria-label="'第 ' + (i + 1) + ' 项'"></button></div>
       </div>
 
       <div v-if="tab === 'C' && cg && ev.c" class="p-4 sm:p-5 space-y-4">
@@ -627,18 +733,18 @@ COMPONENTS['page-inspect'] = {
         <div class="overflow-x-auto"><table class="tbl">
           <thead><tr><th>气泡</th><th>特性 / 判定要求</th><th class="w-[110px]">不良数（件）</th><th>备注</th><th>判定</th><th></th></tr></thead>
           <tbody>
-            <tr v-for="it in cItems" :key="it.cid" :id="'irow-' + it.cid" :class="sel === it.cid ? 'bg-amber-50/60' : ''" @click="sel = it.cid">
+            <tr v-for="it in cItems" :key="it.cid" :id="'irow-' + it.cid" :class="sel === it.cid ? 'bg-amber-50/60' : ''" @click="rememberRow(it.cid)">
               <td><span class="balloon-badge" :class="badgeCls(it)">{{ it.no }}</span></td>
               <td class="min-w-[180px]"><div class="font-medium flex items-center gap-1.5">{{ it.name }}<span v-if="it.cls !== '一般'" :class="it.cls === 'CTQ' ? 'chip-red' : 'chip-amber'">{{ it.cls }}</span></div><div class="text-[11px] text-ink-3 mt-0.5">{{ specText(it) }} · {{ gaugeLabel(it.gauge) }}</div></td>
-              <td><input class="cell !w-[88px]" :data-cnt="it.cid" :class="cntCls(it)" v-model.trim="round.cnt[it.cid].bad" @input="touch" @focus="sel = it.cid" :disabled="!editable" inputmode="numeric" autocomplete="off" placeholder="未录入"></td>
-              <td class="min-w-[160px]"><input class="input !h-8" v-model="round.cnt[it.cid].note" :disabled="!editable" placeholder="缺陷描述（可选）"></td>
+              <td><input class="cell !w-[88px]" :data-cnt="it.cid" :data-next-field="isNextField(it.cid)" :class="cntCls(it)" v-model.trim="round.cnt[it.cid].bad" @input="touch" @focus="markField(it.cid, 'count')" :disabled="!editable" inputmode="numeric" autocomplete="off" placeholder="未录入" :aria-label="'#' + it.no + ' ' + it.name + ' 不良数'"></td>
+              <td class="min-w-[160px]"><input class="input !h-8" data-count-note @focus="markField(it.cid, 'note')" v-model="round.cnt[it.cid].note" :disabled="!editable" placeholder="缺陷描述（可选）"></td>
               <td class="whitespace-nowrap"><span v-if="ev.byCid[it.cid].status === 'ok'" class="chip-green">无不良</span><span v-else-if="ev.byCid[it.cid].status === 'ng'" class="chip-red">不良 {{ ev.byCid[it.cid].bad }}</span><span v-else class="chip-gray">待录入</span></td>
               <td><button class="btn-icon relative" :class="pvSet.has(it.cid) ? '!text-amber-600 !bg-amber-50' : ''" @click.stop="photoFor = it.cid" :title="pvSet.has(it.cid) ? '该特性需要拍照' : '现场照片'"><ic name="camera" :size="15"/><span v-if="photosOf(it.cid).length" class="absolute -top-0.5 -right-0.5 min-w-[14px] h-[14px] px-0.5 rounded-full bg-brand-600 text-white text-[9px] font-semibold flex items-center justify-center">{{ photosOf(it.cid).length }}</span></button></td>
             </tr>
           </tbody>
         </table></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div class="rounded-2xl bg-[#f7f7f9] p-4"><div class="label">不良单位数 d</div><input class="cell !w-full !h-10 !text-[15px]" v-model.trim="round.dUnits" @input="touch" :placeholder="'自动 = ' + ev.c.total" :disabled="!editable" inputmode="numeric" autocomplete="off"><p class="text-[11px] text-ink-4 mt-2 leading-relaxed">默认等于各项不良数之和；同一件有多处不良时可下调，但不得小于单项最大值 {{ ev.c.maxb }}。</p></div>
+          <div class="rounded-2xl bg-[#f7f7f9] p-4"><label for="inspection-d-units" class="label">不良单位数 d</label><input id="inspection-d-units" data-d-units @focus="markField(null, 'total')" class="cell !w-full !h-10 !text-[15px]" :data-next-field="editable && nextAct.kind === 'count-total'" :aria-invalid="!!ev.c.dInvalid" v-model.trim="round.dUnits" @input="touch" :placeholder="'自动 = ' + ev.c.total" :disabled="!editable" inputmode="numeric" autocomplete="off"><p class="text-[11px] text-ink-4 mt-2 leading-relaxed">默认等于各项不良数之和；同一件有多处不良时可下调，但不得小于单项最大值 {{ ev.c.maxb }}。</p></div>
           <div class="md:col-span-2 rounded-2xl p-4 ring-1 ring-inset" :class="cTone"><div class="flex items-center gap-2"><st k="result" :v="ev.c.result"/><span class="font-semibold">d = {{ ev.c.d }} · Ac {{ ev.c.ac }} / Re {{ ev.c.re }}</span></div><p class="text-[12.5px] mt-2 leading-relaxed">{{ cText }}</p></div>
         </div>
       </div>
@@ -652,18 +758,18 @@ COMPONENTS['page-inspect'] = {
     </div>
   </div>
 
-  <div v-if="active && isLast" class="sticky bottom-4 z-20">
-    <div class="glass rounded-2xl shadow-lift ring-1 ring-black/[0.06] px-4 py-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+  <div v-if="active && isLast" class="inspect-footer sticky bottom-4 z-20">
+    <div class="inspect-action-panel glass rounded-xl shadow-lift ring-1 ring-black/[0.06] px-4 py-3 flex flex-wrap items-center gap-x-5 gap-y-2" :data-cue="workSteps.find((s) => s.key === workPhase).cue">
       <div class="flex items-center gap-3 min-w-[200px] flex-1">
         <div class="flex-1 h-2 rounded-full bg-black/[0.07] overflow-hidden"><div class="h-full rounded-full bg-brand-500 transition-all duration-700 ease-apple" :style="{ width: Math.round(ev.progress * 100) + '%' }"></div></div>
         <span class="text-[12px] tabular text-ink-3 whitespace-nowrap">已录 {{ ev.filled }} / {{ ev.total }}</span>
       </div>
-      <div class="flex flex-wrap items-center gap-1.5 text-[12px]">
+      <div class="inspect-chips flex flex-wrap items-center gap-1.5 text-[12px]">
         <span v-if="ev.m.total" class="chip-green">符合 {{ ev.m.ok }}</span><span v-if="ev.m.ng" class="chip-red">不符合 {{ ev.m.ng }}</span><span v-if="ev.m.missing" class="chip-gray">待测 {{ ev.m.missing }}</span>
         <span v-if="ev.c" class="inline-flex items-center gap-1 text-ink-3">计数组<st k="result" :v="ev.c.result"/></span>
         <span v-if="pv.length" class="chip-amber"><ic name="camera" :size="11"/>待拍照 {{ pv.length }}</span>
       </div>
-      <div class="flex items-center gap-3 ml-auto"><span class="text-[12.5px] hidden md:inline max-w-[360px] truncate"><span class="text-ink-4">下一步　</span><span class="font-medium">{{ nextAct.text }}</span></span><g-btn :perm="nextAct.perm" cls="btn-primary" :icon="nextAct.icon" @click="doNext">{{ nextAct.btn }}</g-btn></div>
+      <div class="inspect-action" :data-inspect-action="nextAct.kind"><span class="inspect-action-detail">{{ nextAct.text }}</span><g-btn :perm="nextAct.perm" cls="btn-primary" :icon="nextAct.icon" @click="doNext">{{ nextAct.btn }}</g-btn></div>
     </div>
   </div>
 

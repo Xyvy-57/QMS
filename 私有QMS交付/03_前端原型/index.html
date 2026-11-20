@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23095e61'/%3E%3Cpath d='M5 8l5 16 6-12 6 12 5-16' fill='none' stroke='white' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E"/>
 <meta name="theme-color" content="#f5f5f7" />
 <title>Worlder QMS · 开发入口（免构建）</title>
 <!--
@@ -13,6 +14,7 @@
   · 下面这段 text/tailwindcss 样式与 styles/tailwind.css 的组件层保持一致，修改组件类时两处同步。
 -->
 <link rel="stylesheet" href="styles/app.css" />
+<link rel="stylesheet" href="styles/handoff.css" />
 <!-- Tailwind 运行时：优先用本地 vendor/ 里的文件，没有再走 CDN；配置必须紧跟在它后面 -->
 <script src="vendor/tailwind.play.js" onerror="this.remove()"></script>
 <script>if (!window.tailwind) document.write('<script src="https://cdn.tailwindcss.com/3.4.17"><\/script>');</script>
@@ -113,7 +115,7 @@ if (window.tailwind) {
     { name: 'Vue', ok: function () { return !!window.Vue; }, urls: ['vendor/vue.global.prod.js', NPM + '/vue/3.4.38/files/dist/vue.global.prod.js', UNPKG + '/vue@3.4.38/dist/vue.global.prod.js', JSD + '/vue@3.4.38/dist/vue.global.prod.js'] },
     { name: 'Chart.js', optional: true, ok: function () { return !!window.Chart; }, urls: ['vendor/chart.umd.min.js', NPM + '/chart.js/4.4.1/files/dist/chart.umd.js', UNPKG + '/chart.js@4.4.1/dist/chart.umd.js', JSD + '/chart.js@4.4.1/dist/chart.umd.min.js'] }
   ];
-  var SRC = ['10_core', '15_actions', '20_ui', '30_pages_a', '32_bubble', '40_inspect', '44_qr', '45_reports', '46_production', '47_mainline', '48_guide', '49_floor', '50_ncr', '60_masterdata', '70_system', '80_rd', '85_prod_demo', '90_app'];
+  var SRC = ['10_core', '15_actions', '20_ui', '30_pages_a', '32_bubble', '40_inspect', '44_qr', '45_reports', '46_production', '47_mainline', '48_guide', '49_floor', '50_ncr', '60_masterdata', '70_system', '80_rd', '81_tour_frames', '82_order_tour', '83_tour_cases', '85_prod_demo', '86_tour_practice', '87_handoff', '88_handoff_ui', '90_app'];
 
   function loadOne(url, done) {
     var s = document.createElement('script');

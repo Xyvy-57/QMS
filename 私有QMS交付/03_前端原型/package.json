@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "test": "node tests/smoke.mjs --html qms_pro_qms.html"
+    "test": "node tests/smoke.mjs --html qms_pro_qms.html",
+    "delivery": "node build.mjs --tour-out demo/工单操作演示.html && node scripts/package-handoff.mjs",
+    "test:delivery": "node --test tests/handoff.mjs"
   },
   "devDependencies": {
     "puppeteer-core": "^23.0.0",
