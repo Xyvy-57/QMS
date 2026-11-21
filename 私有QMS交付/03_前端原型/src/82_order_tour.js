@@ -34,6 +34,8 @@ const TOUR_CHAPTERS = [
 const TOUR_STEPS = TOUR_CHAPTERS.flatMap((chapter, chapterIndex) => chapter.steps.map(([id, role, title, detail]) => ({ id, role, title, detail, chapterIndex })));
 const TOUR_PROGRESS_KEY = 'worlder-order-tour-208-v1';
 let packedTourFrames;
+/** 是否是带实拍画面的演示文件（node build.mjs --tour-out 生成）。日常工作台不内嵌画面，首页也不放演示横幅。 */
+function tourPacked() { return typeof document !== 'undefined' && !!document.getElementById('order-tour-media'); }
 function tourPicture(device, id) {
   if (packedTourFrames === undefined) {
     const embedded = document.getElementById('order-tour-media');

@@ -594,13 +594,14 @@ COMPONENTS['page-inspect'] = {
   },
   template: `
 <div v-if="t && round && ev" class="space-y-4 pb-6">
-  <div class="flex flex-wrap items-start justify-between gap-3">
-    <div class="min-w-0">
-      <button class="text-xs text-ink-3 hover:text-ink inline-flex items-center gap-1 mb-2" @click="go('/tasks/' + t.scene)"><ic name="chevron-left" :size="13"/>{{ scene.name }}</button>
+  <!-- 手机上标题区压成两行：单号和“更多”同一行，单据信息一行（超出省略，点“依据”展开全部） -->
+  <div class="inspect-head flex flex-wrap items-start justify-between gap-3">
+    <div class="inspect-head-main min-w-0">
+      <button class="inspect-back text-xs text-ink-3 hover:text-ink inline-flex items-center gap-1 mb-2" @click="go('/tasks/' + t.scene)"><ic name="chevron-left" :size="13"/>{{ scene.name }}</button>
       <div class="flex flex-wrap items-center gap-2"><h1 class="page-title font-mono">{{ t.code }}</h1><span class="chip" :class="SCENE_META[t.scene].tint">{{ scene.name }}</span><st k="task" :v="t.status" dot/></div>
-      <p class="text-xs text-ink-3 mt-1">{{ part.partNo }} {{ part.name }} · {{ ctxText(t) || '无外部单据（独立运行）' }}<button class="link ml-2 inline-flex items-center gap-0.5" @click="showInfo = !showInfo">{{ showInfo ? '收起' : '检验依据与流程' }}<ic name="chevron-down" :size="12" class="transition-transform duration-300" :class="showInfo ? 'rotate-180' : ''"/></button></p>
+      <p class="inspect-meta text-xs text-ink-3 mt-1"><span class="inspect-meta-text" :title="part.partNo + ' ' + part.name + ' · ' + (ctxText(t) || '')">{{ part.partNo }} {{ part.name }} · {{ ctxText(t) || '无外部单据（独立运行）' }}</span><button class="link ml-2 inline-flex items-center gap-0.5 shrink-0" @click="showInfo = !showInfo">{{ showInfo ? '收起' : '检验依据与流程' }}<ic name="chevron-down" :size="12" class="transition-transform duration-300" :class="showInfo ? 'rotate-180' : ''"/></button></p>
     </div>
-    <div class="flex flex-wrap gap-2">
+    <div class="inspect-head-actions flex flex-wrap gap-2">
       <details v-if="active && isLast" ref="moreEl" class="relative">
         <summary class="btn-ghost list-none cursor-pointer select-none">更多<ic name="chevron-down" :size="13"/></summary>
         <div class="absolute right-0 mt-1 w-56 card shadow-pop z-30 p-1.5 text-[13px]">

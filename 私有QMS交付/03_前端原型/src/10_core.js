@@ -201,7 +201,7 @@ function titleBlock(p) {
   return '<g font-size="10" fill="#475569"><rect x="520" y="372" width="308" height="114" fill="#fff" stroke="#94a3b8"/>' +
     '<line x1="520" y1="400" x2="828" y2="400" stroke="#cbd5e1"/><line x1="520" y1="428" x2="828" y2="428" stroke="#cbd5e1"/><line x1="520" y1="456" x2="828" y2="456" stroke="#cbd5e1"/><line x1="670" y1="372" x2="670" y2="486" stroke="#cbd5e1"/>' +
     '<text x="530" y="390">零件号 <tspan fill="#0f172a" font-weight="600">' + p.partNo + '</tspan></text><text x="680" y="390">名称 <tspan fill="#0f172a" font-weight="600">' + p.name + '</tspan></text>' +
-    '<text x="530" y="418">图号 <tspan fill="#0f172a">' + p.dwg + '</tspan></text><text x="680" y="418">版本 <tspan fill="#1f63e0" font-weight="600">' + p.rev + '</tspan></text>' +
+    '<text x="530" y="418">图号 <tspan fill="#0f172a">' + p.dwg + '</tspan></text><text x="680" y="418">版本 <tspan fill="#075e63" font-weight="600">' + p.rev + '</tspan></text>' +
     '<text x="530" y="446">材料 <tspan fill="#0f172a">' + p.mat + '</tspan></text><text x="680" y="446">比例 <tspan fill="#0f172a">1:1</tspan></text>' +
     '<text x="530" y="474">未注公差 <tspan fill="#0f172a">GB/T 1804-m</tspan></text><text x="680" y="474">来源 <tspan fill="#0f172a">Worlder 气泡图</tspan></text></g>';
 }

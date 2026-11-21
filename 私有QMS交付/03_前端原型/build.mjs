@@ -131,29 +131,30 @@ for (const ph of ['/*__TAILWIND__*/', '/*__APP_CSS__*/']) if (!head.includes(ph)
 head = head.replace('/*__TAILWIND__*/', () => twCss).replace('/*__APP_CSS__*/', () => appCss);
 const hash = createHash('sha256').update(appJs).digest('hex').slice(0, 12);
 const stamp = new Date().toISOString();
-// 单文件版内置导览实拍；开发入口从 demo/frames 按当前步骤加载。
-const tourMedia = {};
-if (jsFiles.some(f => basename(f) === '82_order_tour.js')) {
+/* 导览实拍（36 张 webp，约 2 MB）只装进单独的演示文件（--tour-out）。
+   日常工作台不内嵌，车间平板打开更快；在本目录打开时，导览从 demo/frames 按当前步骤加载。 */
+const scripts = (media) => (media ? '\n<script type="application/json" id="order-tour-media">' + JSON.stringify(media) + '</script>' : '') +
+  '\n<script>/* Vue 3.4.38 · MIT */\n' + esc(vue) + '\n</script>' +
+  '\n<script>/* Chart.js 4.4.1 · MIT */\n' + esc(chart) + '\n</script>' +
+  '\n<script>\n/* Worlder QMS 原型 · build ' + stamp + ' · src ' + hash + ' */\n(function () {\n\'use strict\';\n' + esc(appJs) + '\n})();\n</script>\n</body>\n</html>\n';
+const html = head + scripts(null);
+writeFileSync(out, html);
+const tourOut = arg('tour-out', '');
+if (tourOut) {
+  if (!jsFiles.some(f => basename(f) === '82_order_tour.js')) fail('--tour-out 需要 src/82_order_tour.js');
+  const tourMedia = {};
   for (const device of ['web', 'mobile']) {
     const dir = join(root, 'demo', 'frames', device);
     for (const frame of readdirSync(dir).filter(f => f.endsWith('.webp')).sort()) {
       tourMedia[device + '/' + frame] = readFileSync(join(dir, frame)).toString('base64');
     }
   }
-}
-const html = head +
-  '\n<script type="application/json" id="order-tour-media">' + JSON.stringify(tourMedia) + '</script>' +
-  '\n<script>/* Vue 3.4.38 · MIT */\n' + esc(vue) + '\n</script>' +
-  '\n<script>/* Chart.js 4.4.1 · MIT */\n' + esc(chart) + '\n</script>' +
-  '\n<script>\n/* Worlder QMS 原型 · build ' + stamp + ' · src ' + hash + ' */\n(function () {\n\'use strict\';\n' + esc(appJs) + '\n})();\n</script>\n</body>\n</html>\n';
-writeFileSync(out, html);
-const tourOut = arg('tour-out', '');
-if (tourOut) {
   const file = resolve(tourOut);
   mkdirSync(dirname(file), { recursive:true });
   const autostart = "<script>if (!location.hash && !new URLSearchParams(location.search).has('exercise')) location.replace('#/demo');</script>";
-  writeFileSync(file, html.replace('</head>', autostart + '</head>'));
-  console.log('已生成可单独携带的双端演示 ' + file);
+  const tourHtml = (head + scripts(tourMedia)).replace('</head>', autostart + '</head>');
+  writeFileSync(file, tourHtml);
+  console.log('已生成可单独携带的双端演示 ' + file + '（' + (Buffer.byteLength(tourHtml) / 1024).toFixed(0) + ' KB，含实拍画面）');
 }
 console.log('已生成 ' + out + '（' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KB，' + jsFiles.length + ' 个源码文件，src ' + hash + '）');
 

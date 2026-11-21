@@ -148,7 +148,7 @@ COMPONENTS['page-dashboard'] = {
           { label: '合格批', data: rows.map((r) => r[0]), backgroundColor: '#34d399', borderRadius: 6, stack: 's', maxBarThickness: 26 },
           { label: '不合格批', data: rows.map((r) => r[1]), backgroundColor: '#fb7185', borderRadius: 6, stack: 's', maxBarThickness: 26 },
           { label: '证据不足', data: rows.map((r) => r[2]), backgroundColor: '#fbbf24', borderRadius: 6, stack: 's', maxBarThickness: 26 },
-          { type: 'line', label: '批合格率 %', data: rate, yAxisID: 'y1', borderColor: '#1f63e0', backgroundColor: '#1f63e0', tension: 0.35, pointRadius: 3, borderWidth: 2 },
+          { type: 'line', label: '批合格率 %', data: rate, yAxisID: 'y1', borderColor: '#075e63', backgroundColor: '#075e63', tension: 0.35, pointRadius: 3, borderWidth: 2 },
         ] },
         options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true, padding: 14 } } }, scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, grid: { color: 'rgba(0,0,0,.05)' }, ticks: { precision: 0 } }, y1: { position: 'right', min: 80, max: 100, grid: { display: false } } } },
       };
@@ -339,7 +339,7 @@ COMPONENTS['page-bubble'] = {
   <div class="flex items-center gap-1 overflow-x-auto pb-1 -mt-1">
     <template v-for="(grp,gi) in BUBBLE_ROUTES" :key="grp.g">
       <span class="text-[11px] text-ink-4 px-2 shrink-0">{{ grp.g }}</span>
-      <button v-for="r in grp.items" :key="r[0]" @click="navTo(r[0])" class="shrink-0 h-8 px-3 rounded-lg text-[12.5px] font-medium transition-all duration-200 inline-flex items-center gap-1" :class="routeActive(r[0]) ? 'bg-brand-600 text-white shadow-[0_2px_8px_rgba(31,99,224,.3)]' : 'text-ink-2 hover:bg-black/[0.05]'">{{ r[1] }}<ic v-if="r[0].indexOf('qms:') === 0" name="arrow-right" :size="11" class="opacity-50"/></button>
+      <button v-for="r in grp.items" :key="r[0]" @click="navTo(r[0])" class="shrink-0 h-8 px-3 rounded-lg text-[12.5px] font-medium transition-all duration-200 inline-flex items-center gap-1" :class="routeActive(r[0]) ? 'bg-brand-600 text-white shadow-[0_2px_8px_rgba(7,94,99,.3)]' : 'text-ink-2 hover:bg-black/[0.05]'">{{ r[1] }}<ic v-if="r[0].indexOf('qms:') === 0" name="arrow-right" :size="11" class="opacity-50"/></button>
       <span v-if="gi < BUBBLE_ROUTES.length - 1" class="w-px h-4 bg-black/10 mx-1 shrink-0"></span>
     </template>
   </div>

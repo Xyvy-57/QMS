@@ -176,7 +176,7 @@ COMPONENTS['stepper'] = {
     '<ol class="flex items-center w-full overflow-x-auto">' +
     '<li v-for="(s,i) in steps" :key="i" class="flex items-center" :class="i < steps.length - 1 ? \'flex-1 min-w-[96px]\' : \'\'">' +
     '<div class="flex items-center gap-2 shrink-0">' +
-    '<span class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold transition-all duration-500" :class="i < current ? \'bg-brand-600 text-white\' : i === current ? \'bg-white text-brand-700 ring-2 ring-brand-500 shadow-[0_0_0_4px_rgba(52,120,246,.15)]\' : \'bg-black/[0.06] text-ink-4\'"><ic v-if="i < current" name="check" :size="13" stroke="2.6"/><template v-else>{{ i + 1 }}</template></span>' +
+    '<span class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold transition-all duration-500" :class="i < current ? \'bg-brand-600 text-white\' : i === current ? \'bg-white text-brand-700 ring-2 ring-brand-500 shadow-[0_0_0_4px_rgba(25,123,127,.15)]\' : \'bg-black/[0.06] text-ink-4\'"><ic v-if="i < current" name="check" :size="13" stroke="2.6"/><template v-else>{{ i + 1 }}</template></span>' +
     '<span class="text-xs whitespace-nowrap" :class="i <= current ? \'text-ink font-medium\' : \'text-ink-4\'">{{ s }}</span></div>' +
     '<div v-if="i < steps.length - 1" class="flex-1 h-[2px] mx-3 rounded-full bg-black/[0.07] overflow-hidden"><div class="h-full bg-brand-500 transition-all duration-700 ease-apple" :style="{ width: i < current ? \'100%\' : \'0%\' }"></div></div>' +
     '</li></ol>',
@@ -263,7 +263,7 @@ COMPONENTS['drawing-viewer'] = {
       if (st === 'missing') return { f: '#ffffff', s: '#a1a1aa', t: '#52525b' };
       if (it.cls === 'CTQ') return { f: '#fff1f2', s: '#f43f5e', t: '#be123c' };
       if (it.cls === 'CC') return { f: '#fffbeb', s: '#f59e0b', t: '#b45309' };
-      return { f: '#eef5ff', s: '#1f63e0', t: '#1a4fb8' };
+      return { f: '#ecf6f5', s: '#075e63', t: '#004c50' };
     },
     tip(it) { return '#' + it.no + ' ' + it.name + '  ' + specText(it) + (it.unit && it.kind !== 'count' ? ' ' + it.unit : ''); },
   },
@@ -354,9 +354,9 @@ function demoPhoto() {
   const g = c.getContext('2d');
   const grd = g.createLinearGradient(0, 0, 640, 480); grd.addColorStop(0, '#dbeafe'); grd.addColorStop(1, '#e0e7ff');
   g.fillStyle = grd; g.fillRect(0, 0, 640, 480);
-  g.strokeStyle = 'rgba(31,99,224,.28)'; g.lineWidth = 2;
+  g.strokeStyle = 'rgba(7,94,99,.28)'; g.lineWidth = 2;
   for (let i = 0; i < 6; i++) { g.beginPath(); g.arc(320, 240, 44 + i * 36, 0, Math.PI * 2); g.stroke(); }
-  g.textAlign = 'center'; g.fillStyle = '#1a4fb8'; g.font = '600 30px -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif'; g.fillText('示例照片', 320, 236);
+  g.textAlign = 'center'; g.fillStyle = '#004c50'; g.font = '600 30px -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif'; g.fillText('示例照片', 320, 236);
   g.fillStyle = '#475569'; g.font = '16px -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif'; g.fillText(fmtTime(nowISO()) + ' · 演示用，非真实照片', 320, 272);
   return c.toDataURL('image/jpeg', 0.8);
 }
@@ -423,7 +423,7 @@ COMPONENTS['scene-pipeline'] = {
     cls(k) {
       const s = this.states ? this.states[k] : null;
       if (s === 'done') return 'bg-emerald-50 text-emerald-700 ring-emerald-600/20';
-      if (s === 'active') return 'bg-brand-600 text-white ring-brand-600 shadow-[0_4px_14px_rgba(31,99,224,.35)]';
+      if (s === 'active') return 'bg-brand-600 text-white ring-brand-600 shadow-[0_4px_14px_rgba(7,94,99,.35)]';
       if (s === 'warn') return 'bg-amber-50 text-amber-700 ring-amber-600/25';
       return 'bg-white text-ink-3 ring-black/[0.08]';
     },
@@ -475,6 +475,8 @@ const NAV = [
   { group: '', items: [{ to: '/workbench', label: '首页', icon: 'home', badge: 'mine' }, { to: '/orders', label: '工单', icon: 'factory' }, { to: '/tasks', label: '检验', icon: 'list' }, { to: '/ncr', label: '不合格', icon: 'alert' }, { to: '/reports', label: '报告', icon: 'file' }] },
   { group: '图纸与标准', roles: ['qe', 'ql'], items: [{ to: '/bubble', label: '气泡识别', icon: 'target' }, { to: '/standards', label: '检验标准', icon: 'ruler' }, { to: '/plans', label: '检验方案', icon: 'clipboard' }] },
   { group: '现场', more: true, items: [{ to: '/floor', label: '现场看板', icon: 'monitor' }, { to: '/trace', label: '批次追溯', icon: 'trace' }] },
+  /* 操作演示只在“更多功能”里留一个入口；首页的演示横幅只在单独打包的演示文件里出现（见 tourPacked） */
+  { group: '帮助', more: true, items: [{ to: '/demo', label: '工单操作演示', icon: 'play' }] },
   { group: '看数据', roles: ['qe', 'ql', 'pm'], items: [{ to: '/dashboard', label: '数据看板', icon: 'chart' }] },
   { group: '基础资料', more: true, items: [{ to: '/parts', label: '零部件', icon: 'box' }, { to: '/routes', label: '工序路线与模板', icon: 'route' }, { to: '/scenes', label: '检验场景与流程', icon: 'layers' }, { to: '/gauges', label: '检具与检验方法', icon: 'gauge' }, { to: '/report-templates', label: '报告模板', icon: 'layout' }] },
   { group: '系统', more: true, promote: ['admin'], items: [{ to: '/users', label: '用户与角色', icon: 'users' }, { to: '/audit', label: '操作日志', icon: 'history' }, { to: '/settings', label: '集成设置', icon: 'settings' }] },

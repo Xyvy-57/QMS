@@ -4,7 +4,7 @@
 [v-cloak] { display: none !important; }
 :root { --ease: cubic-bezier(.32,.72,0,1); --spring: cubic-bezier(.34,1.56,.64,1); }
 html { scroll-behavior: smooth; }
-::selection { background: rgba(31,99,224,.18); }
+::selection { background: rgba(7,94,99,.18); }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,.14); border-radius: 10px; border: 3px solid transparent; background-clip: content-box; }
 ::-webkit-scrollbar-thumb:hover { background-color: rgba(0,0,0,.28); }
@@ -54,7 +54,7 @@ html { scroll-behavior: smooth; }
 
 /* —— 图纸气泡 —— */
 .balloon { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform .28s var(--spring), filter .2s ease; }
-.balloon:hover { transform: scale(1.18); filter: drop-shadow(0 2px 6px rgba(31,99,224,.45)); }
+.balloon:hover { transform: scale(1.18); filter: drop-shadow(0 2px 6px rgba(7,94,99,.45)); }
 .balloon.is-active { transform: scale(1.3); filter: drop-shadow(0 0 8px rgba(245,158,11,.8)); }
 .balloon.is-ng circle.halo { animation: pulse 1.6s var(--ease) infinite; }
 @keyframes pulse { 0% { opacity: .55; r: 14px; } 100% { opacity: 0; r: 26px; } }
@@ -74,7 +74,7 @@ html { scroll-behavior: smooth; }
 .sig-canvas { touch-action: none; background-image: linear-gradient(to right, rgba(0,0,0,.08) 50%, transparent 0); background-size: 10px 1px; background-repeat: repeat-x; background-position: 0 72%; }
 
 /* —— 研发看板拖拽 —— */
-.drop-ok { outline: 2px dashed rgba(31,99,224,.5); outline-offset: -6px; background: rgba(31,99,224,.05); }
+.drop-ok { outline: 2px dashed rgba(7,94,99,.5); outline-offset: -6px; background: rgba(7,94,99,.05); }
 .dragging { opacity: .45; transform: rotate(1.5deg); }
 
 /* —— A4 报告 —— */
@@ -303,7 +303,18 @@ input[data-next-field="true"][aria-invalid="true"] { outline-color:#b43c4d; }
   .drawing-toggle { display:flex; align-items:center; gap:8px; min-height:44px; padding:0 12px; border:1px solid var(--shop-line); border-radius:6px; background:#fff; color:var(--shop-action); font-weight:600; }
   .drawing-toggle span { flex:1; text-align:right; color:var(--shop-muted); font-size:12px; font-weight:400; }
   .modal-panel :is(input.input,select.input,textarea.textarea) { font-size:16px; min-height:44px; }
+  /* 检验页：输入框之前只留单号行和一行单据信息。顶栏面包屑已有“检验”，返回工单在下面的工单行里 */
+  .inspect-head { flex-wrap:nowrap; gap:8px; }
+  .inspect-head-main { flex:1 1 auto; }
+  .inspect-head-actions { flex:none; }
+  .inspect-back { display:none; }
+  .inspect-head .page-title { font-size:19px; }
+  .inspect-meta { display:flex; align-items:baseline; min-width:0; }
+  .inspect-meta-text { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 }
+/* 检验页底部的进度条是吸底的：跳到下一格时，留出它的高度，输入框不被挡住 */
+html:has(.inspect-footer) { scroll-padding-bottom:132px; }
+@media (max-width:600px) { html:has(.inspect-footer) { scroll-padding-bottom:150px; } }
 
 @media print {
   @page { size: A4; margin: 0; }

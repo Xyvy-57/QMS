@@ -525,7 +525,8 @@ COMPONENTS['page-workbench'] = {
     };
     const today = computed(() => fmtDate(new Date(shopMinute.value).toISOString()));
     const shift = computed(() => shiftText(shiftAt(shopMinute.value)));
-    return { today, shift, steps, all, groups, attention, sel, pickStep, doItem, kw, find, dispatchOwner, dispatchStatus };
+    const showTour = tourPacked();
+    return { today, shift, steps, all, groups, attention, sel, pickStep, doItem, kw, find, dispatchOwner, dispatchStatus, showTour };
   },
   template: `
 <div class="dispatch-page">
@@ -534,7 +535,7 @@ COMPONENTS['page-workbench'] = {
     <form class="dispatch-search" @submit.prevent="find"><ic name="search" :size="16"/><input v-model="kw" aria-label="查找工单、批次或检验单" placeholder="工单号、批次或检验单"><button type="submit" aria-label="查找">查找</button>
     </form>
   </div>
-  <section v-if="!practiceCase" class="tour-entry" aria-label="工单操作演示"><span class="tour-entry-icon"><ic name="play" :size="19"/></span><div><h2>工单操作演示</h2><p>跟着一张 208 件的阀芯工单，从建单走到放行。</p></div><div class="tour-entry-links"><a class="handoff-entry-link" href="?live=1"><ic name="edit" :size="16"/>工单实操</a><a href="#/demo/web"><ic name="monitor" :size="16"/>Web 端演示<ic name="chevron-right" :size="13"/></a><a href="#/demo/mobile"><ic name="phone" :size="16"/>手机端演示<ic name="chevron-right" :size="13"/></a></div></section>
+  <section v-if="showTour && !practiceCase" class="tour-entry" aria-label="工单操作演示"><span class="tour-entry-icon"><ic name="play" :size="19"/></span><div><h2>工单操作演示</h2><p>跟着一张 208 件的阀芯工单，从建单走到放行。</p></div><div class="tour-entry-links"><a class="handoff-entry-link" href="?live=1"><ic name="edit" :size="16"/>工单实操</a><a href="#/demo/web"><ic name="monitor" :size="16"/>Web 端演示<ic name="chevron-right" :size="13"/></a><a href="#/demo/mobile"><ic name="phone" :size="16"/>手机端演示<ic name="chevron-right" :size="13"/></a></div></section>
   <div class="dispatch-filters role-steps" role="navigation" aria-label="我的工作流程">
     <button type="button" data-all :aria-pressed="!sel" @click="sel = ''">全部 <b>{{ all.length }}</b></button>
     <button v-for="s in steps" :key="s.key" type="button" :data-step="s.key" :title="s.hint" :aria-pressed="sel === s.key" @click="pickStep(s)">{{ s.name }} <b v-if="s.items.length">{{ s.items.length }}</b></button>

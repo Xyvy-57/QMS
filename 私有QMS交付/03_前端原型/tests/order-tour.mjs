@@ -3,14 +3,19 @@ import { before, after, test } from 'node:test';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { copyFile, mkdtemp } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { openApp, launch, ROOT } from './lib.mjs';
 
 let browser, html;
 const frames = ['orders','create','intake','record','first','deviation','ncr','scope','approve','rework','retest','unhold','work','final','shipping','remaining','release','closed'];
+/* 实拍画面只内嵌在单独的演示文件里（日常工作台 qms_pro_qms.html 不带），
+   先运行 npm run delivery 或 node build.mjs --tour-out demo/工单操作演示.html */
+const TOUR_HTML = join(ROOT, 'demo', '工单操作演示.html');
 before(async () => {
+  if (!existsSync(TOUR_HTML)) throw new Error('找不到 ' + TOUR_HTML + '，请先运行 npm run delivery');
   browser = await launch();
   html = join(await mkdtemp(join(tmpdir(),'worlder-tour-offline-')), 'qms.html');
-  await copyFile(join(ROOT, 'qms_pro_qms.html'), html);
+  await copyFile(TOUR_HTML, html);
 });
 after(async () => { await browser?.close(); });
 async function open(t, route, width=390, height=844) {
