@@ -100,7 +100,10 @@ COMPONENTS['page-order-tour'] = {
       const renderedHeight = el.clientWidth * dims[1]/dims[0];
       el.scrollTop = Math.max(0, (bounds.value[1]+bounds.value[3]/2)*renderedHeight-el.clientHeight/2);
     }
-    const loaded = () => { imageReady.value=true; nextTick(centerTarget); };
+    const loaded = () => { imageReady.value=true; missing.value=false; nextTick(centerTarget); };
+    /* 工作台单文件被单独拿走时，旁边没有 demo/frames：说明去哪里看，而不是显示一张破图 */
+    const missing = ref(false);
+    const failed = () => { missing.value = true; };
     watch(picture, () => { imageReady.value=false; nextTick(centerTarget); });
     watch([playing, index, imageReady], () => {
       clearTimeout(timer);
@@ -121,7 +124,7 @@ COMPONENTS['page-order-tour'] = {
       window.addEventListener('keydown',onKey); document.addEventListener('visibilitychange',visibility);
     });
     onBeforeUnmount(() => { clearTimeout(timer); observer?.disconnect(); window.removeEventListener('keydown',onKey); document.removeEventListener('visibilitychange',visibility); });
-    return { chapters, steps:TOUR_STEPS, step, index, playing, imageReady, device, bounds, picture, hotspotStyle, stage, last, finished, toggle, replay, select, advance, switchDevice, jump:id=>select(tourStepIndex(id)), zoom, expanded, expandButton, openZoom, closeZoom, loaded, dialog, cases:TOUR_PRACTICE_LABELS, exerciseLink:key=>exerciseUrl(key, device.value, step.value.id) };
+    return { chapters, steps:TOUR_STEPS, step, index, playing, imageReady, device, bounds, picture, hotspotStyle, stage, last, finished, toggle, replay, select, advance, switchDevice, jump:id=>select(tourStepIndex(id)), zoom, expanded, expandButton, openZoom, closeZoom, loaded, missing, failed, dialog, cases:TOUR_PRACTICE_LABELS, exerciseLink:key=>exerciseUrl(key, device.value, step.value.id) };
   },
   template: `
 <div class="order-tour" :data-tour-device="device" :data-tour-step="step.id">
@@ -135,7 +138,7 @@ COMPONENTS['page-order-tour'] = {
       <div class="tour-active">
         <div class="tour-instruction" aria-live="polite" aria-atomic="true"><div class="tour-step-meta"><span class="tour-role"><ic name="user" :size="13"/>{{ step.role }}</span><span>{{ index+1 }} / {{ steps.length }} 步</span><select aria-label="跳至操作步骤" :value="step.id" @change="jump($event.target.value)"><optgroup v-for="ch in chapters" :key="ch.name" :label="ch.name"><option v-for="s in ch.steps" :value="s.id">{{ s.title }}</option></optgroup></select></div><h2>{{ step.title }}</h2><p>{{ step.detail }}</p></div>
         <div class="tour-stage" :class="{handset:device==='mobile'}">
-          <div class="tour-screen" ref="stage"><div class="tour-photo"><img :key="picture" :src="picture" @load="loaded" :alt="(device==='mobile'?'手机端':'Web 端')+'实拍，'+step.title" :width="device==='mobile'?390:1360" :height="device==='mobile'?780:800" draggable="false"><button v-if="imageReady && !finished" class="tour-hot" :style="hotspotStyle" :class="{below:bounds[1]<.12,edge:bounds[0]>.78}" @click="advance()" :aria-label="'跟随画面，'+step.title"><span class="tour-pin" aria-hidden="true"><ic name="target" :size="13"/>{{ last?'查看结果':'点这里' }}</span></button></div></div>
+          <div class="tour-screen" ref="stage"><div class="tour-photo"><p v-if="missing" class="tour-missing" role="status">这个文件没有带演示画面。请打开仓库里的 <b>demo/工单操作演示.html</b>（带全部画面，可单独拷走），或用 node server.mjs 启动后访问。</p><img v-show="!missing" :key="picture" :src="picture" @load="loaded" @error="failed" :alt="(device==='mobile'?'手机端':'Web 端')+'实拍，'+step.title" :width="device==='mobile'?390:1360" :height="device==='mobile'?780:800" draggable="false"><button v-if="imageReady && !finished" class="tour-hot" :style="hotspotStyle" :class="{below:bounds[1]<.12,edge:bounds[0]>.78}" @click="advance()" :aria-label="'跟随画面，'+step.title"><span class="tour-pin" aria-hidden="true"><ic name="target" :size="13"/>{{ last?'查看结果':'点这里' }}</span></button></div></div>
           <div v-if="finished" class="tour-end" role="status"><ic name="shield" :size="28"/><h2>工单已放行</h2><p>208 件投入 = 205 件合格 + 3 件报废</p><button class="tour-main-btn" @click="replay"><ic name="rotate-ccw" :size="16"/>重播演示</button></div>
         </div>
         <div class="tour-controls"><div class="tour-meter" role="progressbar" aria-label="演示进度" :aria-valuemax="steps.length" :aria-valuenow="index+1" aria-valuemin="1"><span :style="{width:((index+1)/steps.length*100)+'%'}"></span></div><div class="tour-buttons"><button class="tour-play" data-tour-play @click="toggle"><ic :name="playing?'pause':'play'" :size="16"/>{{ playing?'暂停':last?'重播':'自动演示' }}</button><button class="tour-expand" ref="expandButton" @click="openZoom" aria-label="放大当前画面" title="放大当前画面"><ic name="maximize" :size="16"/></button><div class="tour-step-buttons"><button aria-label="上一步" title="上一步" :disabled="index===0" @click="select(index-1)"><ic name="chevron-left" :size="17"/></button><button class="tour-main-btn" data-tour-next @click="finished ? replay() : advance()">{{ finished?'重新播放':last?'查看结果':'下一步' }}<ic name="arrow-right" :size="16"/></button></div></div></div>

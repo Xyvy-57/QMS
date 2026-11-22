@@ -14,3 +14,7 @@ node_modules/
 .claude/settings.local.json
 .DS_Store
 *.tmp
+
+# 与本项目无关、误提交过的本机文件
+.claude/
+.tdmbev-poster-build.*/
